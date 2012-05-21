@@ -1,0 +1,9 @@
+---
+Name: audience_types
+---
+AudienceType:
+  AudienceTypes:
+    NewComer:
+      NewComer: true
+    NewYoker:
+      Location: New York
