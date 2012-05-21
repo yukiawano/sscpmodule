@@ -1,9 +1,7 @@
----
-Name: audience_types
----
 AudienceType:
   AudienceTypes:
-    NewComer:
-      NewComer: true
-    NewYoker:
-      Location: New York
+    InclusiveOR:
+      NewComer:
+        NewComer: true
+      NewYoker:
+        Location: NewYork

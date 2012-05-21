@@ -1,4 +1,4 @@
 <?php
 class AudienceType extends Object {
-	static public $AudienceTypes = "Foobar";
+	static public $AudienceTypes;
 }
