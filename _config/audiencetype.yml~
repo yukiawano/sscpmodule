@@ -1,7 +1,0 @@
-AudienceType:
-  AudienceTypes:
-    InclusiveOR:
-      NewComer:
-        NewComer: true
-      NewYoker:
-        Location: NewYork

@@ -17,11 +17,13 @@ class AudienceTypeManager{
 			if($match){
 				array_push($results, $audienceTypeName);
 				if($matchingRule == 'ExclusiveOR'){
+					$env->commit();
 					return $results;
 				}
 			}
 		}
 		
+		$env->commit();
 		return $results;
 	}
 	
