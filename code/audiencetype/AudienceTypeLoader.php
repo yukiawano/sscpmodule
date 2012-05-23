@@ -1,8 +1,7 @@
 <?php
 /**
  * Audience Type Loader
- * @author yuki
- *
+ * @package sscp
  */
 class AudienceTypeLoader{
 	public function load(){

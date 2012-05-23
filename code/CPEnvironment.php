@@ -6,6 +6,8 @@
  * Condition rules only talks to CPEnvironment.
  * This can make condition rules stateless.
  * And it make condition rules more testable and debugable.
+ * 
+ * @package sscp
  */
 class CPEnvironment {
 	private $values = array();

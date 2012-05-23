@@ -1,6 +1,8 @@
 <?php
-require_once 'ConditionBase.php';
-
+/**
+ * OS
+ * @package sscp
+ */
 class OS extends ConditionBase{
 	public function doesSatisfy(CPEnvironment $env, $args){
 		$agent = $env->getAgent();

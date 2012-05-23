@@ -1,5 +1,9 @@
 <?php
-class AudienceTypeManager{
+/**
+ * AudienceTypeManager
+ * @package sscp
+ */
+class AudienceTypeManager extends Object{
 	public function getAudienceTypes($audienceTypes){
 		$matchingRule = key($audienceTypes);
 		$rules = $audienceTypes[$matchingRule];
@@ -28,16 +32,13 @@ class AudienceTypeManager{
 	}
 	
 	private function getConditionClass($conditionClass){
-		// TODO Change to class loader.
+		// TODO Change to load classes automatically from the conditions directory.
 		switch($conditionClass){
 			case 'Location':
-				require_once SSCP_PATH.'/code/condition/Location.php';
 				return new Location();
 			case 'NewComer':
-				require_once SSCP_PATH.'/code/condition/NewComer.php';
 				return new NewComer();
 			case 'OS':
-				require_once SSCP_PATH.'/code/condition/OS.php';
 				return new OS();
 		}
 	}

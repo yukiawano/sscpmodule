@@ -1,6 +1,8 @@
 <?php
-require_once 'ConditionBase.php';
-
+/**
+ * NewComer
+ * @package sscp
+ */
 class NewComer extends ConditionBase {
 	public function doesSatisfy(CPEnvironment $env, $args){
 		$hasVisited = $env->get("HasVisited", false);

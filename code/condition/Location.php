@@ -1,6 +1,8 @@
 <?php
-require_once 'ConditionBase.php';
-
+/**
+ * Location
+ * @package sscp
+ */
 class Location extends ConditionBase{
 	function doesSatisfy(CPEnvironment $env, $args){
 		$locations = $env->getLocation();
