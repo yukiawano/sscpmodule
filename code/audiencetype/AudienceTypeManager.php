@@ -4,10 +4,9 @@
  * @package sscp
  */
 class AudienceTypeManager extends Object{
-	public function getAudienceTypes($audienceTypes){
+	public function getAudienceTypes($audienceTypes, CPEnvironment $env){
 		$matchingRule = key($audienceTypes);
 		$rules = $audienceTypes[$matchingRule];
-		$env = CPEnvironment::getCPEnvironment();
 		$results = array();
 		foreach($rules as $audienceTypeName => $conditions){
 			$match = true;
