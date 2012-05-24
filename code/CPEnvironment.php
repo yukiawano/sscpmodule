@@ -13,17 +13,22 @@ class CPEnvironment {
 	private $values = array();
 	private $valuesForRead = array();
 	
+	/**
+	 * Get CPEnvironment for current session
+	 * @return CPEnvironment
+	 */
 	public static function getCPEnvironment(){
 		$env = new CPEnvironment();
-		if(isset($_COOKIE["CPEnvironment"])){
-			$env->values = unserialize($_COOKIE["CPEnvironment"]);
+		if(Cookie::get("CPEnvironment") != null){
+			$env->values = unserialize(Cookie::get("CPEnvironment"));
 			$env->valuesForRead = $env->values;
 		}
 		return $env;
 	}
 	
 	/**
-	 * Return agent of current session
+	 * Return agent of current session.
+	 * @return string e.g. Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0
 	 */
 	public function getAgent(){
 		return "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0";
@@ -36,11 +41,11 @@ class CPEnvironment {
 	 * This method would cost.
 	 */
 	public function getLocation(){
-		if(isset($_COOKIE['CPEnvLocation'])){
-			return unserialize($_COOKIE['CPEnvLocation']);
+		if(Cookie::get("CPEnvLocation") != null){
+			return unserialize(Cookie::get("CPEnvLocation"));
 		}else{
 			$value = array('Country' => 'JAPAN', 'Region' => 'SHIGA', 'City' => 'OTSU');
-			setcookie('CPEnvLocation', serialize($value));
+			Cookie::set("CPEnvLocation", serialize($value));
 			return $value;
 		}
 		
@@ -92,6 +97,6 @@ class CPEnvironment {
 	 */
 	public function commit(){
 		$this->valuesForRead = $this->values;
-		setcookie("CPEnvironment", serialize($this->valuesForRead));
+		Cookie::set("CPEnvironment", serialize($this->valuesForRead));
 	}
 }
