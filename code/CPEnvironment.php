@@ -31,7 +31,7 @@ class CPEnvironment {
 	 * @return string e.g. Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0
 	 */
 	public function getAgent(){
-		return "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0";
+		return $_SERVER['HTTP_USER_AGENT'];
 	}
 	
 	/**
