@@ -44,23 +44,20 @@ class CPEnvironment {
 		if(Cookie::get("CPEnvLocation") != null){
 			return unserialize(Cookie::get("CPEnvLocation"));
 		}else{
-			$value = array('Country' => 'JAPAN', 'Region' => 'SHIGA', 'City' => 'OTSU');
+			$result = Config::inst()->get("APIKey", "IPInfoDB");
+			
+			//Load the class
+			$ipLite = new ip2location_lite;
+			$ipLite->setKey($result);
+			
+			//Get errors and locations
+			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
+			$errors = $ipLite->getError();
+			
+			$value = array('Country' => $locations['countryName'], 'Region' => $locations['regionName'], 'City' => $locations['cityName']);
 			Cookie::set("CPEnvLocation", serialize($value));
 			return $value;
 		}
-		
-		// Change to use actual location data
-		/*
-		 require_once SSCP_PATH.'/thirdparty/ip2locationlite.class.php';
-		
-		//Load the class
-		$ipLite = new ip2location_lite;
-		$ipLite->setKey('APIKEY');
-		
-		//Get errors and locations
-		$locations = $ipLite->getCity("182.166.41.166");
-		$errors = $ipLite->getError();
-		*/
 	}
 	
 	/**
