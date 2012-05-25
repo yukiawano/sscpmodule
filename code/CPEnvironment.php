@@ -47,7 +47,7 @@ class CPEnvironment {
 			$result = Config::inst()->get("APIKey", "IPInfoDB");
 			
 			//Load the class
-			$ipLite = new ip2location_lite;
+			$ipLite = new ip2location_lite();
 			$ipLite->setKey($result);
 			
 			//Get errors and locations
