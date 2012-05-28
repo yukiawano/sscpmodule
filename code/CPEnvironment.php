@@ -7,6 +7,7 @@
  * This can make condition rules stateless.
  * And it make condition rules more testable and debugable.
  * 
+ * @link /docs/en/topics/what-is-cpenvironment
  * @package sscp
  */
 class CPEnvironment {
