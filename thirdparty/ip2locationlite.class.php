@@ -1,4 +1,12 @@
 <?php
+/**
+ * IP2Location Lite
+ * This class is downloaded from the url in the copyright.
+ * In the website of api provider, they just say "We offer a wide range of free services based on our IP address geolocation database".
+ * And we couldn't find detailed license of use of this api.
+ * 
+ * @copyright http://ipinfodb.com/ip_location_api.php
+ */
 final class ip2location_lite{
 	protected $errors = array();
 	protected $service = 'api.ipinfodb.com';
