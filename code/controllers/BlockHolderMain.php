@@ -23,6 +23,12 @@ class BlockHolderMain extends LeftAndMain {
     }
     
     public function createholder(){
-    	echo "statusMessage('test');";
+    	$blockHolder = new BlockHolder();
+    	$blockHolder->Name = "Sample".time();
+    	$blockHolder->TemplateKey = "Key".time();
+    	$blockHolder->Description = "Type description here.";
+    	$blockHolder->write();
+    	echo '<script type="text/javascript">statusMessage("'.$blockHolder->Name.' is created.");</script>';
+		return $this->getResponseNegotiator()->respond($this->request);
     }
 }
