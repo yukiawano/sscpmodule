@@ -9,7 +9,15 @@ class BlockHolderMain extends LeftAndMain {
 	
     public function getEditForm($id = null, $fields = null){
     	$fields = new FieldList();
-    	$gridField = new GridField('BlockHolders', null, BlockHolder::get());
+    	$config = GridFieldConfig::create();
+    	$config->addComponent(new GridFieldDeleteAction());
+    	$config->addComponent(new GridFieldDataColumns());
+    	$config->addComponent(new GridFieldSortableHeader());
+    	$config->addComponent(new GridFieldEditButton());
+    	// $config->addComponent($gridFieldDetail = new GridFieldDetailForm());
+    	// $gridFieldDetail->setTemplate("BHGridFieldEditForms");
+    	$config->addComponent(new BHGridFieldDetailForm());
+    	$gridField = new GridField('BlockHolders', null, BlockHolder::get(), $config);
     	$fields->push($gridField);
     	
     	$actions = new FieldList();
