@@ -15,6 +15,7 @@ class BHGridFieldDetailForm extends RequestHandler implements GridField_URLHandl
 	public function getURLHandlers($gridField) {
 		return array(
 				'item/$ID/edit' => 'edit',
+				'item/$ID/ItemEditForm' => "ItemEditForm",
 		);
 	}
 	
@@ -22,23 +23,27 @@ class BHGridFieldDetailForm extends RequestHandler implements GridField_URLHandl
 		$controller = $gridField->getForm()->Controller();
 		$this->gridField = $gridField;
 		
-		$return = $this->customise(array('ItemEditForm' => $this->ItemEditForm($gridField, $request, $controller)))->renderWith($this->template);
-		return $return;
+		$return = $this->customise(array('ItemEditForm' => $this->ItemEditForm($gridField, $request)))->renderWith($this->template);
+		return '<div class="cms-content center BlockHolderMain LeftAndMain">'.$return.'</div>';
 	}
 	
-	public function ItemEditForm($gridField, $request, $controller) {
-		$fields = new FieldList();
-		$fields->push(new TextField("Test"));
+	public function ItemEditForm($gridField, $request) {
+		$obj = $gridField->getList()->byID($request->param('ID'));
 		$form = new Form(
-				$controller,
+				$this,
 				'ItemEditForm',
-				$fields,
-				new FieldList()
+				$obj->getCMSFields(),
+				new FieldList($saveAction = new FormAction('doSave', _t('GridFieldDetailsForm.Save', 'Save')))
 		);
-		
-		$form->addExtraClass('cms-edit-form cms-panel-padded center ' . $controller->BaseCSSClasses());
-		$controller->extend('updateEditForm', $form);
+		$form->loadDataFrom($obj);
+		$form->setFormAction(Controller::join_links($gridField->Link('item'), $obj->ID, 'ItemEditForm'));
+		// $form->addExtraClass('cms-edit-form cms-panel-padded center ' . $controller->BaseCSSClasses());
+		// $controller->extend('updateEditForm', $form);
 		return $form;
 	}
 	
+	public function doSave($data, Form $form) {
+		// var_dump($form);
+		$form->Controller()->redirectBack();
+	}
 }

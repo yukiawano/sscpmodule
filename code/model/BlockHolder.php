@@ -10,4 +10,10 @@ class BlockHolder extends DataObject {
 			'TemplateKey',
 			'Description'
 			);
+	
+	public function getCMSFields(){
+		$fields = parent::getCMSFields();
+		// $fields->push(new TextField("Name", "Name"));
+		return $fields;
+	}
 }
