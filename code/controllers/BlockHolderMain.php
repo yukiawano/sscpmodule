@@ -2,41 +2,47 @@
 /**
  * @package sscp
  */
-class BlockHolderMain extends CMSSettingsController {
-// class BlockHolderMain extends LeftAndMain {
+// class BlockHolderMain extends CMSSettingsController {
+class BlockHolderMain extends LeftAndMain {
 	
 	static $url_segment = 'personalization';
 	static $url_rule = '/$Action/$ID';
 	static $menu_title = 'Personalization';
 	static $menu_priority = -1;
-	
 	/**
 	 * @return Form
 	 */
 	function getEditForm($id = null, $fields = null) {
-		var_dump($this->getTemplatesWithSuffix('_EditForm'));
-		return new Form($this, "EditForm", new FieldList(new LabelField("Foo", "Bar")), new FieldList());
-		$siteConfig = SiteConfig::current_site_config();
-		$fields = $siteConfig->getCMSFields();
-	
-		$actions = $siteConfig->getCMSActions();
-		$form = new Form($this, 'EditForm', $fields, $actions);
+    	$fields = new FieldList();
+    	$config = GridFieldConfig::create()->addComponents(
+				new GridFieldToolbarHeader(),
+				new GridFieldSortableHeader(),
+				new GridFieldDataColumns(),
+				new GridFieldPaginator(),
+    			new GridFieldDeleteAction(),
+    			new GridFieldEditButton(),
+    			new GridFieldDetailForm(),
+    			new GridFieldAddNewButton());
+    	$gridField = new GridField('BlockHolders', null, BlockHolder::get(), $config);
+    	
+    	$fields = new FieldList(
+    			new TabSet('Root',
+    				$blockHolderTab = new Tab('BlockHolder',$gridField),
+    				$snippetTab = new Tab('Snippet'),
+    				$audienceTypeTab = new Tab('AudienceType')));
+    	$form = new Form($this, "EditForm", $fields, new FieldList());
+    	
 		$form->addExtraClass('root-form');
-	
-		$form->addExtraClass('cms-edit-form cms-panel-padded center');
-	
+		$form->addExtraClass('cms-edit-form center'); // cms-panel-padded 
 		if($form->Fields()->hasTabset()) $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
 		$form->setHTMLID('Form_EditForm');
-		$form->loadDataFrom($siteConfig);
 		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-	
-		// Use <button> to allow full jQuery UI styling
-		$actions = $actions->dataFields();
-		if($actions) foreach($actions as $action) $action->setUseButtonTag(true);
-	
-		$this->extend('updateEditForm', $form);
-	
-		return $form;
+		
+    	// $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+		// $form->addExtraClass('cms-edit-form center ' . $this->BaseCSSClasses());
+		
+		 $this->extend('updateEditForm', $fields);
+    	return $form;
 	}
 	
 	/*

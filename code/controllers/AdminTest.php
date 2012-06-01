@@ -1,5 +1,5 @@
 <?php
-class AdminHolderTest extends LeftAndMain {
+class AdminTest extends LeftAndMain {
 
 	static $url_segment = 'admintest';
 	static $url_rule = '/$Action/$ID/$OtherID';
@@ -10,6 +10,7 @@ class AdminHolderTest extends LeftAndMain {
 	 * @return Form
 	 */
 	function getEditForm($id = null, $fields = null) {
+		var_dump($this->getTemplatesWithSuffix('_EditForm'));
     	return new Form($this, "EditForm", new FieldList(new LabelField("Foo", "Bar")), new FieldList());
 		$siteConfig = SiteConfig::current_site_config();
 		$fields = $siteConfig->getCMSFields();
