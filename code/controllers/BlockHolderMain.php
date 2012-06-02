@@ -17,16 +17,9 @@ class BlockHolderMain extends LeftAndMain {
 	}
 	
 	function getEditForm($id = null, $fields = null) {
-    	$fields = new FieldList();
-    	$config = GridFieldConfig::create()->addComponents(
-				new GridFieldToolbarHeader(),
-				new GridFieldSortableHeader(),
-				new GridFieldDataColumns(),
-				new GridFieldPaginator(),
-    			new GridFieldDeleteAction(),
-    			new GridFieldEditButton(),
-    			new GridFieldDetailForm(),
-    			new GridFieldAddNewButton());
+    	if($fields == null) $fields = new FieldList();
+    	
+    	$config = GridFieldConfig_RelationEditor::create();
     	$gridField = new GridField('BlockHolders', null, BlockHolder::get(), $config);
     	
     	$fields = new FieldList(

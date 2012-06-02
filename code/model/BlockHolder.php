@@ -5,15 +5,24 @@ class BlockHolder extends DataObject {
 			'TemplateKey' => 'Varchar',
 			'Description' => 'Text'
 			);
+	
 	static $summary_fields = array(
 			'Name',
 			'TemplateKey',
 			'Description'
 			);
 	
+	
+	static $has_many = array(
+			'Blocks'=>'Block'
+	);
+	
 	public function getCMSFields(){
 		$fields = parent::getCMSFields();
-		// $fields->push(new TextField("Name", "Name"));
+		
+		$config = GridFieldConfig_RelationEditor::create();
+		$gridFields = new GridField('Blocks', 'Blocks that is shown in this BlockHolder.', $this->Blocks(), $config);
+		$fields->push($gridFields);
 		return $fields;
 	}
 }
