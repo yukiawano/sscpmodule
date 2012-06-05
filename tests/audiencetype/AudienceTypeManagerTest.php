@@ -29,4 +29,25 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$this->assertEquals(array('NewComer'), $result);
 	}
 	
+	function testPrettyPrint(){
+		$audienceTypes = array('InclusiveOR' => array(
+				'NewComer' => array('NewComer' => 'true'),
+				'ShigaResidents' => array('Location' => 'SHIGA', 'OS' => 'Ubuntu')
+				));
+		$expected = <<<EOT
+MatchingRule: InclusiveOR<br />
+---<br />
+NewComer:<br />
+&nbsp;&nbsp;NewComer: true<br />
+ShigaResidents:<br />
+&nbsp;&nbsp;Location: SHIGA<br />
+&nbsp;&nbsp;OS: Ubuntu<br />
+
+EOT;
+		
+		$audienceTypeManager = new AudienceTypeManager();
+		$result = $audienceTypeManager->prettyPrint($audienceTypes);
+		$this->assertEquals($expected, $result);
+	}
+	
 }

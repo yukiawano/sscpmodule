@@ -19,6 +19,6 @@ class CPEnvironmentStub extends CPEnvironment{
 	}
 	
 	public function getLocation(){
-		return array('Country' => 'JAPAN', 'Region' => 'SHIGA', 'CITY' => 'Otsu');
+		return array('Country' => 'JAPAN', 'Region' => 'SHIGA', 'City' => 'Otsu');
 	}
 }

@@ -30,6 +30,25 @@ class AudienceTypeManager extends Object{
 		return $results;
 	}
 	
+	/**
+	 * Return pretty print of AudienceTypes
+	 * @param array $audienceTypes
+	 */
+	public function prettyPrint($audienceTypeArray) {
+		$matchingRule = key($audienceTypeArray);
+		$result = "MatchingRule: " . $matchingRule . "\n---\n";
+		
+		$audienceTypes = $audienceTypeArray[$matchingRule];
+		foreach($audienceTypes as $audienceTypeName => $conditions) {
+			$result .= $audienceTypeName . ":\n";
+			foreach($conditions as $condition => $args) {
+				$result .= "&nbsp;&nbsp;" . $condition . ": " . $args . "\n";
+			}
+		}
+		
+		return nl2br($result);
+	}
+	
 	private function getConditionClass($conditionClass){
 		// TODO Change to load classes automatically from the conditions directory.
 		switch($conditionClass){
