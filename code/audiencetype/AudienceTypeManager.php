@@ -34,7 +34,9 @@ class AudienceTypeManager extends Object{
 	 * Return pretty print of AudienceTypes
 	 * @param array $audienceTypes
 	 */
-	public function prettyPrint($audienceTypeArray) {
+	public function prettyPrint($audienceTypeArray) {	
+		// TODO This should be handled by template.
+		
 		$matchingRule = key($audienceTypeArray);
 		$result = "MatchingRule: " . $matchingRule . "\n---\n";
 		
