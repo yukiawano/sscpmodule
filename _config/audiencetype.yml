@@ -6,3 +6,7 @@ AudienceType:
       NewYoker:
         Location: NewYork
         OS: iOS
+      Japanese:
+        Location: Japan
+      ReturnUser:
+        NewComer: false
