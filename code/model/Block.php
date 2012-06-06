@@ -1,11 +1,12 @@
 <?php
 class Block extends DataObject {
 	static $db = array(
-			'Title' => 'Varchar'
+			'Title' => 'Varchar',
+			'AudienceType' => 'Varchar'
 		);
 	
 	static $has_one = array(
-			"BlockHolder" => "BlockHolder",
-			"Snippet" => "Snippet"
+			'BlockHolder' => 'BlockHolder',
+			'Snippet' => 'Snippet'
 	);
 }
