@@ -5,6 +5,7 @@ class Block extends DataObject {
 		);
 	
 	static $has_one = array(
-			"BlockHolder" => "BlockHolder"
+			"BlockHolder" => "BlockHolder",
+			"Snippet" => "Snippet"
 	);
 }
