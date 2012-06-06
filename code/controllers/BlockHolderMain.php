@@ -30,6 +30,11 @@ class BlockHolderMain extends LeftAndMain {
     	$gridField = new GridField('BlockHolders', null, BlockHolder::get(), $config);
     	$blockHolderTab->push($gridField);
     	
+    	// Snippet Tab
+    	$sConfig = GridFieldConfig_RecordEditor::create();
+    	$sGridField = new GridField('Snippets', null, Snippet::get(), $sConfig);
+    	$snippetTab->push($sGridField);
+    	
     	// AudienceType Tab
     	$audienceTypeLoader = new AudienceTypeLoader();
     	$audienceTypeManager = new AudienceTypeManager();
