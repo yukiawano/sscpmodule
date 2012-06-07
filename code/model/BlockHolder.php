@@ -1,7 +1,7 @@
 <?php
 class BlockHolder extends DataObject {
 	static $db = array(
-			'Name' => 'Varchar',
+			'Title' => 'Varchar',
 			'TemplateKey' => 'Varchar',
 			'Description' => 'Text',
 			'ShowDefaultSnippet' => 'Boolean'
@@ -12,7 +12,7 @@ class BlockHolder extends DataObject {
 	);
 	
 	static $summary_fields = array(
-			'Name',
+			'Title',
 			'TemplateKey',
 			'Description'
 			);
