@@ -24,11 +24,4 @@ class BlockHolder extends DataObject {
 	static $has_one = array(
 			'DefaultSnippet' => 'Snippet'
 	);
-	
-	public function getCMSFields(){
-		$fields = parent::getCMSFields();
-		$descriptionField = new LabelField('AddBlocks', 'You can add blocks by clicking the Blocks tab at the right above.<br />');
-		$fields->insertBefore($descriptionField, "Name");
-		return $fields;
-	}
 }
