@@ -5,6 +5,6 @@ AudienceType:
     InclusiveOR:
       NewComer:
         NewComer: true
-      NewYoker:
+      NewYorker:
         Location: NewYork
         Device: Linux
