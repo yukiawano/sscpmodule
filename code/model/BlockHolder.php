@@ -8,7 +8,7 @@ class BlockHolder extends DataObject {
 			);
 	
 	static $defaults = array(
-			'ShowDefaultSnippet' => true
+			'ShowDefaultSnippet' => false
 	);
 	
 	static $summary_fields = array(
