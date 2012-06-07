@@ -1,2 +1,11 @@
+# Copy this yaml file to mysite/_config/apikey.yml.
+# You need to set APIKey for using third party APIs, such as IP-Location API.
+# 
+# Details of APIKeys
+# 
+# IPInfoDB:
+#   This is used for getting location of a user by using IP Address.
+#   You can get the APIKey of this service from the url below for free.
+#   http://ipinfodb.com/register.php
 APIKey:
-  IPInfoDB: 5fdadb1d76190886b1f2c7a5084b038ed8bee504cb502349fe0bb85a52a6ab9f
+  IPInfoDB: foobarhogehoge
