@@ -3,8 +3,13 @@ class BlockHolder extends DataObject {
 	static $db = array(
 			'Name' => 'Varchar',
 			'TemplateKey' => 'Varchar',
-			'Description' => 'Text'
+			'Description' => 'Text',
+			'ShowDefaultSnippet' => 'Boolean'
 			);
+	
+	static $defaults = array(
+			'ShowDefaultSnippet' => true
+	);
 	
 	static $summary_fields = array(
 			'Name',
@@ -12,17 +17,18 @@ class BlockHolder extends DataObject {
 			'Description'
 			);
 	
-	
 	static $has_many = array(
 			'Blocks'=>'Block'
 	);
 	
+	static $has_one = array(
+			'DefaultSnippet' => 'Snippet'
+	);
+	
 	public function getCMSFields(){
 		$fields = parent::getCMSFields();
-		
-		$config = GridFieldConfig_RelationEditor::create();
-		$gridFields = new GridField('Blocks', 'Blocks that is shown in this BlockHolder.', $this->Blocks(), $config);
-		$fields->push($gridFields);
+		$descriptionField = new LabelField('AddBlocks', 'You can add blocks by clicking the Blocks tab at the right above.<br />');
+		$fields->insertBefore($descriptionField, "Name");
 		return $fields;
 	}
 }
