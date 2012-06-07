@@ -58,8 +58,8 @@ class AudienceTypeManager extends Object{
 				return new Location();
 			case 'NewComer':
 				return new NewComer();
-			case 'OS':
-				return new OS();
+			case 'Device':
+				return new Device();
 		}
 	}
 }

@@ -18,7 +18,15 @@ class CPEnvironmentStub extends CPEnvironment{
 		return "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0";
 	}
 	
+	public function getPlatform() {
+		return 'Linux';
+	}
+	
+	public function getBrowser() {
+		return 'Firefox';
+	}
+	
 	public function getLocation(){
-		return array('Country' => 'JAPAN', 'Region' => 'SHIGA', 'City' => 'Otsu');
+		return array('Country' => 'Japan', 'Region' => 'Shiga', 'City' => 'Otsu');
 	}
 }

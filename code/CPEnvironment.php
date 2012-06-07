@@ -28,11 +28,19 @@ class CPEnvironment {
 	}
 	
 	/**
-	 * Return agent of current session.
-	 * @return string e.g. Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0
+	 * Return platform of current session
 	 */
-	public function getAgent(){
-		return $_SERVER['HTTP_USER_AGENT'];
+	public function getPlatform() {
+		$userAgent = new CI_User_agent();
+		return $userAgent->platform();
+	}
+	
+	/**
+	 * Return browser of current session
+	 */
+	public function getBrowser() {
+		$userAgent = new CI_User_agent();
+		return $userAgent->browser();
 	}
 	
 	/**

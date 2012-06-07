@@ -7,4 +7,4 @@ AudienceType:
         NewComer: true
       NewYoker:
         Location: NewYork
-        OS: iOS
+        Device: Linux
