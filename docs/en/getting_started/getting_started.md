@@ -93,7 +93,7 @@ We introduced snippet for reusing html snippet.
 In this tutorial we create two snippet, WelcomeSnippet and WelcomeBackSnippet.
 
 ![Welcome Snippet](/docs/img/WelcomeSnippet.png)
-![Welcome Back Snippet](/docs/img/WelcomeBackSnippet.png)
+![Welcome Back Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBack.png)
 
 ### 3. Create Blocks
 
