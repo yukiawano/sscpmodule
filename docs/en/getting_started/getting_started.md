@@ -81,7 +81,7 @@ $PersonalizedContent('WelcomeBlock')
 
 Now create a block holder with template name "WelcomeBlock", and input favorite title and description.
 
-![Welcome BlockHolder](/yukiawano/sscpmodule/docs/img/WelcomeBlockHolder.png)
+![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlockHolder.png)
 
 ### 2. Create Snippet
 
@@ -92,15 +92,15 @@ We introduced snippet for reusing html snippet.
 
 In this tutorial we create two snippet, WelcomeSnippet and WelcomeBackSnippet.
 
-![Welcome Snippet](/docs/img/WelcomeSnippet.png)
-![Welcome Back Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBack.png)
+![Welcome Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeSnippet.png)  
+![Welcome Back Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBackSnippet.png)
 
 ### 3. Create Blocks
 
 Now we create a block for showing a welcome message for new comers.
 Move to the block holder that we created before, click the right-top tab 'Blocks', and hit 'Add Block'.
 
-![Welcome Block](/docs/img/WelcomeBlock.png)
+![Welcome Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlock.png)
 
 ### 4. Define default snippet
 
@@ -112,7 +112,7 @@ Default snippet is shown when there is no block that corresponds to the current 
 
 In editor of a block holder, check "Show default snippet" and set "WelcomeBackSnippet" as a default snippet.
 
-![Default Snippet](/docs/img/DefaultSnippet.png)
+![Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/DefaultSnippet.png)
 
 ### 5. Add Function in Template
 
@@ -150,4 +150,4 @@ And when you access the site again, you will get welcome-back message.
 
 If you want to see welcome message again, delete cookie of this site or use private browsing mode.
 
-![Welcome Message Is Shown](/docs/img/WelcomeMessageIsShown.png)
+![Welcome Message Is Shown](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeMessageIsShown.png)
