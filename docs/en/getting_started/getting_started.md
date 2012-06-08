@@ -47,7 +47,7 @@ AudienceType is a collection of conditions.
 
 You can define AudienceTypes with yaml as the example.
 
-'''yaml
+```yaml
 AudienceType:
   AudienceTypes:
     InclusiveOR:
@@ -58,7 +58,7 @@ AudienceType:
         Device: Linux
       Japanese:
         Location: Japan
-'''
+```
 
 After you changed audience types you must access to /dev/build/?flush=all to reload configuration.
 
@@ -75,9 +75,9 @@ We can call block holder by using template key from template.
 When we defined a block holder with template key "WelcomeBlock",
 you can access to the block holder from template file as the below.
 
-'''
+```
 $PersonalizedContent('WelcomeBlock')
-'''
+```
 
 Now create a block holder with template name "WelcomeBlock", and input favorite title and description.
 
@@ -121,7 +121,7 @@ This is a final step.
 Add a function for showing the block holder in your template.
 If you are using "simple" template that is bundled with SS3, includes/SideBar.ss may be a good place.
 
-'''
+```html
 <aside>
 	<div>$PersonalizedContent('WelcomeBlock')</div>
 	<% if Menu(2) %>
@@ -139,7 +139,7 @@ If you are using "simple" template that is bundled with SS3, includes/SideBar.ss
 		</nav>
 	<% end_if %>  	
 </aside>
-'''
+```
 
 ### 6. Congratulations
 
