@@ -1,6 +1,6 @@
 ### Instruction
 
-[Getting Started](getting_started/getting_started)
+[Getting Started](getting-started/getting-started)
 
 ### Developers
 
