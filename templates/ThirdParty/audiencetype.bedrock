@@ -1,0 +1,16 @@
+<# with AudienceType #>
+<p>Matching Rule: <#= MatchingRule #></p>
+<p>Audience Types:</p>
+<ul>
+  <# each AudienceTypes #>
+    <li>
+      <strong><#= :Name #></strong>
+      <ul>
+        <# each :Children #>
+        <li><#= :Name #> <#= :Val #></li>
+        <# /each #>
+      </ul>
+    </li>
+  <# /each #>
+</ul>
+<# /with #>

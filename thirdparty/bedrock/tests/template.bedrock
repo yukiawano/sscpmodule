@@ -1,0 +1,52 @@
+<p>Living things are everywhere on Earth. They are divided into two main categories: 
+<# each LivingThings #><# if :First #><# else #>, <# /if #><# if :Last #>and <# /if #><#= :Name #><# /each #>. Each group has its own subcategories, as well:
+
+<ul>
+<# each LivingThings #>
+	<li><#= :Name #>
+		<ul>
+			<# each :Children #>
+			<li><#= :Name #></li>
+			<# /each #>
+		</ul>
+	</li>
+<# /each #>
+</ul>
+</p>
+
+<# with LivingThings #>
+<p>Aquatic mammals are very interesting.
+	<# with Animals.Mammals #>
+		<# each Aquatic #>
+			<#= :Name #> are 
+				<# if Endangered #>
+					rare because they are endangered
+				<# else #>
+					all over the ocean
+				<# /if #>
+			and can reach a top speed of <#= TopSpeed #>.
+		<# /each #>
+	<# /with #>
+</p>
+<p>Some animals are friendly with humans. They include:
+	<ul>
+		<# with Animals.Mammals #>
+			<# each Land #>
+				<# if Domesticated #>
+					<li><#= :Name #></li>
+				<# /if #>
+			<# /each #>
+		<# /with #>
+	</ul>
+</p>
+<p>Other animals deserve to die because they're annoying. If you see these, squash 'em.</p>
+	<ul>
+		<# each Animals.Insects #>		
+			<# if ShouldIKillIt == "yes" #>
+			<#= :Pos #>. <#= :Name #><br />
+			<# /if #>
+		<# /each #>
+	</ul>
+</p>
+<# /with #>
+
