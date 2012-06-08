@@ -5,7 +5,9 @@
  */
 class AudienceTypeLoader{
 	public function load(){
-		$result = Config::inst()->get("AudienceType", "AudienceTypes");
-		return $result;
+		$audienceTypes = Config::inst()->get("AudienceType", "AudienceTypes");
+		$matchingRule = Config::inst()->get("AudienceType", "MatchingRule");
+		
+		return array($matchingRule => $audienceTypes);
 	}
 }

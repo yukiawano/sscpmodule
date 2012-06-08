@@ -1,10 +1,10 @@
 # Copy this yaml file to mysite/_config/audiencetype.yml and define your setting of AudienceType
 # This file is a sample of defining audience type and if you don't need this, you can delete this file.
 AudienceType:
+  MatchingRule: InclusiveOR
   AudienceTypes:
-    InclusiveOR:
-      NewComer:
-        NewComer: true
-      NewYorker:
-        Location: NewYork
-        Device: Linux
+    NewComer:
+      NewComer: true
+    NewYorker:
+      Location: NewYork
+      Device: Linux
