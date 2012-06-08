@@ -1,7 +1,7 @@
 ### Instruction
 
-[Getting Started](getting-started/getting-started)
+[Getting Started](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/getting-started/getting-started.md)
 
 ### Developers
 
-[What is CPEnvironment](topics/what-is-cpenvironment)
+[What is CPEnvironment](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/what-is-cpenvironment.md)
