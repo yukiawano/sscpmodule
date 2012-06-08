@@ -81,7 +81,7 @@ $PersonalizedContent('WelcomeBlock')
 
 Now create a block holder with template name "WelcomeBlock", and input favorite title and description.
 
-![Welcome BlockHolder](/docs/img/WelcomeBlockHolder.png)
+![Welcome BlockHolder](/yukiawano/sscpmodule/docs/img/WelcomeBlockHolder.png)
 
 ### 2. Create Snippet
 
