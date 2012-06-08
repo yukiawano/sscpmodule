@@ -49,15 +49,15 @@ You can define AudienceTypes with yaml as the example.
 
 ```yaml
 AudienceType:
+  MatchingRule: InclusiveOR
   AudienceTypes:
-    InclusiveOR:
-      NewComer:
-        NewComer: true
-      JapanLinuxUser:
-        Location: Japan
-        Device: Linux
-      Japanese:
-        Location: Japan
+    NewComer:
+      NewComer: true
+    JapanLinuxUser:
+      Location: Japan
+      Device: Linux
+    Japanese:
+      Location: Japan
 ```
 
 After you changed audience types you must access to /dev/build/?flush=all to reload configuration.
