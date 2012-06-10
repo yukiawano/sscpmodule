@@ -1,25 +1,28 @@
+# Getting started with SilverStripe's Content Personalization Module (SSCP)
+
+
 ## Notice
 
-This module is under development.
-It means that there would be a lot of large changes and this module is not reliable.
-For example, we may change the database structure largely.
-We strongly recomment not use this module on production environment.
-Please know this before you begin to use this module.
+Please note that this module is **under development** and **not suitable for use in production**!
 
-## Install
+* There will be a lot of changes.
+* We may change the database structure.
+* It is not feature complete.
 
-For installing this module, you just need to
 
-    git clone https://github.com/yukiawano/sscpmodule.git
+## Installation
 
-After you cloned this module, you need to rename the folder of this module to sscp.
+To install this module:
 
-Finally, access to /dev/build/?flush=all
+1. Either clone the code from the GitHub repository with ``git clone https://github.com/yukiawano/sscpmodule.git`` or download it at [https://github.com/yukiawano/sscpmodule/downloads](https://github.com/yukiawano/sscpmodule/downloads).
+2. Add the folder to your SilverStripe installation and rename it to ``sscp``.
+3. Access ``/dev/build/?flush=all`` to install the module.
+
 
 ## Configuration
 
-You must make configuration before you start to use this module.
-Copy two configuration files
+You must configure the module before you can start using it.
+Copy the two configuration files
 
     sscp/_config/audiencetype.yml.sample
     sscp/_config/apikey.yml.sample
@@ -29,25 +32,23 @@ to
     mysite/_config/audiencetype.yml
     mysite/_config/apikey.yml
 
-### APIKeys
 
-You need to set some api keys to use our module,
-because our module uses some thirdparty apis(e.g. IP-Based Geo-Location).
+### APIKeys (mysite/_config/apikey.yml)
 
-Currently, you just need to set an apikey of IPInfoDB.
-You can get an api key from the link below for free.
+You need to some set the following API keys to use the respective thirdparty services:
 
-Register
-http://ipinfodb.com/register.php
+* **IP-base geo-location:** We are using IPInfoDB for which you can get a free key at
+[http://ipinfodb.com/register.php](http://ipinfodb.com/register.php).
 
-### AudienceTypes
 
-On our personalization module, we personalize content based on AudienceTypes.
-AudienceType is a collection of conditions.
+### AudienceTypes (mysite/_config/audiencetype.yml)
 
-You can define AudienceTypes with yaml as the example.
+The module personalizes content based on AudienceTypes.
+An AudienceType is a collection of conditions.
 
-```yaml
+You can define AudienceTypes in YAML like this:
+
+```
 AudienceType:
   MatchingRule: InclusiveOR
   AudienceTypes:
@@ -60,68 +61,30 @@ AudienceType:
       Location: Japan
 ```
 
-After you changed audience types you must access to /dev/build/?flush=all to reload configuration.
+After you have changed audience types you must access ``/dev/build/?flush=all`` to reload the configuration.
+
 
 ## Tutorial
 
-In this tutorial we create a example of creating a customized block, which shows welcome message for new comers.
-We use the audience types that is defined before.
+In this tutorial we will create a customized block, which shows a welcome message for first time visitors.
+We will use the audience types from the sample configuration, which already covers this.
 
-### 1. Create BlockHolder
 
-BlockHolder is a place holder for content personalization.
-We can call block holder by using template key from template.
+### 1. Add Personalized Content
 
-When we defined a block holder with template key "WelcomeBlock",
-you can access to the block holder from template file as the below.
+A BlockHolder is a place holder for content personalization and looks like this in the template:
 
 ```
 $PersonalizedContent('WelcomeBlock')
 ```
 
-Now create a block holder with template name "WelcomeBlock", and input favorite title and description.
+* ``$PersonalizedContent()`` is a method provided by the module.
+* ``WelcomeBlock`` is a template key, which we will use to load the desired content. You can select any (unique) name you want.
 
-![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlockHolder.png)
+Now add the BlockHolder to your template.
+If you are using the Simple template that is bundled with SS3, ``includes/SideBar.ss`` may be a good place - the second line is the relevant change:
 
-### 2. Create Snippet
-
-We add blocks to block holder with specifying an audience type.
-However, before we go on to add blocks to a block holder, we must intorduce snippets.
-
-We introduced snippet for reusing html snippet.
-
-In this tutorial we create two snippet, WelcomeSnippet and WelcomeBackSnippet.
-
-![Welcome Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeSnippet.png)  
-![Welcome Back Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBackSnippet.png)
-
-### 3. Create Blocks
-
-Now we create a block for showing a welcome message for new comers.
-Move to the block holder that we created before, click the right-top tab 'Blocks', and hit 'Add Block'.
-
-![Welcome Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlock.png)
-
-### 4. Define default snippet
-
-Now a new comer gets welcome message that we created before,
-but we want to show welcome-back message for return users.
-
-We set welcome-back message snippet as default snippet.
-Default snippet is shown when there is no block that corresponds to the current session.
-
-In editor of a block holder, check "Show default snippet" and set "WelcomeBackSnippet" as a default snippet.
-
-![Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/DefaultSnippet.png)
-
-### 5. Add Function in Template
-
-This is a final step.
-
-Add a function for showing the block holder in your template.
-If you are using "simple" template that is bundled with SS3, includes/SideBar.ss may be a good place.
-
-```html
+```
 <aside>
 	<div>$PersonalizedContent('WelcomeBlock')</div>
 	<% if Menu(2) %>
@@ -141,13 +104,52 @@ If you are using "simple" template that is bundled with SS3, includes/SideBar.ss
 </aside>
 ```
 
+
+### 2. Create a Snippet
+
+Snippets are reusable pieces of HTML, which are the different personalizations your page can display.
+
+For this tutorial we need to create two Snippets, a ``WelcomeSnippet`` and a ``WelcomeBackSnippet``.
+Log into the CMS and go to the *Personalization* page (``/admin/personalization``) and click on the *Snippet* tab where you can *Add Snippet* add the information shown in the following two screenshots:
+
+![Welcome Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeSnippet.png)  
+![Welcome Back Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBackSnippet.png)
+
+
+### 3. Create a BlockHolder
+
+BlockHolders are the containers of personalized content. They provide the mapping to the template key from the first step.
+
+Go to the *Block Holder* tab and click on the *Add Block Holder*. On the following page set the *Template Key* to ``WelcomeBlock`` and add a title and description to give it some context.
+
+![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlockHolder.png)
+
+
+### 4. Create a Block
+
+Once we have defined a BlockHolder, we need to add Blocks to it. These Blocks specify the audience type and map to the correct Snippet.
+
+On the current page, where we have just defined the *Template Key*, go the *Blocks* tab and hit *Add Block*. There, add the information as shown in the following screenshot:
+
+![Welcome Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlock.png)
+
+
+### 5. Define a DefaultSnippet
+
+Now a new comer gets the ``WelcomeSnippet`` that we have created, but we also want to show the ``WelcomeBackSnippet`` to returning users.
+To accomplish that, we set the ``WelcomeBackSnippet`` as the DefaultSnippet, which is shown when there is no block that corresponds to the current session.
+
+Go back to the details page of the current BlockHolder, check *Show default snippet* and set the ``WelcomeBackSnippet`` as the *Default Snippet*.
+
+![Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/DefaultSnippet.png)
+
+
 ### 6. Congratulations
 
-Now when you accessed to the site for the first time,
-you will get welcome message.
+Now when you access the site for the first time, you will get a welcome message.
 
 And when you access the site again, you will get welcome-back message.
 
-If you want to see welcome message again, delete cookie of this site or use private browsing mode.
+If you want to see welcome message again, delete the cookie of this site or use private browsing mode.
 
 ![Welcome Message Is Shown](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeMessageIsShown.png)
