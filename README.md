@@ -22,6 +22,16 @@ We have open problems.
 
 We are really welcome to discussion of topics that is not in the above list.
 
+## Typical Personalization
+
+For developing this module, we have typical image of personalization to share the goal of our module.
+
+[Plunket](https://skitch.com/sigurdmagnusson/8ajep/screen-shot-2012-05-02-at-10.15.07-pm)  
+([Proposed by Sigurd](https://groups.google.com/d/msg/silverstripe-dev/biYXGPO0K8g/_d4UAH3ks2YJ))
+
+If you have other needs for personalization, please let us know.
+We are happy to know what needs there is.
+
 ## License
 
 Content Personalization Module for SilverStripe 3.0 (sscpmodule) is licensed under the open source revised BSD license.
