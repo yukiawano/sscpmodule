@@ -43,7 +43,7 @@ You need to some set the following API keys to use the respective thirdparty ser
 
 ### AudienceTypes (mysite/_config/audiencetype.yml)
 
-The module personalizes content based on AudienceTypes.
+The module personalizes content based on [AudienceTypes](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/audience-type.md).
 An AudienceType is a collection of conditions.
 
 You can define AudienceTypes in YAML like this:
