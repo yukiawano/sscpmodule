@@ -5,12 +5,29 @@ Content Personalization Module for SilverStripe 3.0 (GSoC 2012)
  * [Documents for developers](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/index.md)
  * [Demo](http://gsoc2012ss.yaunix.com/)
 
+
+## Notice
+
+Please note that this module is **under development** and **not suitable for use in production**!
+
+* There will be a lot of changes.
+* We may change the database structure.
+* It is not feature complete.
+
+## Open Problem
+
+We have open problems.
+
+* [Query based personalization](https://github.com/yukiawano/sscpmodule/issues/6)
+
+We are really welcome to discussion of topics that is not in the above list.
+
 ## License
 
 Content Personalization Module for SilverStripe 3.0 (sscpmodule) is licensed under the open source revised BSD license.
 Third-party open source libraries we include in our download are released under their own licenses.
 
-'''
+```
 Copyright (c) 2012, Yuki Awano
 All rights reserved.
 
@@ -35,12 +52,4 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-'''
-
-## Notice
-
-Please note that this module is **under development** and **not suitable for use in production**!
-
-* There will be a lot of changes.
-* We may change the database structure.
-* It is not feature complete.
+```
