@@ -14,23 +14,26 @@ Please note that this module is **under development** and **not suitable for use
 * We may change the database structure.
 * It is not feature complete.
 
-## Open Problem
 
-We have open problems.
+## Open Questions
+
+At the moment there are the following open questions / issues:
 
 * [Query based personalization](https://github.com/yukiawano/sscpmodule/issues/6)
 
-We are really welcome to discussion of topics that is not in the above list.
+Of course we are open for discussion of topics which are not on the above list.
+
 
 ## Typical Personalization
 
-For developing this module, we have typical image of personalization to share the goal of our module.
+For developing this module, here is a typical image of personalization to share the goal of our module.
 
 [Plunket](https://skitch.com/sigurdmagnusson/8ajep/screen-shot-2012-05-02-at-10.15.07-pm)  
 ([Proposed by Sigurd](https://groups.google.com/d/msg/silverstripe-dev/biYXGPO0K8g/_d4UAH3ks2YJ))
 
 If you have other needs for personalization, please let us know.
-We are happy to know what needs there is.
+We are happy to know what your needs are.
+
 
 ## License
 
