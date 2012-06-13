@@ -5,3 +5,4 @@
 ### Developers
 
 [What is CPEnvironment](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/what-is-cpenvironment.md)
+[Available Conditions](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/conditions.md)
