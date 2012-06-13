@@ -25,7 +25,7 @@ Location: Otsu
 By default, we get location of a visitor from IPInfoDB.
 You can specify the location with the name which is used in IPInfoDB, such as Japan, Kyoto.
 I don't know where the list of names which IPInfoDB uses, 
-but I think you can get some about it from [the list in correcting form].
+but I think you can get some about it from [the list in correcting form](http://ipinfodb.com/report.php).
 
 ### Tips : Location is Cached in Cookie
 
