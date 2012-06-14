@@ -50,7 +50,27 @@ class BlockHolderMain extends LeftAndMain {
 		$form->setHTMLID('Form_EditForm');
 		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 		
-		 $this->extend('updateEditForm', $fields);
+		var_dump($this->getSnippetClasses());
+		
+		$this->extend('updateEditForm', $fields);
     	return $form;
+	}
+	
+	
+	/**
+	 * Return a subclasses of SnippetBase
+	 *
+	 * @return array
+	 */
+	private function getSnippetClasses() {
+		$classes = ClassInfo::subclassesFor('SnippetBase');
+		
+		$subClasses = array();
+		foreach($classes as $class){
+			if($class == 'SnippetBase') continue;
+			array_push($subClasses, $class);
+		}
+		
+		return $subClasses;
 	}
 }
