@@ -6,9 +6,10 @@
 class BlockHolderMain extends LeftAndMain {
 	
 	static $url_segment = 'personalization';
-	static $url_rule = '/$Action/$ID';
+	static $url_rule = '/$Action/$ID/$OtherID';
 	static $menu_title = 'Personalization';
 	static $menu_priority = -1;
+	static $url_priority = 39;
 	
 	public function init(){
 		parent::init();
