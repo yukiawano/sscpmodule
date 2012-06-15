@@ -8,6 +8,10 @@ class SnippetBase extends DataObject {
 			'Title' => 'Varchar'
 	);
 	
+	static $summary_fields = array(
+			'Title',
+	);
+	
 	/**
 	 * Snippet name is shown in administration panel
 	 */
