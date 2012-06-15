@@ -6,9 +6,10 @@
 class BlockHolderMain extends LeftAndMain {
 	
 	static $url_segment = 'personalization';
-	static $url_rule = '/$Action/$ID';
+	static $url_rule = '/$Action/$ID/$OtherID';
 	static $menu_title = 'Personalization';
 	static $menu_priority = -1;
+	static $url_priority = 39;
 	
 	public function init(){
 		parent::init();
@@ -32,7 +33,9 @@ class BlockHolderMain extends LeftAndMain {
     	
     	// Snippet Tab
     	$sConfig = GridFieldConfig_RecordEditor::create();
-    	$sGridField = new GridField('Snippets', null, Snippet::get(), $sConfig);
+    	$sConfig->addComponent(new GridFieldAddNewSnippetButton('buttons-before-left'));
+    	$sConfig->removeComponentsByType('GridFieldAddNewButton');
+    	$sGridField = new GridField('Snippets', null, SnippetBase::get(), $sConfig);
     	$snippetTab->push($sGridField);
     	
     	// AudienceType Tab
@@ -50,7 +53,26 @@ class BlockHolderMain extends LeftAndMain {
 		$form->setHTMLID('Form_EditForm');
 		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 		
-		 $this->extend('updateEditForm', $fields);
+		$this->extend('updateEditForm', $fields);
     	return $form;
+	}
+	
+	
+	/**
+	 * Return a subclasses of SnippetBase
+	 *
+	 * @return array
+	 */
+	protected function getSnippetClasses() {
+		$classes = ClassInfo::subclassesFor('SnippetBase');
+		
+		$subClasses = array();
+		foreach($classes as $class){
+			if($class == 'SnippetBase') continue;
+			$snippetName = $class::$snippet_name;
+			$subClasses[$class] = $snippetName;
+		}
+		
+		return $subClasses;
 	}
 }

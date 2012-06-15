@@ -19,13 +19,13 @@ class PersonalizablePage extends DataExtension {
 		$blocks = $blockHolder->Blocks();
 		foreach($blocks as $block) {
 			if(in_array($block->AudienceType, $currentAudienceTypes)) {
-				return $block->Snippet()->Html;
+				return $block->SnippetBase()->getContent();
 			}
 		}
 		
 		// When there is no block that correspond to current session
 		if($blockHolder->ShowDefaultSnippet) {
-			return $blockHolder->DefaultSnippet()->Html;
+			return $blockHolder->DefaultSnippet()->getContent();
 		} else {
 			return '';
 		}
