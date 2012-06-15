@@ -4,7 +4,7 @@ class SnippetAddController extends BlockHolderMain {
 	static $url_segment = 'personalization/add';
 	static $url_rule = '/$Action/$ID/$OtherID';
 	static $url_priority = 42;
-	static $menu_title = 'Add snippet';
+	static $menu_title = 'Add Snippet';
 	
 	static $allowed_actions = array(
 			'AddForm',
