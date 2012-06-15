@@ -22,6 +22,6 @@ class BlockHolder extends DataObject {
 	);
 	
 	static $has_one = array(
-			'DefaultSnippet' => 'Snippet'
+			'DefaultSnippet' => 'SnippetBase'
 	);
 }

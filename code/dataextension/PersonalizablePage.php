@@ -19,7 +19,7 @@ class PersonalizablePage extends DataExtension {
 		$blocks = $blockHolder->Blocks();
 		foreach($blocks as $block) {
 			if(in_array($block->AudienceType, $currentAudienceTypes)) {
-				return $block->Snippet()->Html;
+				return $block->SnippetBase()->getContent();
 			}
 		}
 		
