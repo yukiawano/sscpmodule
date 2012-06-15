@@ -25,7 +25,7 @@ class PersonalizablePage extends DataExtension {
 		
 		// When there is no block that correspond to current session
 		if($blockHolder->ShowDefaultSnippet) {
-			return $blockHolder->DefaultSnippet()->Html;
+			return $blockHolder->DefaultSnippet()->getContent();
 		} else {
 			return '';
 		}
