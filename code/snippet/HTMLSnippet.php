@@ -15,4 +15,5 @@ class HTMLSnippet extends SnippetBase {
 	public function getContent() {
 		return $this->HTML;	
 	}
+	
 }
