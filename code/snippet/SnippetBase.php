@@ -11,7 +11,7 @@ class SnippetBase extends DataObject {
 	/**
 	 * Snippet name is shown in administration panel
 	 */
-	public static $snippet_name = 'SnippetBase';
+	public static $snippet_name = 'SnippetNameIsUndefined';
 	
 	/**
 	 * Return content of this snippet.

@@ -6,6 +6,8 @@
  */
 class HTMLSnippet extends SnippetBase {
 	
+	public static $snippet_name = 'HTML Snippet';
+	
 	static $db = array(
 			'HTML' => 'Text'
 	);

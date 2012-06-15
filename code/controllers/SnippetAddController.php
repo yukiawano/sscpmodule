@@ -1,5 +1,5 @@
 <?php
-class SnippetAddController extends LeftAndMain {
+class SnippetAddController extends BlockHolderMain {
 	
 	static $url_segment = 'personalization/add';
 	static $url_rule = '/$Action/$ID/$OtherID';
@@ -13,24 +13,38 @@ class SnippetAddController extends LeftAndMain {
 	
 	function AddForm($id = null, $fields = null) {
 		$fields = new FieldList();
-		$fields->push(new LabelField('gaf', 'getAddForm is called.'));
+		$fields->push(new TextField('Title', 'Title'));
+		$fields->push(new ListboxField('SnippetType', 'Snippet Type', $this->getSnippetClasses()));
 		
-		$actions = new FieldList();
+		
+		$actions = new FieldList(
+				FormAction::create("doAdd", _t('CMSMain.Create',"Create"))
+				->addExtraClass('ss-ui-action-constructive')->setAttribute('data-icon', 'accept')
+				->setUseButtonTag(true)
+		);
 		
 		$form = new Form($this, "AddForm", $fields, $actions);
+		$form->addExtraClass('cms-add-form stacked cms-content center cms-edit-form ' . $this->BaseCSSClasses());
+		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 		
 		return $form;
 	}
 	
-	function getEditForm($id = null, $fields = null) {
-		$fields = new FieldList();
-		$fields->push(new LabelField('gef', 'getEditForm is called.'));
+	function doAdd($data, $form) {
+		$title = $data['Title'];
+		$snippetType = $data['SnippetType'];
 		
-		$actions = new FieldList();
+		$snippet = new $snippetType();
+		$snippet->Title = $title;
+		$snippet->write();
 		
-		$form = new Form($this, "AddForm", $fields, $actions);
+		$link = Controller::join_links(
+				$this->stat('url_base', true),
+				'personalization',
+				'/'
+		);
 		
-		return $form;
-		
+		return $this->redirect($link);
 	}
+	
 }
