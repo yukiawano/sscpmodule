@@ -33,7 +33,9 @@ class BlockHolderMain extends LeftAndMain {
     	
     	// Snippet Tab
     	$sConfig = GridFieldConfig_RecordEditor::create();
-    	$sGridField = new GridField('Snippets', null, Snippet::get(), $sConfig);
+    	$sConfig->addComponent(new GridFieldAddNewSnippetButton('buttons-before-left'));
+    	$sConfig->removeComponentsByType('GridFieldAddNewButton');
+    	$sGridField = new GridField('Snippets', null, SnippetBase::get(), $sConfig);
     	$snippetTab->push($sGridField);
     	
     	// AudienceType Tab
@@ -51,8 +53,6 @@ class BlockHolderMain extends LeftAndMain {
 		$form->setHTMLID('Form_EditForm');
 		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 		
-		var_dump($this->getSnippetClasses());
-		
 		$this->extend('updateEditForm', $fields);
     	return $form;
 	}
@@ -63,13 +63,14 @@ class BlockHolderMain extends LeftAndMain {
 	 *
 	 * @return array
 	 */
-	private function getSnippetClasses() {
+	protected function getSnippetClasses() {
 		$classes = ClassInfo::subclassesFor('SnippetBase');
 		
 		$subClasses = array();
 		foreach($classes as $class){
 			if($class == 'SnippetBase') continue;
-			array_push($subClasses, $class);
+			$snippetName = $class::$snippet_name;
+			$subClasses[$class] = $snippetName;
 		}
 		
 		return $subClasses;
