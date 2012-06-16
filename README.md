@@ -1,7 +1,7 @@
 Content Personalization Module for SilverStripe 3.0 (GSoC 2012)
 ==========
 
- * [How to install and use this module](https://github.com/yukiawano/sscpmodule/blob/master/docs/getting-started/getting-started.md)
+ * [How to install and use this module](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/getting-started/getting-started.md)
  * [Documents for developers](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/index.md)
  * [Demo](http://gsoc2012ss.yaunix.com/)
 
