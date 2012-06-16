@@ -49,7 +49,7 @@ An AudienceType is a collection of [conditions](https://github.com/yukiawano/ssc
 You can define AudienceTypes in YAML like this:
 
 ```
-AudienceType:
+AudienceTypeDefinition:
   MatchingRule: InclusiveOR
   AudienceTypes:
     NewComer:

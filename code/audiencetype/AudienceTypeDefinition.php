@@ -3,7 +3,7 @@
  * AudienceType
  * @package sscp
  */
-class AudienceType extends Object {
+class AudienceTypeDefinition extends Object {
 	static public $AudienceTypes;
 	static public $MatchingRule;
 }
