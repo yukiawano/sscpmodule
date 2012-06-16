@@ -39,6 +39,11 @@ class BrowsingActivity extends ConditionBase {
 			array_splice($accessedSites, $key, 1);
 		}
 		
+		// Delete and make the length of the array smaller than (maxUrlSize - 1)
+		if(count($accessedSites) >= self::maxUrlSize) {
+			$accessedSites = array_slice($accessedSites, (count($accessedSites) - (self::maxUrlSize - 1)));
+		}
+		
 		array_push($accessedSites, $shortUrl);
 		
 		$env->set(self::cookieKey, $accessedSites);

@@ -50,4 +50,26 @@ class BrowsingActivityTest extends SapphireTest {
 		$this->assertEquals('/url-one', $result[1]);
 	}
 	
+	function testLogAccessOfMaxNum() {
+		$stubEnv = CPEnvironmentStub::getCPEnvironment();
+		$browsingActivity = new BrowsingActivity();
+		
+		for($i = 0; $i < 40; $i++){
+			$browsingActivity->logAccesse($stubEnv, "/url{$i}");
+			$stubEnv->commit();
+			
+			$result = $stubEnv->get('BrowsingActivity', null);
+			$this->assertEquals(($i + 1), count($result));
+		}
+		
+		$browsingActivity->logAccesse($stubEnv, "/url_41");
+		$stubEnv->commit();
+		
+		$result = $stubEnv->get('BrowsingActivity', null);
+		$this->assertEquals(40, count($result));
+		
+		$this->assertEquals('/url1', $result[0]);
+		$this->assertEquals('/url_41', $result[39]);
+	}
+	
 }
