@@ -7,4 +7,4 @@
  * [What is CPEnvironment](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/what-is-cpenvironment.md)
  * [Available Conditions](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/conditions.md)
  * [Audience Types](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/audience-type.md)
- * [Audience Types](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/object-relations.md)
+ * [BlockHolder, Block and Snippet](https://github.com/yukiawano/sscpmodule/blob/master/docs/en/topics/object-relations.md)
