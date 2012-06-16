@@ -2,6 +2,7 @@
 class AudienceTypeManagerTest extends SapphireTest{
 	
 	function setUp(){
+		// TODO move this to CPEnvironmentStub as utility method
 		parent::setUp();
 		setcookie("CPEnvironment","", time() - 3600); // Delete cookie before running the tests.
 		unset($_COOKIE["CPEnvironment"]);
