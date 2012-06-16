@@ -11,7 +11,7 @@ class GridFieldAddNewSnippetButton implements GridField_HTMLProvider {
 	public function getHTMLFragments($gridField) {
 		$newLink = Controller::join_links(
 				$gridField->stat('url_base', true),
-				'admin/personalization/add/'
+				'admin/personalization/AddSnippetForm/'
 		);
 		
 		$data = new ArrayData(array(

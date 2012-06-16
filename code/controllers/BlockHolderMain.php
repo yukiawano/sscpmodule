@@ -9,7 +9,11 @@ class BlockHolderMain extends LeftAndMain {
 	static $url_rule = '/$Action/$ID/$OtherID';
 	static $menu_title = 'Personalization';
 	static $menu_priority = -1;
-	static $url_priority = 39;
+		
+	static $allowed_actions = array(
+			'AddSnippetForm',
+			'doAddSnippet'
+			);
 	
 	public function init(){
 		parent::init();
@@ -58,6 +62,17 @@ class BlockHolderMain extends LeftAndMain {
 	}
 	
 	
+	public function Breadcrumbs($unlinked = false) {
+		$items = parent::Breadcrumbs($unlinked);
+	
+		// The root element should point to the pages tree view,
+		// rather than the actual controller (which would just show an empty edit form)
+		$items[0]->Title = self::menu_title_for_class('CMSPagesController');
+		$items[0]->Link = singleton('CMSPagesController')->Link();
+	
+		return $items;
+	}
+	
 	/**
 	 * Return a subclasses of SnippetBase
 	 *
@@ -74,5 +89,58 @@ class BlockHolderMain extends LeftAndMain {
 		}
 		
 		return $subClasses;
+	}
+	
+	public function addSnippetForm(SS_HTTPRequest $request) {
+		$obj = $this->customise(array(
+				'EditForm' => $this->getAddSnippetForm()
+		));
+	
+		if($request->isAjax()) {
+			// Rendering is handled by template, which will call EditForm() eventually
+			$content = $obj->renderWith($this->getTemplatesWithSuffix('_Content'));
+		} else {
+			$content = $obj->renderWith($this->getViewer('show'));
+		}
+	
+		
+		return $content;
+	}
+	
+	private function getAddSnippetForm($id = null, $fields = null) {
+		$fields = new FieldList();
+		$fields->push(new TextField('Title', 'Title'));
+		$fields->push(new ListboxField('SnippetType', 'Snippet Type', $this->getSnippetClasses()));
+	
+		$actions = new FieldList(
+				FormAction::create('doAddSnippet')
+					->addExtraClass('ss-ui-action-constructive')->setAttribute('data-icon', 'accept')
+					->setTitle('Create Snippet')
+		);
+		
+		
+		$form = new Form($this, "doAddSnippet", $fields, $actions);
+		$form->addExtraClass('add-form cms-add-form cms-edit-form cms-panel-padded center ' . $this->BaseCSSClasses());
+		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+		
+		return $form;
+	}
+	
+	public function doAddSnippet(SS_HTTPRequest $request) {
+		$title = $request->postVar('Title');
+		$snippetType = $request->postVar('SnippetType');
+	
+		$snippet = new $snippetType();
+		$snippet->Title = $title;
+		$snippet->write();
+	
+		$link = Controller::join_links(
+				$this->stat('url_base', true),
+				'personalization',
+				'/'
+		);
+		
+		$this->response->addHeader('X-Status', 'Created new snippet.');
+		return $this->redirect($link);
 	}
 }
