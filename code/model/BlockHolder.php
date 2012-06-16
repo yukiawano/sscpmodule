@@ -18,7 +18,7 @@ class BlockHolder extends DataObject {
 			);
 	
 	static $has_many = array(
-			'Blocks'=>'Block'
+			'Blocks'=>'SSCP_Block'
 	);
 	
 	static $has_one = array(

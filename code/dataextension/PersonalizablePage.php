@@ -7,6 +7,9 @@ class PersonalizablePage extends DataExtension {
 	 */
 	public function PersonalizedContent(string $templateKey) {
 		$blockHolder = BlockHolder::get()->filter(array('TemplateKey' => $templateKey))->First();
+		if($blockHolder == null) {
+			return "BlockHolder of {$templateKey} is not found.";
+		}
 		
 		$audienceTypeLoader = new AudienceTypeLoader();
 		$audienceTypeManager = new AudienceTypeManager();

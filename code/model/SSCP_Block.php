@@ -1,5 +1,5 @@
 <?php
-class Block extends DataObject {
+class SSCP_Block extends DataObject {
 	static $db = array(
 			'Title' => 'Varchar',
 			'AudienceType' => 'Varchar'
