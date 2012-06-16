@@ -52,14 +52,6 @@ class AudienceTypeManager extends Object{
 	}
 	
 	private function getConditionClass($conditionClass){
-		// TODO Change to load classes automatically from the conditions directory.
-		switch($conditionClass){
-			case 'Location':
-				return new Location();
-			case 'NewComer':
-				return new NewComer();
-			case 'Device':
-				return new Device();
-		}
+		return new $conditionClass;
 	}
 }
