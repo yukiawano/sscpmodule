@@ -13,18 +13,24 @@
 class CPEnvironment {
 	private $values = array();
 	private $valuesForRead = array();
+	private static $env = null;
 	
 	/**
 	 * Get CPEnvironment for current session
 	 * @return CPEnvironment
 	 */
 	public static function getCPEnvironment(){
-		$env = new CPEnvironment();
-		if(Cookie::get("CPEnvironment") != null){
-			$env->values = unserialize(Cookie::get("CPEnvironment"));
-			$env->valuesForRead = $env->values;
+		if(self::$env == null) { 
+			self::$env = $env = new CPEnvironment(); 
+			
+			if(Cookie::get("CPEnvironment") != null){
+				self::$env->values = unserialize(Cookie::get("CPEnvironment"));
+				self::$env->valuesForRead = self::$env->values;
+			}
+			return self::$env;
+		}else{
+			return self::$env;
 		}
-		return $env;
 	}
 	
 	/**
