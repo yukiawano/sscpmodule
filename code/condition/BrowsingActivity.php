@@ -24,8 +24,7 @@ class BrowsingActivity extends ConditionBase {
 	const maxUrlSize = 40;
 	
 	public function doesSatisfy(CPEnvironment $env, $args) {
-		$accessedSites = $env->get(self::cookieKey, array());
-		
+		return $this->hasAccessedTo($env, $args);
 	}
 	
 	// Utility methos, they should be put on more proper location...
@@ -50,6 +49,14 @@ class BrowsingActivity extends ConditionBase {
 	}
 	
 	public function hasAccessedTo(CPEnvironment $env, $url) {
+		$accessedSites = $env->get(self::cookieKey, array());
 		
+		foreach($accessedSites as $site) {
+			if(strpos($site, $url, 0) === 0) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

@@ -72,4 +72,24 @@ class BrowsingActivityTest extends SapphireTest {
 		$this->assertEquals('/url_41', $result[39]);
 	}
 	
+	function testHasAccessedTo() {
+		$stubEnv = CPEnvironmentStub::getCPEnvironment();
+		$browsingActivity = new BrowsingActivity();
+		
+		$browsingActivity->logAccesse($stubEnv, "/sample_url_one");
+		$stubEnv->commit();
+		
+		$browsingActivity->logAccesse($stubEnv, "/sample_url_two");
+		$stubEnv->commit();
+		
+		// Exact match
+		$this->assertTrue($browsingActivity->hasAccessedTo($stubEnv, '/sample_url_one'));
+		
+		// False case
+		$this->assertFalse($browsingActivity->hasAccessedTo($stubEnv, '/sample_url_one_and_two'));
+		
+		// Prefix match
+		$this->assertTrue($browsingActivity->hasAccessedTo($stubEnv, '/sample'));
+	}
+	
 }
