@@ -4,7 +4,10 @@
  * @package sscp
  */
 class Location extends ConditionBase{
-	function doesSatisfy(CPEnvironment $env, $args){
+	
+	var $javascript_file = 'sscp/code/condition/javascript/location.js';
+	
+	function doesSatisfy(CPEnvironment $env, $args) {
 		$locations = $env->getLocation();
 		$locationString = $locations['Country'].' '.$locations['Region'].' '.$locations['City'];
 		
