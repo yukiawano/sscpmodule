@@ -13,18 +13,18 @@ class Location extends ConditionBase{
 			if(isset($value)) {
 				return $value;
 			} else {
-				return 'NULL';
+				return null;
 			}
 		};
 		
 		$locations = $env->getLocation();
-		$locationString = $getValue($locations->Country) . ' '
-						. $getValue($locations->Region) . ' '
-						. $getValue($locations->City) . ' '
-						. $getValue($locations->County) . ' '
-						. $getValue($locations->Road) . ' '
-						. $getValue($locations->PublicBuilding) . ' '
-						. $getValue($locations->Postcode);
+		$locationString = $getValue($locations['Country']) . ' '
+						. $getValue($locations['Region']) . ' '
+						. $getValue($locations['City']) . ' '
+						. $getValue($locations['County']) . ' '
+						. $getValue($locations['Road']) . ' '
+						. $getValue($locations['PublicBuilding']) . ' '
+						. $getValue($locations['Postcode']);
 		
 		if(stristr($locationString, $args) != false){
 			return true;

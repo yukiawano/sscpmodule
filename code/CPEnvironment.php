@@ -61,7 +61,7 @@ class CPEnvironment {
 	 */
 	public function getLocation(){
 		if(Cookie::get(self::CPEnvLocationKey) != null){
-			return json_decode(Cookie::get(self::CPEnvLocationKey));
+			return json_decode(Cookie::get(self::CPEnvLocationKey), true);
 		}else{
 			$result = Config::inst()->get("APIKey", "IPInfoDB");
 			

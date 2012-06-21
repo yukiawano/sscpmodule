@@ -4,10 +4,10 @@ class AudienceTypeManagerTest extends SapphireTest{
 	function setUp(){
 		// TODO move this to CPEnvironmentStub as utility method
 		parent::setUp();
-		setcookie("CPEnvironment","", time() - 3600); // Delete cookie before running the tests.
-		unset($_COOKIE["CPEnvironment"]);
-		setcookie("CPEnvLocation","", time() - 3600);
-		unset($_COOKIE["CPEnvLocation"]);
+		setcookie("CPEnv","", time() - 3600); // Delete cookie before running the tests.
+		unset($_COOKIE["CPEnv"]);
+		setcookie("CPEnvLocationJ","", time() - 3600);
+		unset($_COOKIE["CPEnvLocationJ"]);
 	}
 	
 	function testGetAudienceTypesInclusive(){
