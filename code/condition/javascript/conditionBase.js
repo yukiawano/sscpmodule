@@ -36,6 +36,7 @@ if(!locationSourceIsHTML5() && navigator.geolocation) {
 					
 				           address.Latitude = json.lat;
 				           address.Longitude = json.lon;
+				           
 				           address.Country = detailedAddress.country;
 				           address.Region = detailedAddress.state + ' ' + detailedAddress.region;
 				           address.City = detailedAddress.city;
@@ -43,7 +44,7 @@ if(!locationSourceIsHTML5() && navigator.geolocation) {
 				           address.Road = detailedAddress.road;
 				           address.PublicBuilding = detailedAddress.public_building;
 				           address.Postcode = detailedAddress.postcode;
-				           address.Source = SourceIsHTML5';
+				           address.Source = SourceIsHTML5;
 					
 				           $.cookie(CPEnvLocationKey,JSON.stringify(address));
 				       }
