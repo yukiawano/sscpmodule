@@ -11,6 +11,10 @@
  * @package sscp
  */
 class CPEnvironment {
+	
+	const CPEnvLocationKey = 'CPEnvLocationJ';
+	const CPEnvKey = 'CPEnv';
+	
 	private $values = array();
 	private $valuesForRead = array();
 	private static $env = null;
@@ -23,8 +27,8 @@ class CPEnvironment {
 		if(self::$env == null) { 
 			self::$env = $env = new CPEnvironment(); 
 			
-			if(Cookie::get("CPEnvironment") != null){
-				self::$env->values = unserialize(Cookie::get("CPEnvironment"));
+			if(Cookie::get(self::CPEnvKey) != null){
+				self::$env->values = unserialize(Cookie::get(self::CPEnvKey));
 				self::$env->valuesForRead = self::$env->values;
 			}
 			return self::$env;
@@ -56,8 +60,8 @@ class CPEnvironment {
 	 * This method would cost.
 	 */
 	public function getLocation(){
-		if(Cookie::get("CPEnvLocation") != null){
-			return unserialize(Cookie::get("CPEnvLocation"));
+		if(Cookie::get(self::CPEnvLocationKey) != null){
+			return json_decode(Cookie::get(self::CPEnvLocationKey));
 		}else{
 			$result = Config::inst()->get("APIKey", "IPInfoDB");
 			
@@ -69,8 +73,8 @@ class CPEnvironment {
 			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
 			$errors = $ipLite->getError();
 			
-			$value = array('Country' => $locations['countryName'], 'Region' => $locations['regionName'], 'City' => $locations['cityName']);
-			Cookie::set("CPEnvLocation", serialize($value));
+			$value = array('Country' => $locations['countryName'], 'Region' => $locations['regionName'], 'City' => $locations['cityName'], 'Source' => 'IPInfoDB');
+			Cookie::set(self::CPEnvLocationKey, json_encode($value));
 			return $value;
 		}
 	}
@@ -109,6 +113,6 @@ class CPEnvironment {
 	 */
 	public function commit(){
 		$this->valuesForRead = $this->values;
-		Cookie::set("CPEnvironment", serialize($this->valuesForRead));
+		Cookie::set(self::CPEnvKey, serialize($this->valuesForRead));
 	}
 }
