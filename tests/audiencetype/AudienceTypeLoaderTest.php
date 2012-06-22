@@ -18,4 +18,20 @@ class AudienceTypeLoaderTest extends SapphireTest{
 				));
 		$this->assertEquals($result,$expected);
 	}
+	
+	function testGetAudienceTypes() {
+		$data = array("InclusiveOR" => array(
+				"NewComer" => array("NewComer" => true),
+				"NewYorker" => array(
+						"Location" => "NewYork",
+						"Device" => "Linux")
+		));
+		$expected = array('NewComer', 'NewYorker');
+		
+		$audienceTypeLoader = new AudienceTypeLoader();
+		$result = $audienceTypeLoader->getAudienceTypes($data);
+		
+		$this->assertEquals($expected, $result);
+		
+	}
 }
