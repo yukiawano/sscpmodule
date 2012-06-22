@@ -13,7 +13,7 @@
 class CPEnvironment {
 	
 	const CPEnvLocationKey = 'CPEnvLocationJ';
-	const CPEnvKey = 'CPEnv';
+	const CPEnvKey = 'CPEnvJ';
 	
 	private $values = array();
 	private $valuesForRead = array();
@@ -28,7 +28,7 @@ class CPEnvironment {
 			self::$env = $env = new CPEnvironment(); 
 			
 			if(Cookie::get(self::CPEnvKey) != null){
-				self::$env->values = unserialize(Cookie::get(self::CPEnvKey));
+				self::$env->values = json_decode(Cookie::get(self::CPEnvKey), true);
 				self::$env->valuesForRead = self::$env->values;
 			}
 			return self::$env;
@@ -113,6 +113,6 @@ class CPEnvironment {
 	 */
 	public function commit(){
 		$this->valuesForRead = $this->values;
-		Cookie::set(self::CPEnvKey, serialize($this->valuesForRead));
+		Cookie::set(self::CPEnvKey, json_encode($this->valuesForRead));
 	}
 }

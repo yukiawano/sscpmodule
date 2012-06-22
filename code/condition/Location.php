@@ -5,8 +5,6 @@
  */
 class Location extends ConditionBase{
 	
-	var $javascript_file = 'sscp/code/condition/javascript/location.js';
-	
 	function doesSatisfy(CPEnvironment $env, $args) {
 		
 		$getValue = function(& $value) {
