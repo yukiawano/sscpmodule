@@ -1,5 +1,6 @@
 <?php
 class SSCP_Block extends DataObject {
+	
 	static $db = array(
 			'Title' => 'Varchar',
 			'AudienceType' => 'Varchar'
@@ -10,18 +11,18 @@ class SSCP_Block extends DataObject {
 			'SnippetBase' => 'SnippetBase'
 	);
 	
-	function getCMSFields() {
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		// Get audience types
+		$fields->removeByName('BlockHolderID');
 		$fields->removeByName('AudienceType');
 		
+		// Audience Types
 		$audienceTypeLoader = new AudienceTypeLoader();
-		$audienceTypesArray = $audienceTypeLoader->load();
-		$audienceTypes = $audienceTypeLoader->getAudienceTypes($audienceTypesArray);
-		
-		$fields->push(new DropdownField('AudienceType', 'AudienceType', $audienceTypes));
+		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($audienceTypeLoader->load());
+		$fields->push(new DropdownField('AudienceType', 'AudienceType', $audienceTypesArray));
 		
 		return $fields;
 	}
+	
 }

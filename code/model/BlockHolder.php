@@ -24,4 +24,17 @@ class BlockHolder extends DataObject {
 	static $has_one = array(
 			'DefaultSnippet' => 'SnippetBase'
 	);
+	
+	public function getCMSFields() {
+		$fields = parent::getCMSFields();
+		$fields->removeFieldFromTab('Root', 'Blocks');
+		
+		$gridFieldConfig = GridFieldConfig_RecordEditor::create();
+    	$gridFieldConfig->addComponent(new GridFieldAddNewBlockButton($this->ID, 'buttons-before-left'));
+    	$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
+		$gridFields = new GridField('SSCP_Block', null, SSCP_Block::get(), $gridFieldConfig);
+		$fields->push($gridFields);
+		
+		return $fields;
+	}
 }

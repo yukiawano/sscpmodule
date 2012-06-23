@@ -26,12 +26,11 @@ class AudienceTypeLoaderTest extends SapphireTest{
 						"Location" => "NewYork",
 						"Device" => "Linux")
 		));
-		$expected = array('NewComer', 'NewYorker');
+		$expected = array('NewComer' => 'NewComer', 'NewYorker' => 'NewYorker');
 		
 		$audienceTypeLoader = new AudienceTypeLoader();
 		$result = $audienceTypeLoader->getAudienceTypes($data);
 		
 		$this->assertEquals($expected, $result);
-		
 	}
 }

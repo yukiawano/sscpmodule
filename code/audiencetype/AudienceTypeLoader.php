@@ -20,7 +20,8 @@ class AudienceTypeLoader{
 		$types = $audienceTypes[$matchingRule];
 		$result = array();
 		foreach($types as $audienceTypeName => $conds) {
-			array_push($result, $audienceTypeName);
+			//array_push($result, $audienceTypeName);
+			$result[$audienceTypeName] = $audienceTypeName;
 		}
 		return $result;
 	}
