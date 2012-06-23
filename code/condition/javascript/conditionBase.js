@@ -8,6 +8,7 @@
 var CPEnvKey = 'CPEnv';
 var CPEnvLocationKey = 'CPEnvLocationJ';
 var SourceIsHTML5 = 'HTML5-GeolocationAPI';
+var CPEnvironment = {}; // Namespace for CPEnvironment
 
 (function($) {
 
@@ -56,20 +57,23 @@ if(!locationSourceIsHTML5() && navigator.geolocation) {
 
 // APIs for getting / setting values from / to CPEnvironment
 // You can use these APIs if you want to get or set values from your javascript code.
-
-function CPEnvGet(key, defaultValue) {
-	var value = $.parseJSON($.cookie(CPEnvKey));
-	if(value == null || value[key] == null) {
-		return defaultValue;
-	} else {
-		return value;
+// Namespace for this is CPEnvironment.
+(function(){
+	CPEnvironment = {
+			get: function(key, defaultValue) {
+				var value = $.parseJSON($.cookie(CPEnvKey));
+				if(value == null || value[key] == null) {
+					return defaultValue;
+				} else {
+					return value;
+				}
+			},
+			set: function(key, value) {
+				var value = $.parseJSON($.cookie(CPEnvKey));
+				value[key] = value;
+				$.cookie(CPEnvKey, JSON.stringify(CPEnvKey));
+			}
 	}
-}
-
-function CPEnvSet(key, value) {
-	var value = $.parseJSON($.cookie(CPEnvKey));
-	value[key] = value;
-	$.cookie(CPEnvKey, JSON.stringify(CPEnvKey));
-}
+})();
 
 })(jQuery);
