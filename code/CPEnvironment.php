@@ -12,8 +12,8 @@
  */
 class CPEnvironment {
 	
-	const CPEnvLocationKey = 'CPEnvLocationJ';
-	const CPEnvKey = 'CPEnvJ';
+	const CPEnvLocationKey = 'CPEnvLocationJSON';
+	const CPEnvKey = 'CPEnvJSON';
 	
 	private $values = array();
 	private $valuesForRead = array();

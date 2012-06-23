@@ -5,8 +5,8 @@
 // Get location by using html5 geo-location api and reverse-geo-coding api by OpenStreetMap.
 // https://wiki.openstreetmap.org/wiki/Nominatim
 
-var CPEnvKey = 'CPEnv';
-var CPEnvLocationKey = 'CPEnvLocationJ';
+var CPEnvKey = 'CPEnvJSON';
+var CPEnvLocationKey = 'CPEnvLocationJSON';
 var SourceIsHTML5 = 'HTML5-GeolocationAPI';
 var CPEnvironment = {}; // Namespace for CPEnvironment
 
