@@ -127,7 +127,7 @@ class BlockHolderMain extends LeftAndMain {
 		$fields->push(new TextField('Title', 'Title'));
 		$fields->push(new DropdownField('SnippetBaseID', 'SnippetBase', $snippetBasesArray));
 		$fields->push(new DropdownField('AudienceType', 'AudienceType', $audienceTypesArray));
-		$fields->push(new HiddenField('BlockHolderID', $id));
+		$fields->push(new HiddenField('BlockHolderID', 'BlockHolderID', $id));
 		
 		$actions = new FieldList(
 				FormAction::create('doAddBlock')
