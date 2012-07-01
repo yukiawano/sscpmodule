@@ -1,0 +1,6 @@
+---
+Name: manual_flag_routes
+---
+Director:
+    rules:
+        'manualFlag/$Action/$FlagName': 'ManualFlagController'
