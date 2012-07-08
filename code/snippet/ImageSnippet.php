@@ -3,12 +3,12 @@ class ImageSnippet extends SnippetBase {
 	
 	public static $snippet_name = 'Image Snippet';
 	
-	static $db = array(
-			'ImageUrl' => 'Varchar'
+	static $has_one = array(
+		'BannerImage' => 'Image'
 	);
 	
 	public function getContent() {
-		return "<img src='{$this->ImageUrl}' />";
+		return "<img src='{$this->BannerImage()->getURL()}' />";
 	}
 	
 }
