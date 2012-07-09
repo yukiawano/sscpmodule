@@ -31,6 +31,25 @@ class AudienceTypeManager extends Object{
 	}
 	
 	/**
+	 * Get locations that is marked as nearest
+	 * @param mixed $audienceTypes
+	 */
+	public function getNearestOptionedLocations($audienceTypes) {
+		$matchingRule = key($audienceTypes);
+		$rules = $audienceTypes[$matchingRule];
+		$results = array();
+		foreach($rules as $audienceTypeName => $conditions) {
+			foreach($conditions as $conditionClass => $conditionArgs) {
+				if(preg_match('/nearest\((.+)\)/', $conditionArgs, $matches)){
+					array_push($results, $matches[1]);
+				}
+			}
+		}
+		
+		return $results;
+	}
+	
+	/**
 	 * Return pretty print of AudienceTypes
 	 * @param array $audienceTypes
 	 */
