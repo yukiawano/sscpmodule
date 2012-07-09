@@ -24,6 +24,24 @@ class CPEnvironment {
 	 * @return CPEnvironment
 	 */
 	public static function getCPEnvironment(){
+		
+		
+		
+		$result = Config::inst()->get("APIKey", "IPInfoDB");
+		
+		//Load the class
+		$ipLite = new ip2location_lite();
+		$ipLite->setKey($result);
+		
+		//Get errors and locations
+		
+		// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
+		$locations = $ipLite->getCity('49.135.193.171');
+		var_dump($locations['longitude'].' '.$locations['latitude']);
+		
+		
+		
+		
 		if(self::$env == null) { 
 			self::$env = $env = new CPEnvironment(); 
 			
@@ -59,7 +77,7 @@ class CPEnvironment {
 	 * If it needs to get location of current session, it tries to get.
 	 * This method would cost.
 	 */
-	public function getLocation(){
+	public function getLocation() {
 		if(Cookie::get(self::CPEnvLocationKey) != null){
 			return json_decode(Cookie::get(self::CPEnvLocationKey), true);
 		}else{
@@ -70,13 +88,50 @@ class CPEnvironment {
 			$ipLite->setKey($result);
 			
 			//Get errors and locations
-			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
+			
+			// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
+			$locations = $ipLite->getCity('49.135.193.171');
 			$errors = $ipLite->getError();
 			
-			$value = array('Country' => $locations['countryName'], 'Region' => $locations['regionName'], 'City' => $locations['cityName'], 'Source' => 'IPInfoDB');
+			$value = array(	'Longitude' => $locations['longitude'],
+						    'Latitude'  => $locations['latitude']);
+			
 			Cookie::set(self::CPEnvLocationKey, json_encode($value));
 			return $value;
 		}
+	}
+	
+	/**
+	 * Return nearest location to a user
+	 * 
+	 * CPEnvironment holds the nearest location to the user
+	 */
+	public function getNearestLocation() {
+		// List up nearest-optioned locations
+		$audienceTypeLoader = new AudienceTypeLoader();
+		$audienceTypeManager = new AudienceTypeManager();
+		
+		$audienceTypes = $audienceTypeLoader->load();
+		$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
+		
+		// Get lists of longitude and latitude of them
+		// Return the nearest location to this user
+	}
+	
+	/**
+	 * Return lat and lon of address by using Nominatim API
+	 * https://wiki.openstreetmap.org/wiki/Nominatim
+	 * 
+	 * @param string $address
+	 */
+	public static function getLatLon($address) {
+		$encodedAddress = urlencode($address);
+		$url = "http://nominatim.openstreetmap.org/search?q={$encodedAddress}&format=xml";
+		$xml =  simplexml_load_file($url);
+		$place = $xml->place[0];
+		
+		return array('lat' => (float)$place['lat'],
+					   'lon' => (float)$place['lon']);	
 	}
 	
 	/**
