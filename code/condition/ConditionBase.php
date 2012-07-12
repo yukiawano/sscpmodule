@@ -29,6 +29,7 @@ abstract class ConditionBase extends Object{
 		parent::__construct();
 		
 		// Basis for condition
+		Requirements::javascript('http://code.jquery.com/jquery-1.7.2.js');
 		Requirements::javascript(FRAMEWORK_DIR.'/thirdparty/jquery-cookie/jquery.cookie.js');
 		Requirements::javascript(SSCP_DIR.'/code/condition/javascript/conditionBase.js');
 		

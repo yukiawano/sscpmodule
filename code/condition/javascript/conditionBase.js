@@ -37,8 +37,8 @@ if(!locationSourceIsHTML5() && navigator.geolocation) {
 				           var address = $.parseJSON($.cookie(CPEnvLocationKey));
 				           if(address == null) address = {};
 					
-				           address.Latitude = json.lat;
-				           address.Longitude = json.lon;
+				           address.lat = json.lat;
+				           address.lon = json.lon;
 				           
 				           address.Country = detailedAddress.country;
 				           address.Region = detailedAddress.state + ' ' + detailedAddress.region;

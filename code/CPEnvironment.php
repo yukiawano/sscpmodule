@@ -72,13 +72,17 @@ class CPEnvironment {
 			$ipLite->setKey($result);
 			
 			//Get errors and locations
-			
 			// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
 			$locations = $ipLite->getCity('133.3.254.122');
 			$errors = $ipLite->getError();
+			var_dump($locations);
 			
-			$value = array(	'lon' => $locations['longitude'],
-						    'lat'  => $locations['latitude']);
+			$value = array('lon' => $locations['longitude'],
+						    'lat'  => $locations['latitude'],
+							'Country' => $locations['countryName'],
+							'Region' => $locations['regionName'],
+							'City' => $locations['cityName'],
+							'Source' => 'IPInfoDB');
 			
 			Cookie::set(self::CPEnvLocationKey, json_encode($value));
 			return $value;
