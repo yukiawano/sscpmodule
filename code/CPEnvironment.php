@@ -95,7 +95,7 @@ class CPEnvironment {
 	 * CPEnvironment holds the nearest location to the user
 	 */
 	public function getNearestLocation() {
-		// List up nearest-optioned locations
+		// List up nearest-optioned locations for $result
 		$cache = SS_Cache::factory('sscp');
 		if(!($serializedResult = $cache->load(self::CacheKeyOfNearestLocations))) {
 			$audienceTypeLoader = new AudienceTypeLoader();
@@ -115,11 +115,15 @@ class CPEnvironment {
 		}
 		
 		// Calculate the nearest location to the user
+		$distanceFunc = function ($a, $b) {
+			return pow($a['lat'] - $b['lat'], 2) + pow($a['lon'] - $b['lon'], 2);
+		};
+		
 		$location = $this->getLocation();
 		$nearestLocation = null;
 		$minimumDistance = pow(200,2) * 2;
 		foreach ($result as $locationName => $latLon) {
-			$distance = $this->calculateDistance($latLon, $location);
+			$distance = $distanceFunc($latLon, $location);
 			if($distance < $minimumDistance) {
 				$minimumDistance = $distance;
 				$nearestLocation = $locationName;
@@ -127,10 +131,6 @@ class CPEnvironment {
 		}
 		
 		return $nearestLocation;
-	}
-	
-	public function calculateDistance($a, $b) {
-		return pow($a['lat'] - $b['lat'], 2) + pow($a['lon'] - $b['lon'], 2);
 	}
 	
 	/**
