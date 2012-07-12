@@ -8,5 +8,12 @@ class CPEnvironmentTest extends SapphireTest {
 		$this->assertEquals($expected, $result);
 	}
 	
+	function testGetNearestLocation() {
+		$cpenvironment = CPEnvironmentStub::getCPEnvironment();
+		$result = $cpenvironment->getNearestLocation();
+		$expected = 'osaka';
+		
+		$this->assertEquals($expected, $result);
+	}
 	
 }

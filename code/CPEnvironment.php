@@ -14,6 +14,7 @@ class CPEnvironment {
 	
 	const CPEnvLocationKey = 'CPEnvLocationJSON';
 	const CPEnvKey = 'CPEnvJSON';
+	const CacheKeyOfNearestLocations = 'NearestLocations';
 	
 	private $values = array();
 	private $valuesForRead = array();
@@ -24,23 +25,6 @@ class CPEnvironment {
 	 * @return CPEnvironment
 	 */
 	public static function getCPEnvironment(){
-		
-		
-		
-		$result = Config::inst()->get("APIKey", "IPInfoDB");
-		
-		//Load the class
-		$ipLite = new ip2location_lite();
-		$ipLite->setKey($result);
-		
-		//Get errors and locations
-		
-		// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
-		$locations = $ipLite->getCity('49.135.193.171');
-		var_dump($locations['longitude'].' '.$locations['latitude']);
-		
-		
-		
 		
 		if(self::$env == null) { 
 			self::$env = $env = new CPEnvironment(); 
@@ -90,11 +74,11 @@ class CPEnvironment {
 			//Get errors and locations
 			
 			// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
-			$locations = $ipLite->getCity('49.135.193.171');
+			$locations = $ipLite->getCity('133.3.254.122');
 			$errors = $ipLite->getError();
 			
-			$value = array(	'Longitude' => $locations['longitude'],
-						    'Latitude'  => $locations['latitude']);
+			$value = array(	'lon' => $locations['longitude'],
+						    'lat'  => $locations['latitude']);
 			
 			Cookie::set(self::CPEnvLocationKey, json_encode($value));
 			return $value;
@@ -108,14 +92,41 @@ class CPEnvironment {
 	 */
 	public function getNearestLocation() {
 		// List up nearest-optioned locations
-		$audienceTypeLoader = new AudienceTypeLoader();
-		$audienceTypeManager = new AudienceTypeManager();
+		$cache = SS_Cache::factory('sscp');
+		if(!($serializedResult = $cache->load(self::CacheKeyOfNearestLocations))) {
+			$audienceTypeLoader = new AudienceTypeLoader();
+			$audienceTypeManager = new AudienceTypeManager();
+			
+			$audienceTypes = $audienceTypeLoader->load();
+			$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
+			
+			$result = array();
+			foreach ($nearestOptionedLocations as $nearestOptionedLocation) {
+				$latLon = CPEnvironment::getLatLon($nearestOptionedLocation);
+				$result[$nearestOptionedLocation] = $latLon;
+			}
+			$cache->save(serialize($result), self::CacheKeyOfNearestLocations);	
+		} else {
+			$result = unserialize($serializedResult);
+		}
 		
-		$audienceTypes = $audienceTypeLoader->load();
-		$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
+		// Calculate the nearest location to the user
+		$location = $this->getLocation();
+		$nearestLocation = null;
+		$minimumDistance = pow(200,2) * 2;
+		foreach ($result as $locationName => $latLon) {
+			$distance = $this->calculateDistance($latLon, $location);
+			if($distance < $minimumDistance) {
+				$minimumDistance = $distance;
+				$nearestLocation = $locationName;
+			}
+		}
 		
-		// Get lists of longitude and latitude of them
-		// Return the nearest location to this user
+		return $nearestLocation;
+	}
+	
+	public function calculateDistance($a, $b) {
+		return pow($a['lat'] - $b['lat'], 2) + pow($a['lon'] - $b['lon'], 2);
 	}
 	
 	/**
