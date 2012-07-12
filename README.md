@@ -14,6 +14,15 @@ Please note that this module is **under development** and **not suitable for use
 * We may change the database structure.
 * It is not feature complete.
 
+## Features that will be added
+
+These are list of what we will do in near future. These are still a lot of room for discussion, and may be changed, deleted or added.
+We are really welcome to your feedback.
+So if you have anything about them, please let us know.
+
+* Developer mode - Provide developer mode for web site developer. In the mode, user can change their location or other settings, and can preview the results in specific environment.
+* Snippet for personalized list of articles
+* Create a personalized demo site with [plunket](https://skitch.com/sigurdmagnusson/8ajep/screen-shot-2012-05-02-at-10.15.07-pm). The demo site is still under construction. However you can check it from  [http://sandbox.yaunix.com/](http://sandbox.yaunix.com/).
 
 ## Open Questions
 
