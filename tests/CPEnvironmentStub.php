@@ -2,6 +2,16 @@
 class CPEnvironmentStub extends CPEnvironment{
 	
 	/**
+	 * Clear cookies related to CPEnvironment
+	 */
+	public static function clearCookie() {
+		setcookie(self::CPEnvKey,"", time() - 3600); // Delete cookie before running the tests.
+		unset($_COOKIE[self::CPEnvKey]);
+		setcookie(self::CPEnvLocationKey,"", time() - 3600);
+		unset($_COOKIE[self::CPEnvLocationKey]);
+	}
+	
+	/**
 	 * Return stub CPEnvironment (This actually writes to cookie)
 	 * @return CPEnvironment
 	 */
