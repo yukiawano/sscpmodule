@@ -19,6 +19,7 @@ class CPEnvironment {
 	private $values = array();
 	private $valuesForRead = array();
 	private static $env = null;
+	protected $audienceTypes = null;
 	
 	/**
 	 * Get CPEnvironment for current session
@@ -90,6 +91,18 @@ class CPEnvironment {
 	}
 	
 	/**
+	 * Return audience types
+	 * (This method is provided for testing(Stub) and performance(Reducing IOs).
+	 */
+	private function getAudienceTypes() {
+		if($this->audienceTypes == null) {
+			$audienceTypeLoader = new AudienceTypeLoader();
+			$this->audienceTypes = $audienceTypeLoader->load();
+		}
+		return $this->audienceTypes;
+	}
+	
+	/**
 	 * Return nearest location to a user
 	 * 
 	 * CPEnvironment holds the nearest location to the user
@@ -98,10 +111,9 @@ class CPEnvironment {
 		// List up nearest-optioned locations for $result
 		$cache = SS_Cache::factory('sscp');
 		if(!($serializedResult = $cache->load(self::CacheKeyOfNearestLocations))) {
-			$audienceTypeLoader = new AudienceTypeLoader();
 			$audienceTypeManager = new AudienceTypeManager();
 			
-			$audienceTypes = $audienceTypeLoader->load();
+			$audienceTypes = $this->getAudienceTypes();
 			$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
 			
 			$result = array();
