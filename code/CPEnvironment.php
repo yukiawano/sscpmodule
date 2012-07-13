@@ -75,7 +75,6 @@ class CPEnvironment {
 			//Get errors and locations
 			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
 			$errors = $ipLite->getError();
-			var_dump($locations);
 			
 			$value = array('lon' => $locations['longitude'],
 						    'lat'  => $locations['latitude'],
