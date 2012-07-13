@@ -73,8 +73,7 @@ class CPEnvironment {
 			$ipLite->setKey($result);
 			
 			//Get errors and locations
-			// $locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
-			$locations = $ipLite->getCity('133.3.254.122');
+			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
 			$errors = $ipLite->getError();
 			var_dump($locations);
 			
