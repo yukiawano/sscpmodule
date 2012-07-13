@@ -1,9 +1,9 @@
 <?php
 class LocationTest extends SapphireTest {
+	
 	function setUp(){
 		parent::setUp();
 	}
-	
 	
 	function testNearestOptionedLocation() {
 		// There are two nearest optioned location, tokyo and osaka.
