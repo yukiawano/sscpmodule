@@ -4,11 +4,14 @@
  * @package sscp
  */
 class AudienceTypeManager extends Object{
-	public function getAudienceTypes($audienceTypes, CPEnvironment $env){
+	public function getAudienceTypes($audienceTypes, CPEnvironment $env, $consideredTypes = null){
 		$matchingRule = key($audienceTypes);
 		$rules = $audienceTypes[$matchingRule];
 		$results = array();
 		foreach($rules as $audienceTypeName => $conditions){
+			if($consideredTypes != null && !in_array($audienceTypeName, $consideredTypes)) {
+				continue; // When the audience type is not in consideredTypes, then skip.
+			}
 			$match = true;
 			foreach($conditions as $conditionClass => $conditionArgs){
 				$condition = $this->getConditionClass($conditionClass);
