@@ -38,6 +38,11 @@ class CPEnvironmentStub extends CPEnvironment{
 	}
 	
 	public function getLocation(){
-		return array('lat' => 35.1061038125824, 'lon' => 135.727367242386);
+		return array('lat' => 35.1061038125824,
+				       'lon' => 135.727367242386,
+				       'Country' => 'Japan',
+					   'Region' => 'Kinki',
+					   'City' => 'Kyoto',
+					   'Source' => 'IPInfoDB');
 	}
 }

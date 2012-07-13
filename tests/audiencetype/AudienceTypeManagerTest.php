@@ -14,20 +14,32 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('InclusiveOR' => array(
 				'NewComer' => array('NewComer' => 'true'),
-				'ShigaResidents' => array('Location' => 'SHIGA', 'Device' => 'Linux')
+				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
 				));
 		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment());
-		$this->assertEquals(array('NewComer', 'ShigaResidents'), $result);
+		$this->assertEquals(array('NewComer', 'Kyoto'), $result);
 	}
 	
 	function testGetAudienceTypesExclusive(){
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('ExclusiveOR' => array(
 				'NewComer' => array('NewComer' => 'true'),
-				'ShigaResidents' => array('Location' => 'SHIGA', 'Device' => 'Linux')
+				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
 				));
 		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment());
 		$this->assertEquals(array('NewComer'), $result);
+	}
+	
+	function testGetAudienceTypeFiltered() {
+		$audienceTypeManager = new AudienceTypeManager();
+		$audienceTypes = array('ExclusiveOR' => array(
+				'NewComer' => array('NewComer' => 'true'),
+				'Kyoto' => array('Location' => 'kyoto'),
+				'LinuxUser' => array('Device' => 'linux')
+				));
+		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
+		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, array('Kyoto', 'LinuxUser'));
+		$this->assertEquals(array('Kyoto'), $result);
 	}
 	
 	function testGetNearestOptionedLocations() {

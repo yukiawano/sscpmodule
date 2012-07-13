@@ -2,10 +2,6 @@
 class LocationTest extends SapphireTest {
 	function setUp(){
 		parent::setUp();
-		setcookie("CPEnvJSON","", time() - 3600); // Delete cookie before running the tests.
-		unset($_COOKIE["CPEnvJSON"]);
-		setcookie("CPEnvLocationJSON","", time() - 3600);
-		unset($_COOKIE["CPEnvLocationJSON"]);
 	}
 	
 	
