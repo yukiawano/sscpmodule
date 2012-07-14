@@ -1,0 +1,17 @@
+BlockHolder:
+  blockholdera:
+    Title: BlockHolderA
+    TemplateKey: BlockHolderAKey
+SSCP_Block:
+  blocka:
+    Title: BlockA
+    AudienceType: TypeA
+    BlockHolder: =>BlockHolder.blockholdera
+  blockb:
+    Title: BlockB
+    AudienceType: TypeB
+    BlockHolder: =>BlockHolder.blockholdera
+  blockc:
+    Title: BlockC
+    AudienceType: TypeA
+    BlockHolder: =>BlockHolder.blockholdera
