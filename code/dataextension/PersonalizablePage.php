@@ -16,7 +16,7 @@ class PersonalizablePage extends DataExtension {
 		
 		$audienceTypes = $audienceTypeLoader->load();
 		$env = CPEnvironment::getCPEnvironment();
-		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($audienceTypes, $env);
+		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, $blockHolder->getRelatedAudienceTypes());
 		
 		// Get blocks of this block holder
 		$blocks = $blockHolder->Blocks();
