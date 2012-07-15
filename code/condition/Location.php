@@ -38,4 +38,31 @@ class Location extends ConditionBase{
 			}	
 		}
 	}
+	
+	/**
+	 * Parse parameter and return in as array
+	 * @example
+	 * nearest(kyoto) => array('nearest' => array('location' => 'kyoto'))
+	 * in((135,40), 10km) => array('in' => array('distance' => '10', 'location' => array('lat' => '135', 'lon' => '40'))
+	 * kyoto => array('match' => array('location' => 'kyoto')' 
+	 * 
+	 * @param string $param
+	 */
+	function parseParameter($param) {
+		$getLocation = function($p) {
+			if(preg_match('/\(([0-9]+),([0-9]+)\)/', $p, $m)) {
+				return array('lat' => $m[1], 'lon' => $m[2]);
+			} else {
+				return $p;
+			}
+		};
+		
+		if(preg_match('/nearest\((.+)\)/', $param, $matches)) {
+			return array('nearest' => array('location' => $getLocation($matches[1])));
+		} else if (preg_match('/in\((.+),([0-9]+)km\)/', $param, $matches)) { 
+			return array('in' => array('location' => $getLocation($matches[1]), 'distance' => $matches[2]));
+		} else {
+			return array('match' => array('location' => $getLocation($param)));
+		}
+	}
 }
