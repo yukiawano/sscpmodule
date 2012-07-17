@@ -48,10 +48,11 @@ class AudienceTypeManagerTest extends SapphireTest{
 				'OsakaResidents' => array('Location' => 'nearest(osaka)'),
 				'ShigaResidents' => array('Location' => 'shiga'),
 				'KyotoResidents' => array('Location' => 'nearest(kyoto)'),
-				'TokyoResidents' => array('Location' => 'nearest(tokyo)')
+				'TokyoResidents' => array('Location' => 'nearest(tokyo)'),
+				'HokkaidoResidents' => array('Location' => 'nearest((135,40))')
 		));
 		
-		$expected = array('osaka', 'kyoto', 'tokyo');
+		$expected = array('osaka', 'kyoto', 'tokyo', array('lat' => 135, 'lon' => 40));
 		$this->assertEquals($expected, $audienceTypeManager->getNearestOptionedLocations($audienceTypes));
 	}
 	

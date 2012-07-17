@@ -1,41 +1,49 @@
 <?php
 /**
  * Location
+ * 
+ * match - address
+ * nearest - latlon or address
+ * in - latlon
  * @package sscp
  */
 class Location extends ConditionBase{
 	
 	function doesSatisfy(CPEnvironment $env, $args) {
-		if(preg_match('/nearest\((.+)\)/', $args, $matches)) {
-			$nearestLocation = $env->getNearestLocation();
-			if(strtolower($matches[1]) === strtolower($nearestLocation)) {
-				return true;
-			} else {
+		$parsedArgs = $this->parseParameter($args);
+		switch(key($parsedArgs)) {
+			case 'nearest':
+				$latLon = 	is_array($parsedArgs['nearest']['location']) ? 
+							$parsedArgs['nearest']['location'] :
+							CPEnvironment::getLatLon($parsedArgs['nearest']['location']);
+				$nearestLatLon = $env->getNearestLocation();
+				return ($latLon['lat'] == $nearestLatLon['lat'] && $latLon['lon'] == $nearestLatLon['lon']);
+			case 'in':
 				return false;
-			}
-		} else {
-			$getValue = function(& $value) {
-				if(isset($value)) {
-					return $value;
+			case 'match':
+				if(is_array($parsedArgs['match']['location'])){
+					return false; // match option does not accept lat and lon
 				} else {
-					return null;
+					$getValue = function(& $value) {
+						if(isset($value)) {
+							return $value;
+						} else {
+							return null;
+						}
+					};
+					
+					$locations = $env->getLocation();
+					$locationString = $getValue($locations['Country']) . ' '
+					. $getValue($locations['Region']) . ' '
+					. $getValue($locations['City']) . ' '
+					. $getValue($locations['County']) . ' '
+					. $getValue($locations['Road']) . ' '
+					. $getValue($locations['PublicBuilding']) . ' '
+					. $getValue($locations['Postcode']);
+					
+					// Return value of stristr is not bool
+					return (stristr($locationString, $parsedArgs['match']['location']) != false);
 				}
-			};
-			
-			$locations = $env->getLocation();
-			$locationString = $getValue($locations['Country']) . ' '
-			. $getValue($locations['Region']) . ' '
-			. $getValue($locations['City']) . ' '
-			. $getValue($locations['County']) . ' '
-			. $getValue($locations['Road']) . ' '
-			. $getValue($locations['PublicBuilding']) . ' '
-			. $getValue($locations['Postcode']);
-			
-			if(stristr($locationString, $args) != false){
-				return true;
-			}else{
-				return false;
-			}	
 		}
 	}
 	
@@ -50,7 +58,7 @@ class Location extends ConditionBase{
 	 */
 	function parseParameter($param) {
 		$getLocation = function($p) {
-			if(preg_match('/\(([0-9]+),([0-9]+)\)/', $p, $m)) {
+			if(preg_match('/\(([0-9\.]+),([0-9\.]+)\)/', $p, $m)) {
 				return array('lat' => $m[1], 'lon' => $m[2]);
 			} else {
 				return $p;

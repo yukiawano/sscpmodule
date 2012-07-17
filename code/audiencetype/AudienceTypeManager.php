@@ -38,13 +38,21 @@ class AudienceTypeManager extends Object{
 	 * @param mixed $audienceTypes
 	 */
 	public function getNearestOptionedLocations($audienceTypes) {
+		$getLocation = function($p) {
+			if(preg_match('/\(([0-9\.]+),([0-9\.]+)\)/', $p, $m)) {
+				return array('lat' => $m[1], 'lon' => $m[2]);
+			} else {
+				return $p;
+			}
+		};
+		
 		$matchingRule = key($audienceTypes);
 		$rules = $audienceTypes[$matchingRule];
 		$results = array();
 		foreach($rules as $audienceTypeName => $conditions) {
 			foreach($conditions as $conditionClass => $conditionArgs) {
 				if(preg_match('/nearest\((.+)\)/', $conditionArgs, $matches)){
-					array_push($results, $matches[1]);
+					array_push($results, $getLocation($matches[1]));
 				}
 			}
 		}

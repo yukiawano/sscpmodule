@@ -14,7 +14,7 @@ class CPEnvironment {
 	
 	const CPEnvLocationKey = 'CPEnvLocationJSON';
 	const CPEnvKey = 'CPEnvJSON';
-	const CacheKeyOfNearestLocations = 'NearestLocations';
+	const CacheKeyOfNearestLocations = 'NearestLocationsArray';
 	
 	private $values = array();
 	private $valuesForRead = array();
@@ -116,8 +116,12 @@ class CPEnvironment {
 			
 			$result = array();
 			foreach ($nearestOptionedLocations as $nearestOptionedLocation) {
-				$latLon = CPEnvironment::getLatLon($nearestOptionedLocation);
-				$result[$nearestOptionedLocation] = $latLon;
+				if(is_array($nearestOptionedLocation)) {
+					array_push($result, $nearestOptionedLocation);
+				} else {
+					$latLon = CPEnvironment::getLatLon($nearestOptionedLocation);
+					array_push($result, $latLon);
+				}
 			}
 			$cache->save(serialize($result), self::CacheKeyOfNearestLocations);	
 		} else {
@@ -132,11 +136,11 @@ class CPEnvironment {
 		$location = $this->getLocation();
 		$nearestLocation = null;
 		$minimumDistance = pow(200,2) * 2;
-		foreach ($result as $locationName => $latLon) {
+		foreach ($result as $latLon) {
 			$distance = $distanceFunc($latLon, $location);
 			if($distance < $minimumDistance) {
 				$minimumDistance = $distance;
-				$nearestLocation = $locationName;
+				$nearestLocation = $latLon;
 			}
 		}
 		
