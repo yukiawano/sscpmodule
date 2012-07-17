@@ -150,13 +150,20 @@ class CPEnvironment {
 	 * @param string $address
 	 */
 	public static function getLatLon($address) {
-		$encodedAddress = urlencode($address);
-		$url = "http://nominatim.openstreetmap.org/search?q={$encodedAddress}&format=xml";
-		$xml =  simplexml_load_file($url);
-		$place = $xml->place[0];
+		$cache = SS_Cache::factory('sscp_location');
 		
-		return array('lat' => (float)$place['lat'],
-					   'lon' => (float)$place['lon']);	
+		if($latLon = $cache->load($address)) {
+			return unserialize($latLon);
+		} else {
+			$encodedAddress = urlencode($address);
+			$url = "http://nominatim.openstreetmap.org/search?q={$encodedAddress}&format=xml";
+			$xml =  simplexml_load_file($url);
+			$place = $xml->place[0];
+			
+			$latLon = array('lat' => (float)$place['lat'],
+							 'lon' => (float)$place['lon']);
+			$cache->save(serialize($latLon), $address);
+		}
 	}
 	
 	/**
