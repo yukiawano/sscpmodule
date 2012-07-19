@@ -19,7 +19,10 @@ class Location extends ConditionBase{
 				$nearestLatLon = $env->getNearestLocation();
 				return ($latLon['lat'] == $nearestLatLon['lat'] && $latLon['lon'] == $nearestLatLon['lon']);
 			case 'in':
-				return false;
+				$visitorLocation = $env->getLocation();
+				$latLon = $parsedArgs['in']['location'];
+				$distance = (6378.137 * acos((sin(pi( ) * $visitorLocation['lat'] /180 ) * sin(pi() * $latLon['lat'] /180 )) + (cos(pi() * $visitorLocation['lat'] /180) * cos(pi() * $latLon['lat'] /180) * cos((pi() * $latLon['lon'] /180) - (pi( ) * $visitorLocation['lon'] / 180)))));
+				return $distance < $parsedArgs['in']['distance'];
 			case 'match':
 				if(is_array($parsedArgs['match']['location'])){
 					return false; // match option does not accept lat and lon

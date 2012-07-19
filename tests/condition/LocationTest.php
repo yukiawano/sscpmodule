@@ -30,6 +30,19 @@ class LocationTest extends SapphireTest {
 		$this->assertEquals(false, $cond->doesSatisfy($env, "nearest(tokyo)"));
 	}
 	
+	function testRadiusInOption() {
+		// Kyoto University(35.028388,135.780621) is in 100km from osaka station(34.702781,135.494723).
+		// Tokyo University(35.714957,139.762049) is not in 100km from osaka station.
+		
+		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
+				'Osaka' => array('Location' => 'nearest(osaka)'))));
+		$env->setLocation(array('lat' => 34.702781, 'lon' => 135.494723));
+		
+		$cond = new Location();
+		$this->assertEquals(true, $cond->doesSatisfy($env, 'in((35.028388,135.780621),100km)'));
+		$this->assertEquals(false, $cond->doesSatisfy($env, 'in((35.714957,139.762049),100km)'));
+	}
+	
 	function testNearestOptionedLocationWithLatLon() {
 		// Latitude and longitude of Kyoto University
 		// 35.028872,135.780673
