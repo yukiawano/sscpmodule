@@ -21,6 +21,7 @@ class Location extends ConditionBase{
 			case 'in':
 				$visitorLocation = $env->getLocation();
 				$latLon = $parsedArgs['in']['location'];
+				// The below formula is obtained from http://pastie.org/4269303 .
 				$distance = (6378.137 * acos((sin(pi( ) * $visitorLocation['lat'] /180 ) * sin(pi() * $latLon['lat'] /180 )) + (cos(pi() * $visitorLocation['lat'] /180) * cos(pi() * $latLon['lat'] /180) * cos((pi() * $latLon['lon'] /180) - (pi( ) * $visitorLocation['lon'] / 180)))));
 				return $distance < $parsedArgs['in']['distance'];
 			case 'match':
