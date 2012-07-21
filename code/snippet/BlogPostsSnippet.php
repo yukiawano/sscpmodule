@@ -8,6 +8,8 @@
  */
 class BlogPostsSnippet extends SnippetBase {
 	
+	const TagForEveryone = 'Everyone';
+	
 	static $db = array(
 		'VisibleTag' => 'Varchar'
 	);
@@ -27,7 +29,7 @@ class BlogPostsSnippet extends SnippetBase {
 		$posts = new ArrayList();
 		foreach($entries as $entry) {
 			foreach($entry->TagsCollection() as $tag) {
-				if($tag->Tag === $this->VisibleTag) {
+				if($tag->Tag === $this->VisibleTag || $tag->Tag === self::TagForEveryone) {
 					$posts->push($entry);
 				}
 			}
