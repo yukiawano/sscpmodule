@@ -2,6 +2,39 @@
 class PersonalizablePage extends DataExtension {
 	
 	/**
+	 * Show debug toolbar when a user is logged in
+	 */
+	public function DebugToolbar() {
+		$env = CPEnvironment::getCPEnvironment();
+		$location = $env->getLocation();
+		
+		$getValue = function(& $value) {
+			if(isset($value)) {
+				return $value;
+			} else {
+				return null;
+			}
+		};
+		
+		$locationString = $getValue($location['Country']) . ' '
+		. $getValue($location['Region']) . ' '
+		. $getValue($location['City']) . ' '
+		. $getValue($location['County']) . ' '
+		. $getValue($location['Road']) . ' '
+		. $getValue($location['PublicBuilding']) . ' '
+		. $getValue($location['Postcode']);
+		
+		$template = new SSViewer('DebugToolbar');
+		return $template->process($this, array(
+				'Latitude' => $location['lat'],
+				'Longitude' => $location['lon'],
+				'LocationString' => $locationString,
+				'Platform' => $env->getPlatform(),
+				'Browser' => $env->getBrowser(),
+				'UserAgent' => $_SERVER['HTTP_USER_AGENT']));
+	}
+	
+	/**
 	 * Get personalized content for specified templateKey
 	 * @param string $templateKey
 	 */
