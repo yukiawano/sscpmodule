@@ -88,7 +88,7 @@ class CI_User_agent {
 	 */
 	private function _load_agent_file()
 	{
-		require_once 'user_agents.php';
+		require 'user_agents.php';
 		
 		/*
 		if (defined('ENVIRONMENT') AND is_file(APPPATH.'config/'.ENVIRONMENT.'/user_agents.php'))
