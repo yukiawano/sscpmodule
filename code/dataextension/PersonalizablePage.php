@@ -31,7 +31,8 @@ class PersonalizablePage extends DataExtension {
 				'LocationString' => $locationString,
 				'Platform' => $env->getPlatform(),
 				'Browser' => $env->getBrowser(),
-				'UserAgent' => $_SERVER['HTTP_USER_AGENT']));
+				'UserAgent' => $_SERVER['HTTP_USER_AGENT'],
+				'RemoteAddr' => $_SERVER['REMOTE_ADDR']));
 	}
 	
 	/**

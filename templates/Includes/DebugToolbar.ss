@@ -6,7 +6,7 @@
 <h2>Location</h2>
 <p>Latitude: $Latitude, Longitude: $Longitude<br />$LocationString</p>
 <h2>Device</h2>
-<p>$Platform $Browser <br />$UserAgent</p>
+<p>$Platform $Browser <br />User Agent: $UserAgent<br />Remote Addr: $RemoteAddr</p>
 </div>
 </div>
 <% require css(sscp/css/DebugToolbar.css) %>
