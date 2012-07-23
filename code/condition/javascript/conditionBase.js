@@ -52,7 +52,10 @@ if(!locationSourceIsHTML5() && navigator.geolocation) {
 				           $.cookie(CPEnvLocationKey,JSON.stringify(address));
 				       }
 				     );
-	});
+	},
+	function(error) {
+	},
+	{timeout:10000});
 }
 
 // APIs for getting / setting values from / to CPEnvironment
