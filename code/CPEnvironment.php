@@ -89,6 +89,28 @@ class CPEnvironment {
 	}
 	
 	/**
+	 * Set location manually
+	 * @param double $lat
+	 * @param double $lon
+	 */
+	public function setLocationManually($lat, $lon) {
+		$url =  "http://nominatim.openstreetmap.org/reverse?format=xml&lat={$lat}&lon={$lon}&zoom=18&addressdetails=1";
+		$xml =  simplexml_load_file($url);
+		$address = $xml->addressparts[0];
+		
+		return array(	'lat' => $lat, 
+				       	'lon' => $lon,
+						'Country' => $address->country,
+						'Region' => $address->state . ' ' . $address->region,
+						'City' => $address->city,
+						'County' => $address->county,
+						'Road' => $address->road,
+						'PublicBuilding' => $address->public_building,
+						'Postcode' => $address->postcode,
+						'Source' => 'DebugToolbar');
+	}
+	
+	/**
 	 * Return audience types
 	 * (This method is provided for testing(Stub) and performance(Reducing IOs).
 	 */
