@@ -11,6 +11,7 @@
 */
 
 $platforms = array (
+					'windows nt 6.1'	=> 'Windows 7',
 					'windows nt 6.0'	=> 'Windows Longhorn',
 					'windows nt 5.2'	=> 'Windows 2003',
 					'windows nt 5.0'	=> 'Windows 2000',
