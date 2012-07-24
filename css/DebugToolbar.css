@@ -51,3 +51,10 @@
 	color: #000;
 	font-weight: bold;
 }
+
+#ChangeLocationProcessing {
+	color: #f00;
+	font-weight: bold;
+	display: none;
+	float: none;
+}

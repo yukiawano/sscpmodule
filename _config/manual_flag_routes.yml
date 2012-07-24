@@ -3,4 +3,5 @@ Name: manual_flag_routes
 ---
 Director:
     rules:
+        'sscpdebug/$Action/$ID': 'SSCP_DebugController'
         'manualFlag/$Action/$FlagName': 'ManualFlagController'

@@ -98,16 +98,19 @@ class CPEnvironment {
 		$xml =  simplexml_load_file($url);
 		$address = $xml->addressparts[0];
 		
-		return array(	'lat' => $lat, 
+		$value = array(	'lat' => $lat, 
 				       	'lon' => $lon,
-						'Country' => $address->country,
-						'Region' => $address->state . ' ' . $address->region,
-						'City' => $address->city,
-						'County' => $address->county,
-						'Road' => $address->road,
-						'PublicBuilding' => $address->public_building,
-						'Postcode' => $address->postcode,
+						'Country' => (string)$address->country,
+						'Region' => (string)$address->state . ' ' . (string)$address->region,
+						'City' => (string)$address->city,
+						'County' => (string)$address->county,
+						'Road' => (string)$address->road,
+						'PublicBuilding' => (string)$address->public_building,
+						'Postcode' => (string)$address->postcode,
 						'Source' => 'DebugToolbar');
+		
+		Cookie::set(self::CPEnvLocationKey, json_encode($value));
+		return $value;
 	}
 	
 	/**
