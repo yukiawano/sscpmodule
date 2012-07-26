@@ -7,20 +7,14 @@ class CPEnvironmentTest extends SapphireTest {
 		$cache->remove(CPEnvironment::CacheKeyOfNearestLocations);
 	}
 	
-	function testGetLatLon() {
-		$result = CPEnvironment::getLatLon('kyoto');
-		$expected = array('lat' => 35.1061038125824, 'lon' => 135.727367242386);
-		
-		$this->assertEquals($expected, $result);
-	}
-	
 	function testGetNearestLocation() {
-		$cpenvironment = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
-				'Osaka' => array('Location' => 'nearest(osaka)'),
-				'Tokyo' => array('Location' => 'nearest(tokyo)')
+		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
+				'Osaka' => array('Location' => 'nearest((34.693744,135.502151))'),
+				'Tokyo' => array('Location' => 'nearest((35.6895,139.691729))'),
+				'Sapporo' => array('Location' => 'nearest((43.062092,141.354377))')
 				)));
-		$result = $cpenvironment->getNearestLocation();
-		$expected = array('lat' => 34.6852929, 'lon' => 135.5146944);
+		$result = $env->getNearestLocation(array('Sapporo', 'Tokyo')); // Current location is kyoto, thus Tokyo is the nearest location.
+		$expected = "35.6895-139.691729";
 		
 		$this->assertEquals($expected, $result);
 	}

@@ -4,7 +4,7 @@
  * @package sscp
  */
 class NewComer extends ConditionBase {
-	public function doesSatisfy(CPEnvironment $env, $args){
+	public function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes){
 		$hasVisited = $env->get("HasVisited", false);
 		$isNewComer = ($args == "true" ? true : false);
 		$env->set("HasVisited", true);

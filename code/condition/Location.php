@@ -9,13 +9,13 @@
  */
 class Location extends ConditionBase{
 	
-	function doesSatisfy(CPEnvironment $env, $args) {
+	function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes) {
 		$parsedArgs = $this->parseParameter($args);
 		switch(key($parsedArgs)) {
 			case 'nearest':
 				$latLon = $parsedArgs['nearest']['location'];
 				$key = "{$latLon['lat']}-{$latLon['lon']}";
-				$nearestKey = $env->getNearestLocation();
+				$nearestKey = $env->getNearestLocation($consideredAudienceTypes);
 				return ($nearestKey === $key);
 			case 'in':
 				$visitorLocation = $env->getLocation();

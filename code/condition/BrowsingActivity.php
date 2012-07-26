@@ -23,7 +23,7 @@ class BrowsingActivity extends ConditionBase {
 	const maxUrlLength = 50;
 	const maxUrlSize = 40;
 	
-	public function doesSatisfy(CPEnvironment $env, $args) {
+	public function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes) {
 		return $this->hasAccessedTo($env, $args);
 	}
 	

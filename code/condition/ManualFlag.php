@@ -3,7 +3,7 @@ class ManualFlag extends ConditionBase {
 	
 	const ManualFlagPrefix = 'MF';
 	
-	function doesSatisfy(CPEnvironment $env, $args) {
+	function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes) {
 		$flagName = $args;
 		
 		$result = $env->get("{self::ManualFlagPrefix}_{$flagName}", false);

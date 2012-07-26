@@ -4,7 +4,7 @@
  * @package sscp
  */
 class AudienceTypeManager extends Object{
-	public function getAudienceTypes($audienceTypes, CPEnvironment $env, $consideredTypes = null){
+	public function getAudienceTypes($audienceTypes, CPEnvironment $env, $consideredTypes){
 		$matchingRule = key($audienceTypes);
 		$rules = $audienceTypes[$matchingRule];
 		$results = array();
@@ -15,7 +15,7 @@ class AudienceTypeManager extends Object{
 			$match = true;
 			foreach($conditions as $conditionClass => $conditionArgs){
 				$condition = $this->getConditionClass($conditionClass);
-				$result = $condition->doesSatisfy($env, $conditionArgs);
+				$result = $condition->doesSatisfy($env, $conditionArgs, $consideredTypes);
 				if(!$result){
 					$match = false;
 				}
@@ -36,9 +36,9 @@ class AudienceTypeManager extends Object{
 	/**
 	 * Get locations that is marked as nearest
 	 * @param mixed $audienceTypes
-	 * @param array $consideredAudienceTypes Considered audience types with string array
+	 * @param array $consideredAudienceTypes Considered audience types with string array.
 	 */
-	public function getNearestOptionedLocations($audienceTypes, $consideredAudienceTypes = array()) {
+	public function getNearestOptionedLocations($audienceTypes, $consideredAudienceTypes) {
 		$getLocation = function($p) {
 			if(preg_match('/\((\-*[0-9\.]+),(\-*[0-9\.]+)\)/', $p, $m)) {
 				return array('lat' => $m[1], 'lon' => $m[2]);

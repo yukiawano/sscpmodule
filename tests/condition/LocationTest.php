@@ -13,9 +13,10 @@ class LocationTest extends SapphireTest {
 				'Tokyo' => array('Location' => 'Tokyo'),
 				'Kyoto' => array('Location' => 'Kyoto')
 				)));
+		$consideredAudienceTypes = array('Osaka', 'Tokyo', 'Kyoto');
 		$cond = new Location();
-		$this->assertEquals(true, $cond->doesSatisfy($env, 'Kyoto'));
-		$this->assertEquals(false, $cond->doesSatisfy($env, 'Tokyo'));
+		$this->assertEquals(true, $cond->doesSatisfy($env, 'Kyoto', $consideredAudienceTypes));
+		$this->assertEquals(false, $cond->doesSatisfy($env, 'Tokyo', $consideredAudienceTypes));
 	}
 	
 	
@@ -26,10 +27,11 @@ class LocationTest extends SapphireTest {
 		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
 				'Osaka' => array('Location' => 'nearest(osaka)'))));
 		$env->setLocation(array('lat' => 34.702781, 'lon' => 135.494723));
+		$consideredAudienceTypes = array('Osaka');
 		
 		$cond = new Location();
-		$this->assertEquals(true, $cond->doesSatisfy($env, 'in((35.028388,135.780621),100km)'));
-		$this->assertEquals(false, $cond->doesSatisfy($env, 'in((35.714957,139.762049),100km)'));
+		$this->assertEquals(true, $cond->doesSatisfy($env, 'in((35.028388,135.780621),100km)', $consideredAudienceTypes));
+		$this->assertEquals(false, $cond->doesSatisfy($env, 'in((35.714957,139.762049),100km)', $consideredAudienceTypes));
 	}
 	
 	function testNearestOptionedLocationWithLatLon() {
@@ -42,9 +44,10 @@ class LocationTest extends SapphireTest {
 				'StudentOfKyotoUniv' => array('Location' => 'nearest((35.028872,135.780673))'),
 				'StudentOfTokyoUniv' => array('Location' => 'nearest((35.713207,139.762659))')
 				)));
+		$consideredAudienceTypes = array('StudentOfKyotoUniv', 'StudentOfTokyoUniv');
 		$cond = new Location();
-		$this->assertEquals(true, $cond->doesSatisfy($env, 'nearest((35.028872,135.780673))'));
-		$this->assertEquals(false, $cond->doesSatisfy($env, 'nearest((35.713207,139.762659))'));
+		$this->assertEquals(true, $cond->doesSatisfy($env, 'nearest((35.028872,135.780673))', $consideredAudienceTypes));
+		$this->assertEquals(false, $cond->doesSatisfy($env, 'nearest((35.713207,139.762659))', $consideredAudienceTypes));
 	}
 	
 	function testParseParameter() {

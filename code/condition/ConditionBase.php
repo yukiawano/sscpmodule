@@ -23,7 +23,7 @@ abstract class ConditionBase extends Object{
 	 * @param CPEnvironment $env
 	 * @param String $args
 	 */
-	abstract public function doesSatisfy(CPEnvironment $env, $args);
+	abstract public function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes);
 	
 	function __construct() {
 		parent::__construct();

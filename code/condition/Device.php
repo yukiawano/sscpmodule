@@ -8,7 +8,7 @@
  * @package sscp
  */
 class Device extends ConditionBase{
-	public function doesSatisfy(CPEnvironment $env, $args){
+	public function doesSatisfy(CPEnvironment $env, $args, $consideredAudienceTypes){
 		$platform = $env->getPlatform();
 		$browser = $env->getBrowser();
 		

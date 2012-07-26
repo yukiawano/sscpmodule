@@ -16,7 +16,7 @@ class AudienceTypeManagerTest extends SapphireTest{
 				'NewComer' => array('NewComer' => 'true'),
 				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
 				));
-		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment());
+		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment(), array('NewComer', 'Kyoto'));
 		$this->assertEquals(array('NewComer', 'Kyoto'), $result);
 	}
 	
@@ -26,7 +26,7 @@ class AudienceTypeManagerTest extends SapphireTest{
 				'NewComer' => array('NewComer' => 'true'),
 				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
 				));
-		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment());
+		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment(), array('NewComer', 'Kyoto'));
 		$this->assertEquals(array('NewComer'), $result);
 	}
 	

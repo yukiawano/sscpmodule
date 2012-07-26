@@ -135,12 +135,12 @@ class CPEnvironment {
 	 * 
 	 * CPEnvironment holds the nearest location to the user
 	 */
-	public function getNearestLocation() {
+	public function getNearestLocation($consideredAudienceTypes) {
 		// List up nearest-optioned locations for $result
 		$audienceTypeManager = new AudienceTypeManager();
 		
 		$audienceTypes = $this->getAudienceTypes();
-		$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
+		$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes, $consideredAudienceTypes);
 		
 		$result = array();
 		foreach ($nearestOptionedLocations as $nearestOptionedLocation) {
@@ -166,30 +166,7 @@ class CPEnvironment {
 		
 		return $minimumKey;
 	}
-	
-	/**
-	 * Return lat and lon of address by using Nominatim API
-	 * https://wiki.openstreetmap.org/wiki/Nominatim
-	 * 
-	 * @param string $address
-	 */
-	public static function getLatLon($address) {
-		$cache = SS_Cache::factory('sscp_location');
 		
-		if($latLon = $cache->load($address)) {
-			return unserialize($latLon);
-		} else {
-			$encodedAddress = urlencode($address);
-			$url = "http://nominatim.openstreetmap.org/search?q={$encodedAddress}&format=xml";
-			$xml =  simplexml_load_file($url);
-			$place = $xml->place[0];
-			
-			$latLon = array('lat' => (float)$place['lat'],
-							 'lon' => (float)$place['lon']);
-			$cache->save(serialize($latLon), $address);
-		}
-	}
-	
 	/**
 	 * Set Value
 	 * @param string $key
