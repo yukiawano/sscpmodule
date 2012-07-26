@@ -110,6 +110,11 @@ class CPEnvironment {
 						'Source' => 'DebugToolbar');
 		
 		Cookie::set(self::CPEnvLocationKey, json_encode($value));
+		
+		// Remove cache about the nearest location.
+		$cache = SS_Cache::factory('sscp');
+		$cache->remove(self::CacheKeyOfNearestLocations);
+		
 		return $value;
 	}
 	
@@ -132,25 +137,15 @@ class CPEnvironment {
 	 */
 	public function getNearestLocation() {
 		// List up nearest-optioned locations for $result
-		$cache = SS_Cache::factory('sscp');
-		if(!($serializedResult = $cache->load(self::CacheKeyOfNearestLocations))) {
-			$audienceTypeManager = new AudienceTypeManager();
-			
-			$audienceTypes = $this->getAudienceTypes();
-			$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
-			
-			$result = array();
-			foreach ($nearestOptionedLocations as $nearestOptionedLocation) {
-				if(is_array($nearestOptionedLocation)) {
-					array_push($result, $nearestOptionedLocation);
-				} else {
-					$latLon = CPEnvironment::getLatLon($nearestOptionedLocation);
-					array_push($result, $latLon);
-				}
-			}
-			$cache->save(serialize($result), self::CacheKeyOfNearestLocations);	
-		} else {
-			$result = unserialize($serializedResult);
+		$audienceTypeManager = new AudienceTypeManager();
+		
+		$audienceTypes = $this->getAudienceTypes();
+		$nearestOptionedLocations = $audienceTypeManager->getNearestOptionedLocations($audienceTypes);
+		
+		$result = array();
+		foreach ($nearestOptionedLocations as $nearestOptionedLocation) {
+			$key = "{$nearestOptionedLocation['lat']}-{$nearestOptionedLocation['lon']}";
+			$result[$key] = $nearestOptionedLocation;
 		}
 		
 		// Calculate the nearest location to the user
@@ -159,17 +154,17 @@ class CPEnvironment {
 		};
 		
 		$location = $this->getLocation();
-		$nearestLocation = null;
-		$minimumDistance = pow(200,2) * 2;
-		foreach ($result as $latLon) {
+		$minimumDistance = pow(360,2) * 2; // Set maximum number that can be considered
+		$minimumKey = null;
+		foreach ($result as $key => $latLon) {
 			$distance = $distanceFunc($latLon, $location);
 			if($distance < $minimumDistance) {
 				$minimumDistance = $distance;
-				$nearestLocation = $latLon;
+				$minimumKey = $key;
 			}
 		}
 		
-		return $nearestLocation;
+		return $minimumKey;
 	}
 	
 	/**

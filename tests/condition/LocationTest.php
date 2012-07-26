@@ -18,17 +18,6 @@ class LocationTest extends SapphireTest {
 		$this->assertEquals(false, $cond->doesSatisfy($env, 'Tokyo'));
 	}
 	
-	function testNearestOptionedLocation() {
-		// There are two nearest optioned location, tokyo and osaka.
-		// And our location is kyoto.
-		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
-				'Osaka' => array('Location' => 'nearest(osaka)'),
-				'Tokyo' => array('Location' => 'nearest(tokyo)')
-				)));
-		$cond = new Location();
-		$this->assertEquals(true, $cond->doesSatisfy($env, "nearest(osaka)"));
-		$this->assertEquals(false, $cond->doesSatisfy($env, "nearest(tokyo)"));
-	}
 	
 	function testRadiusInOption() {
 		// Kyoto University(35.028388,135.780621) is in 100km from osaka station(34.702781,135.494723).
@@ -62,9 +51,6 @@ class LocationTest extends SapphireTest {
 		$loc = new Location();
 		$expected = array('match' => array('location' => 'kyoto'));
 		$this->assertEquals($expected, $loc->parseParameter('kyoto'));
-		
-		$expected = array('nearest' => array('location' => 'kyoto'));
-		$this->assertEquals($expected, $loc->parseParameter('nearest(kyoto)'));
 		
 		$expected = array('nearest' => array('location' => array('lat' => 135, 'lon' => 40)));
 		$this->assertEquals($expected, $loc->parseParameter('nearest((135,40))'));

@@ -3,7 +3,7 @@
  * Location
  * 
  * match - address
- * nearest - latlon or address
+ * nearest - latlon
  * in - latlon
  * @package sscp
  */
@@ -13,11 +13,10 @@ class Location extends ConditionBase{
 		$parsedArgs = $this->parseParameter($args);
 		switch(key($parsedArgs)) {
 			case 'nearest':
-				$latLon = 	is_array($parsedArgs['nearest']['location']) ? 
-							$parsedArgs['nearest']['location'] :
-							CPEnvironment::getLatLon($parsedArgs['nearest']['location']);
-				$nearestLatLon = $env->getNearestLocation();
-				return ($latLon['lat'] == $nearestLatLon['lat'] && $latLon['lon'] == $nearestLatLon['lon']);
+				$latLon = $parsedArgs['nearest']['location'];
+				$key = "{$latLon['lat']}-{$latLon['lon']}";
+				$nearestKey = $env->getNearestLocation();
+				return ($nearestKey === $key);
 			case 'in':
 				$visitorLocation = $env->getLocation();
 				$latLon = $parsedArgs['in']['location'];
@@ -62,7 +61,7 @@ class Location extends ConditionBase{
 	 */
 	function parseParameter($param) {
 		$getLocation = function($p) {
-			if(preg_match('/\(([0-9\.]+),([0-9\.]+)\)/', $p, $m)) {
+			if(preg_match('/\((\-*[0-9\.]+),(\-*[0-9\.]+)\)/', $p, $m)) {
 				return array('lat' => $m[1], 'lon' => $m[2]);
 			} else {
 				return $p;

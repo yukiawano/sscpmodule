@@ -39,7 +39,7 @@ class AudienceTypeManager extends Object{
 	 */
 	public function getNearestOptionedLocations($audienceTypes) {
 		$getLocation = function($p) {
-			if(preg_match('/\(([0-9\.]+),([0-9\.]+)\)/', $p, $m)) {
+			if(preg_match('/\((\-*[0-9\.]+),(\-*[0-9\.]+)\)/', $p, $m)) {
 				return array('lat' => $m[1], 'lon' => $m[2]);
 			} else {
 				return $p;
