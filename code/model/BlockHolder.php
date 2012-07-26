@@ -29,11 +29,13 @@ class BlockHolder extends DataObject {
 		$fields = parent::getCMSFields();
 		$fields->removeFieldFromTab('Root', 'Blocks');
 		
-		$gridFieldConfig = GridFieldConfig_RecordEditor::create();
-    	$gridFieldConfig->addComponent(new GridFieldAddNewBlockButton($this->ID, 'buttons-before-left'));
-    	$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
-		$gridFields = new GridField('SSCP_Block', null, SSCP_Block::get()->filter(array('BlockHolderID' => $this->ID)), $gridFieldConfig);
-		$fields->push($gridFields);
+		if($this->ID != 0) {
+			$gridFieldConfig = GridFieldConfig_RecordEditor::create();
+    		$gridFieldConfig->addComponent(new GridFieldAddNewBlockButton($this->ID, 'buttons-before-left'));
+    		$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
+			$gridFields = new GridField('SSCP_Block', null, SSCP_Block::get()->filter(array('BlockHolderID' => $this->ID)), $gridFieldConfig);
+			$fields->push($gridFields);
+		}
 		
 		return $fields;
 	}

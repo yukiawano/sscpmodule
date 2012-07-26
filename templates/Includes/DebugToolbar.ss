@@ -10,7 +10,7 @@
 	<input type="button" value="Change" id="ChangeLocationButton"></input>
 	<span id="ChangeLocationProcessing">Processing...</span>
 </p>
-<p>Address: $LocationString</p>
+<p>Address: $LocationString<br />Source: $LocationSource</p>
 <h2>Device & Environment</h2>
 <p>OS: $Platform / Browser: $Browser <br />User Agent: $UserAgent<br />Remote Addr: $RemoteAddr</p>
 </div>

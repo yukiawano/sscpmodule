@@ -29,6 +29,7 @@ class PersonalizablePage extends DataExtension {
 				'Latitude' => $location['lat'],
 				'Longitude' => $location['lon'],
 				'LocationString' => $locationString,
+				'LocationSource' => $location['Source'],
 				'Platform' => $env->getPlatform(),
 				'Browser' => $env->getBrowser(),
 				'UserAgent' => $_SERVER['HTTP_USER_AGENT'],
