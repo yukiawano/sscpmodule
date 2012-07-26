@@ -45,15 +45,16 @@ class AudienceTypeManagerTest extends SapphireTest{
 	function testGetNearestOptionedLocations() {
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('ExclusiveOR' => array(
-				'OsakaResidents' => array('Location' => 'nearest(osaka)'),
+				'OsakaResidents' => array('Location' => 'nearest((34.693744,135.502151))'),
 				'ShigaResidents' => array('Location' => 'shiga'),
-				'KyotoResidents' => array('Location' => 'nearest(kyoto)'),
-				'TokyoResidents' => array('Location' => 'nearest(tokyo)'),
-				'HokkaidoResidents' => array('Location' => 'nearest((135,40))')
+				'KyotoResidents' => array('Location' => 'nearest((35.011642,135.768031))'),
+				'TokyoResidents' => array('Location' => 'nearest((35.6895,139.691729))'),
 		));
 		
-		$expected = array('osaka', 'kyoto', 'tokyo', array('lat' => 135, 'lon' => 40));
-		$this->assertEquals($expected, $audienceTypeManager->getNearestOptionedLocations($audienceTypes));
+		$expected = array(	array('lat' => 34.693744, 'lon' => 135.502151), // Osaka
+							array('lat' => 35.6895, 'lon' => 139.691729) // Tokyo
+						  	);
+		$this->assertEquals($expected, $audienceTypeManager->getNearestOptionedLocations($audienceTypes, array('OsakaResidents', 'TokyoResidents')));
 	}
 	
 	function testPrettyPrint(){
