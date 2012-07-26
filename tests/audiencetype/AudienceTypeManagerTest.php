@@ -58,6 +58,7 @@ class AudienceTypeManagerTest extends SapphireTest{
 	}
 	
 	function testPrettyPrint(){
+		// TODO Change to use template tracked on https://github.com/yukiawano/sscpmodule/issues/18
 		$audienceTypes = array('InclusiveOR' => array(
 				'NewComer' => array('NewComer' => 'true'),
 				'ShigaResidents' => array('Location' => 'SHIGA', 'Device' => 'Linux')
