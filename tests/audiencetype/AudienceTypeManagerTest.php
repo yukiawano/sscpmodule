@@ -1,8 +1,5 @@
 <?php
-/**
- * @outputBuffering enabled
- *
- */
+
 class AudienceTypeManagerTest extends SapphireTest{
 	
 	function setUp(){
