@@ -10,9 +10,6 @@ class AudienceTypeManagerTest extends SapphireTest{
 		unset($_COOKIE["CPEnvLocationJ"]);
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	function testGetAudienceTypesInclusive(){
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('InclusiveOR' => array(
@@ -23,9 +20,6 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$this->assertEquals(array('NewComer', 'Kyoto'), $result);
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	function testGetAudienceTypesExclusive(){
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('ExclusiveOR' => array(
@@ -36,9 +30,6 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$this->assertEquals(array('NewComer'), $result);
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	function testGetAudienceTypeFiltered() {
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('ExclusiveOR' => array(
@@ -51,9 +42,6 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$this->assertEquals(array('Kyoto'), $result);
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	function testGetNearestOptionedLocations() {
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = array('ExclusiveOR' => array(
@@ -69,9 +57,6 @@ class AudienceTypeManagerTest extends SapphireTest{
 		$this->assertEquals($expected, $audienceTypeManager->getNearestOptionedLocations($audienceTypes, array('OsakaResidents', 'TokyoResidents')));
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	function testPrettyPrint(){
 		// TODO Change to use template tracked on https://github.com/yukiawano/sscpmodule/issues/18
 		$audienceTypes = array('InclusiveOR' => array(
