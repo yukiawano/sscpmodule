@@ -68,20 +68,22 @@ class AudienceTypeManager extends Object{
 	 * @param array $audienceTypes
 	 */
 	public function prettyPrint($audienceTypeArray) {	
-		// TODO This should be handled by template.
-		
 		$matchingRule = key($audienceTypeArray);
-		$result = "MatchingRule: " . $matchingRule . "\n---\n";
 		
-		$audienceTypes = $audienceTypeArray[$matchingRule];
-		foreach($audienceTypes as $audienceTypeName => $conditions) {
-			$result .= $audienceTypeName . ":\n";
-			foreach($conditions as $condition => $args) {
-				$result .= "&nbsp;&nbsp;" . $condition . ": " . $args . "\n";
+		$audienceTypes = new ArrayList();
+		foreach($audienceTypeArray[$matchingRule] as $audienceTypeName => $conditionsArray) {
+			$conditions = new ArrayList();
+			foreach($conditionsArray as $condition => $args) {
+				$conditions->push(new ArrayData(array('Name' => $condition, 'Args' => $args)));
 			}
+			$audienceTypes->push(new ArrayData(array(	'Name' => $audienceTypeName,
+														'Conditions' => $conditions)));	
 		}
 		
-		return nl2br($result);
+		$result = array(	'MatchingRule' => $matchingRule,
+							'AudienceTypes' => $audienceTypes );
+		$template = new SSViewer('PrettyPrint');
+		return $template->process(new ArrayData($result), array());
 	}
 	
 	private function getConditionClass($conditionClass){

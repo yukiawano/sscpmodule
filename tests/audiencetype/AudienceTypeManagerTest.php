@@ -65,14 +65,30 @@ class AudienceTypeManagerTest extends SapphireTest{
 				'ShigaResidents' => array('Location' => 'SHIGA', 'Device' => 'Linux')
 				));
 		$expected = <<<EOT
-MatchingRule: InclusiveOR<br />
----<br />
-NewComer:<br />
-&nbsp;&nbsp;NewComer: true<br />
-ShigaResidents:<br />
-&nbsp;&nbsp;Location: SHIGA<br />
-&nbsp;&nbsp;Device: Linux<br />
+<p>MatchingRule: InclusiveOR</p>
+<ul>
 
+<li>
+	<strong>NewComer</strong>
+	<ul>
+	
+		<li>NewComer: true</li>
+	
+	</ul>
+</li>
+
+<li>
+	<strong>ShigaResidents</strong>
+	<ul>
+	
+		<li>Location: SHIGA</li>
+	
+		<li>Device: Linux</li>
+	
+	</ul>
+</li>
+
+</ul>
 EOT;
 		
 		$audienceTypeManager = new AudienceTypeManager();
