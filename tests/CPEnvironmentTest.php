@@ -5,6 +5,8 @@ class CPEnvironmentTest extends SapphireTest {
 		parent::setUp();
 		$cache = SS_Cache::factory('sscp');
 		$cache->remove(CPEnvironment::CacheKeyOfNearestLocations);
+		
+		CPEnvironmentStub::clearCookie();
 	}
 	
 	function testGetNearestLocation() {
@@ -27,6 +29,20 @@ class CPEnvironmentTest extends SapphireTest {
 		$this->assertEquals(135, $result['lon']);
 		$this->assertEquals('Japan', $result['Country']);
 		$this->assertEquals('DebugToolbar', $result['Source']);
+	}
+	
+	function testDefaultLocation() {
+		$defaultLocation = array(	'lon' => 40, 
+									'lat' => 135, 
+									'Country' => 'Japan', 
+									'Region' => 'Kanto', 
+									'City' => 'Tokyo', 
+									'Source' => 'Default');
+		
+		$env = CPEnvironmentStub::getCPEnvironment(null, $defaultLocation);
+		$result = $env->CPEnvGetLocation();
+		
+		$this->assertEquals($defaultLocation, $result);
 	}
 	
 }

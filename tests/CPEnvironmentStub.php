@@ -22,13 +22,14 @@ class CPEnvironmentStub extends CPEnvironment{
 	 * Return stub CPEnvironment (This actually writes to cookie)
 	 * @return CPEnvironment
 	 */
-	public static function getCPEnvironment($audienceTypes = null){
+	public static function getCPEnvironment($audienceTypes = null, $defaultLocation = null){
 		$env = new CPEnvironmentStub();
 		if(Cookie::get(self::CPEnvKey) != null){
 			$env->values = json_decode(Cookie::get(self::CPEnvKey), true);
 			$env->valuesForRead = $env->values;
 		}
 		$env->audienceTypes = $audienceTypes;
+		$env->defaultLocation = $defaultLocation;
 		return $env;
 	}
 	
@@ -50,5 +51,9 @@ class CPEnvironmentStub extends CPEnvironment{
 	
 	public function getLocation(){
 		return $this->dummyLocation;
+	}
+	
+	public function CPEnvGetLocation() {
+		return parent::getLocation();
 	}
 }

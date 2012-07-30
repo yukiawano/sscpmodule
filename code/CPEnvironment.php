@@ -20,6 +20,7 @@ class CPEnvironment {
 	private $valuesForRead = array();
 	private static $env = null;
 	protected $audienceTypes = null;
+	protected $defaultLocation = null;
 	
 	/**
 	 * Get CPEnvironment for current session
@@ -63,28 +64,12 @@ class CPEnvironment {
 	 * This method would cost.
 	 */
 	public function getLocation() {
-		if(Cookie::get(self::CPEnvLocationKey) != null){
+		if(Cookie::get(self::CPEnvLocationKey) != null) {
 			return json_decode(Cookie::get(self::CPEnvLocationKey), true);
-		}else{
-			$result = Config::inst()->get("APIKey", "IPInfoDB");
-			
-			//Load the class
-			$ipLite = new ip2location_lite();
-			$ipLite->setKey($result);
-			
-			//Get errors and locations
-			$locations = $ipLite->getCity($_SERVER['REMOTE_ADDR']);
-			$errors = $ipLite->getError();
-			
-			$value = array('lon' => $locations['longitude'],
-						    'lat'  => $locations['latitude'],
-							'Country' => $locations['countryName'],
-							'Region' => $locations['regionName'],
-							'City' => $locations['cityName'],
-							'Source' => 'IPInfoDB');
-			
-			Cookie::set(self::CPEnvLocationKey, json_encode($value));
-			return $value;
+		} else {
+			$location = $this->getDefaultLocation();
+			Cookie::set(self::CPEnvLocationKey, json_encode($location));
+			return $location;
 		}
 	}
 	
@@ -116,6 +101,26 @@ class CPEnvironment {
 		$cache->remove(self::CacheKeyOfNearestLocations);
 		
 		return $value;
+	}
+	
+	/**
+	 * Return default location
+	 * (This method is provided for testing(Stub) and performance(Reducing IOs)
+	 */
+	private function getDefaultLocation() {
+		if($this->defaultLocation == null) {
+			$location = Config::inst()->get("DefaultLocation", "Location");
+			
+			$this->defaultLocation = array(
+					'lon' => $location['Lon'],
+					'lat' => $location['Lat'],
+					'Country' => $location['Country'],
+					'Region' => $location['Region'],
+					'City' => $location['City'],
+					'Source' => 'DefaultLocation');
+		}
+		
+		return $this->defaultLocation;
 	}
 	
 	/**

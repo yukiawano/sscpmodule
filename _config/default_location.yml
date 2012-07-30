@@ -1,0 +1,10 @@
+---
+Name: Default Location
+---
+DefaultLocation:
+  Location:
+    Lon: 35.011642
+    Lat: 135.768011
+    Country: Japan
+    Region: Kinki
+    City: Kyoto
