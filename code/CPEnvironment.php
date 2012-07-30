@@ -117,7 +117,7 @@ class CPEnvironment {
 					'Country' => $location['Country'],
 					'Region' => $location['Region'],
 					'City' => $location['City'],
-					'Source' => 'DefaultLocation');
+					'Source' => 'Default');
 		}
 		
 		return $this->defaultLocation;
