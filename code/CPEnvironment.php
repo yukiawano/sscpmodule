@@ -21,6 +21,7 @@ class CPEnvironment {
 	private static $env = null;
 	protected $audienceTypes = null;
 	protected $defaultLocation = null;
+	protected $ipInfoDbAPIKey = null;
 	
 	/**
 	 * Get CPEnvironment for current session
@@ -35,6 +36,7 @@ class CPEnvironment {
 				self::$env->values = json_decode(Cookie::get(self::CPEnvKey), true);
 				self::$env->valuesForRead = self::$env->values;
 			}
+			
 			return self::$env;
 		}else{
 			return self::$env;
@@ -101,6 +103,17 @@ class CPEnvironment {
 		$cache->remove(self::CacheKeyOfNearestLocations);
 		
 		return $value;
+	}
+	
+	/**
+	 * Return API Key of IPInfoDB
+	 * (This method is provided for performance(Reducing IOs)
+	 */
+	private function getIpInfoDbAPIKey() {
+		if($this->ipInfoDbAPIKey) {
+			$this->ipInfoDbAPIKey = Config::inst()->get("APIKey", "IPInfoDB");
+		}
+		return $this->ipInfoDbAPIKey;
 	}
 	
 	/**

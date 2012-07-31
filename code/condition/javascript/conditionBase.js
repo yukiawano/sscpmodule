@@ -29,7 +29,7 @@ var getSourceOfLocation = function() {
 	} else {
 		return "NotSet";
 	}
-}
+};
 
 var getLocationWithHtml5 = function(failed) {
 	if(navigator.geolocation) {
@@ -70,18 +70,38 @@ var getLocationWithHtml5 = function(failed) {
 	} else {
 		failed();
 	}
-}
+};
 
 var getLocationWithIPInfoDB = function(failed) {
-	// Get IPAddress of the client and call IPInfoDB
-	failed();
-}
+	// Get IPAddress of the client, by calling the server.
+	// We don't directly call IPInfoDB from Javascript, because it may show APIKey for visitors.
+	$.ajax({
+	    type: "GET",
+	    url: "http://api.ipinfodb.com/v3/ip-city/",
+	    data: { key: ipInfoDbAPIKey,
+			  	format: 'json' },
+	    dataType: "jsonp",
+	    success: function(json) {
+	    	if(json.statusCode === "OK") {
+	    		var result = {
+	    				lat: json.latitude,
+						lon: json.longitude,
+						Country: json.countryName,
+						Region: json.regionName,
+						City: json.cityName,
+						Source: 'IPInfoDB' };
+	    		$.cookie(CPEnvLocationKey, JSON.stringify(result));
+	    	} else {
+	    		failed();
+	    	}
+	    },
+	    error: function(error) {
+	    	failed();
+	    }
+	});
+};
 
-var doNothing = function() {}
-
-var getIPAddress = function() {
-	// Obtain IP Address from Cookie
-}
+var doNothing = function() {};
 
 $(function(){
 	if(!(getSourceOfLocation() == "HTML5" || getSourceOfLocation() == "DebugToolbar")){
