@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+.DebugInfo { 
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.DebugInfo .Title {
+	width: 100%;
+	background: #000;
+	color: #fff;
+	padding: 5px;
+	margin: 0;
+}
+
+.DebugInfo .PropertyBox {
+	background: #ddd;
+	width: 100%;
+	-moz-box-shadow:    inset 0 0 10px #000000;
+   	-webkit-box-shadow: inset 0 0 10px #000000;
+   	box-shadow:         inset 0 0 10px #000000;
+	padding: 5px;
+	margin: 0;
+}
+
+.PropertyBox dt {
+	margin-left: 5px;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.PropertyBox dd {
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
