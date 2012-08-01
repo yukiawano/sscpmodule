@@ -140,7 +140,7 @@ class CPEnvironment {
 	 * Return audience types
 	 * (This method is provided for testing(Stub) and performance(Reducing IOs).
 	 */
-	private function getAudienceTypes() {
+	public function getAudienceTypes() {
 		if($this->audienceTypes == null) {
 			$audienceTypeLoader = new AudienceTypeLoader();
 			$this->audienceTypes = $audienceTypeLoader->load();
