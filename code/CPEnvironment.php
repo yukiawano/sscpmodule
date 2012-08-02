@@ -28,7 +28,6 @@ class CPEnvironment {
 	 * @return CPEnvironment
 	 */
 	public static function getCPEnvironment(){
-		
 		if(self::$env == null) { 
 			self::$env = $env = new CPEnvironment(); 
 			
@@ -69,10 +68,19 @@ class CPEnvironment {
 		if(Cookie::get(self::CPEnvLocationKey) != null) {
 			return json_decode(Cookie::get(self::CPEnvLocationKey), true);
 		} else {
-			$location = $this->getDefaultLocation();
-			Cookie::set(self::CPEnvLocationKey, json_encode($location));
-			return $location;
+			return $this->resetToDefaultLocation();
 		}
+	}
+	
+	/**
+	 * Clear location
+	 * 
+	 * @return array Location
+	 */
+	public function resetToDefaultLocation() {
+		$location = $this->getDefaultLocation();
+		Cookie::set(self::CPEnvLocationKey, json_encode($location));
+		return $location;
 	}
 	
 	/**

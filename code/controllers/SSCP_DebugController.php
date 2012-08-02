@@ -12,7 +12,16 @@ class SSCP_DebugController extends Controller {
 		$env = CPEnvironment::getCPEnvironment();
 		$value = $env->setLocationManually($lat, $lon);
 		
-		var_dump($value);
-		print_r("OK: Changed with ({$lat},{$lon})");
+		$this->response->setStatusCode(200);
+	}
+	
+	/**
+	 * Clear location
+	 */
+	public function clearLocation(SS_HTTPRequest $request) {
+		$env = CPEnvironment::getCPEnvironment();
+		$env->resetToDefaultLocation();
+		
+		$this->response->setStatusCode(200);
 	}
 }

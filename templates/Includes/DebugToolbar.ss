@@ -8,6 +8,7 @@
 	Latitude <input type="text" value="$Latitude" id="LatitudeTextBox" style="width:100px;"></input>
 	Longitude<input type="text" value="$Longitude" id="LongitudeTextBox" style="width:100px;"></input>
 	<input type="button" value="Change" id="ChangeLocationButton"></input>
+	<input type="button" value="Clear" id="ClearLocationButton"></input>
 	<span id="ChangeLocationProcessing">Processing...</span>
 </p>
 <p>Address: $LocationString<br />Source: $LocationSource</p>
@@ -21,6 +22,7 @@
 		$("#DebugToolbarToggleButton").click(function(){
 			$("div.debug_console").toggle("slow");
 		});
+		
 		$("#ChangeLocationButton").click(function(){
 			$("#ChangeLocationButton").attr('disabled', '');
 			$("#ChangeLocationProcessing").show("slow");
@@ -32,6 +34,14 @@
 				alert("Current location is changed successfully.You need to refresh this page to get the result.");
 				$("#ChangeLocationProcessing").hide("slow");
 				$("#ChangeLocationButton").removeAttr('disabled');
+			});
+		});
+		
+		$("#ClearLocationButton").click(function() {
+			$("#ClearLocationButton").attr('disabled', '');
+			$.get('/sscpdebug/clearLocation/', {}, function(data) {
+				alert("Cleared location.");
+				$("#ClearLocationButton").removeAttr('disabled');
 			});
 		});
 	})(jQuery);
