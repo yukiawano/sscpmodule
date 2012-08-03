@@ -26,11 +26,13 @@ Copy the two configuration files
 
     sscp/_config/audiencetype.yml.sample
     sscp/_config/apikey.yml.sample
+    sscp/_config/default_location.yml.sample
 
 to
 
     mysite/_config/audiencetype.yml
     mysite/_config/apikey.yml
+    mysite/_config/default_location.yml
 
 
 ### APIKeys (mysite/_config/apikey.yml)
@@ -63,6 +65,22 @@ AudienceTypeDefinition:
 
 After you have changed audience types you must access ``/dev/build/?flush=all`` to reload the configuration.
 
+## Default Location (mysite/_config/default_location.yml)
+
+To render the page faster, we getting location of a visitor in background with javascript.
+Then our module uses default location as the location of new comer.
+
+You can define default location in YAML like this:
+
+```
+DefaultLocation:
+  Location:
+    Lon: 35.011642
+    Lat: 135.768011
+    Country: Japan
+    Region: Kinki
+    City: Kyoto
+```
 
 ## Tutorial
 
