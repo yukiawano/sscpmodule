@@ -5,35 +5,39 @@ class PersonalizablePage extends DataExtension {
 	 * Show debug toolbar when a user is logged in
 	 */
 	public function DebugToolbar() {
-		$env = CPEnvironment::getCPEnvironment();
-		$location = $env->getLocation();
-		
-		$getValue = function(& $value) {
-			if(isset($value)) {
-				return $value;
-			} else {
-				return null;
-			}
-		};
-		
-		$locationString = $getValue($location['Country']) . ' '
-		. $getValue($location['Region']) . ' '
-		. $getValue($location['City']) . ' '
-		. $getValue($location['County']) . ' '
-		. $getValue($location['Road']) . ' '
-		. $getValue($location['PublicBuilding']) . ' '
-		. $getValue($location['Postcode']);
-		
-		$template = new SSViewer('DebugToolbar');
-		return $template->process($this, array(
-				'Latitude' => $location['lat'],
-				'Longitude' => $location['lon'],
-				'LocationString' => $locationString,
-				'LocationSource' => $location['Source'],
-				'Platform' => $env->getPlatform(),
-				'Browser' => $env->getBrowser(),
-				'UserAgent' => $_SERVER['HTTP_USER_AGENT'],
-				'RemoteAddr' => $_SERVER['REMOTE_ADDR']));
+		if(Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY)) {
+			$env = CPEnvironment::getCPEnvironment();
+			$location = $env->getLocation();
+			
+			$getValue = function(& $value) {
+				if(isset($value)) {
+					return $value;
+				} else {
+					return null;
+				}
+			};
+			
+			$locationString = $getValue($location['Country']) . ' '
+			. $getValue($location['Region']) . ' '
+			. $getValue($location['City']) . ' '
+			. $getValue($location['County']) . ' '
+			. $getValue($location['Road']) . ' '
+			. $getValue($location['PublicBuilding']) . ' '
+			. $getValue($location['Postcode']);
+			
+			$template = new SSViewer('DebugToolbar');
+			return $template->process($this, array(
+					'Latitude' => $location['lat'],
+					'Longitude' => $location['lon'],
+					'LocationString' => $locationString,
+					'LocationSource' => $location['Source'],
+					'Platform' => $env->getPlatform(),
+					'Browser' => $env->getBrowser(),
+					'UserAgent' => $_SERVER['HTTP_USER_AGENT'],
+					'RemoteAddr' => $_SERVER['REMOTE_ADDR']));
+		} else {
+			return '';
+		}
 	}
 	
 	/**
@@ -49,7 +53,8 @@ class PersonalizablePage extends DataExtension {
 		if($blockHolder == null) {
 			return "BlockHolder of {$templateKey} is not found.";
 		} else {
-			return $this->renderPersonalizedContent($this->getPersonalizedContent($blockHolder), true);
+			$showDebugToolbar = Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY);
+			return $this->renderPersonalizedContent($this->getPersonalizedContent($blockHolder), $showDebugToolbar);
 		}
 	}
 	
