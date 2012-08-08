@@ -1,7 +1,6 @@
 <div class="debug_toolbar">
 <h1>Content Personalization Debug Mode</h1>
 <a id="DebugToolbarToggleButton">Toggle Debug Toolbar</a>
-<span>This toolbar is shown for everyone as an experiment.</span>
 <div class="debug_console">
 <h2>Location</h2>
 <p>
@@ -17,32 +16,4 @@
 </div>
 </div>
 <% require css(sscp/css/DebugToolbar.css) %>
-<script type="text/javascript">
-	(function($){
-		$("#DebugToolbarToggleButton").click(function(){
-			$("div.debug_console").toggle("slow");
-		});
-		
-		$("#ChangeLocationButton").click(function(){
-			$("#ChangeLocationButton").attr('disabled', '');
-			$("#ChangeLocationProcessing").show("slow");
-			
-			var lat = $("#LatitudeTextBox").val();
-			var lon = $("#LongitudeTextBox").val();
-			
-			$.get('/sscpdebug/changelocation/', {"lat": lat, "lon": lon}, function(data){
-				alert("Current location is changed successfully.You need to refresh this page to get the result.");
-				$("#ChangeLocationProcessing").hide("slow");
-				$("#ChangeLocationButton").removeAttr('disabled');
-			});
-		});
-		
-		$("#ClearLocationButton").click(function() {
-			$("#ClearLocationButton").attr('disabled', '');
-			$.get('/sscpdebug/clearLocation/', {}, function(data) {
-				alert("Cleared location.");
-				$("#ClearLocationButton").removeAttr('disabled');
-			});
-		});
-	})(jQuery);
-</script>
+<% require javascript(sscp/javascript/DebugToolbar.css) %>

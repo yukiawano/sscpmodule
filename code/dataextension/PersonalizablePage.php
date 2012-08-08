@@ -6,6 +6,8 @@ class PersonalizablePage extends DataExtension {
 	 */
 	public function DebugToolbar() {
 		if(Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY)) {
+			Requirements::javascript('sscp/javascript/DebugToolbar.js');
+			
 			$env = CPEnvironment::getCPEnvironment();
 			$location = $env->getLocation();
 			
