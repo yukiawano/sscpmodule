@@ -69,8 +69,8 @@ class BlockHolderMain extends LeftAndMain {
 	
 		// The root element should point to the pages tree view,
 		// rather than the actual controller (which would just show an empty edit form)
-		$items[0]->Title = self::menu_title_for_class('CMSPagesController');
-		$items[0]->Link = singleton('CMSPagesController')->Link();
+		$items[0]->Title = self::menu_title_for_class('BlockHolderMain');
+		$items[0]->Link = singleton('BlockHolderMain')->Link();
 	
 		return $items;
 	}
