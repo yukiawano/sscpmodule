@@ -33,7 +33,8 @@ class BlockHolder extends DataObject {
 			$gridFieldConfig = GridFieldConfig_RecordEditor::create();
     		$gridFieldConfig->addComponent(new GridFieldAddNewBlockButton($this->ID, 'buttons-before-left'));
     		$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
-			$gridFields = new GridField('SSCP_Block', null, SSCP_Block::get()->filter(array('BlockHolderID' => $this->ID)), $gridFieldConfig);
+			$gridFields = new GridField('SSCP_Block', 'Block' , SSCP_Block::get()->filter(array('BlockHolderID' => $this->ID)), $gridFieldConfig);
+			$gridFields->setAttribute('style', 'margin:15px;');
 			$fields->push($gridFields);
 		}
 		
