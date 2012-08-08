@@ -117,7 +117,7 @@ class CPEnvironment {
 	 * Return API Key of IPInfoDB
 	 * (This method is provided for performance(Reducing IOs)
 	 */
-	private function getIpInfoDbAPIKey() {
+	public function getIpInfoDbAPIKey() {
 		if($this->ipInfoDbAPIKey) {
 			$this->ipInfoDbAPIKey = Config::inst()->get("APIKey", "IPInfoDB");
 		}

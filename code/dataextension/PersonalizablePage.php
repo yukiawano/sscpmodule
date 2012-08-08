@@ -47,9 +47,9 @@ class PersonalizablePage extends DataExtension {
 	 * @param string $templateKey
 	 */
 	public function PersonalizedContent(string $templateKey) {
-		// TODO We need consider more, where should I put these requirements codes.
-		$ipInfoDbAPIKey = Config::inst()->get("APIKey", "IPInfoDB");
-		Requirements::javascriptTemplate('sscp/code/condition/javascript/vars.js', array('ipInfoDbAPIKey' => $ipInfoDbAPIKey));
+		$env = CPEnvironment::getCPEnvironment();
+		
+		Requirements::javascriptTemplate('sscp/code/condition/javascript/vars.js', array('ipInfoDbAPIKey' => $env->getIpInfoDbAPIKey()));
 		
 		$blockHolder = BlockHolder::get()->filter(array('TemplateKey' => $templateKey))->First();
 		if($blockHolder == null) {
