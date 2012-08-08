@@ -5,7 +5,7 @@ class PersonalizablePage extends DataExtension {
 	 * Show debug toolbar when a user is logged in
 	 */
 	public function DebugToolbar() {
-		if(Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY)) {
+		if(Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION)) {
 			Requirements::javascript('sscp/javascript/DebugToolbar.js');
 			
 			$env = CPEnvironment::getCPEnvironment();
@@ -55,7 +55,7 @@ class PersonalizablePage extends DataExtension {
 		if($blockHolder == null) {
 			return "BlockHolder of {$templateKey} is not found.";
 		} else {
-			$showDebugToolbar = Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY);
+			$showDebugToolbar = Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION);
 			return $this->renderPersonalizedContent($this->getPersonalizedContent($blockHolder), $showDebugToolbar);
 		}
 	}

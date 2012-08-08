@@ -3,7 +3,9 @@
  * @package sscp
  */
 // class BlockHolderMain extends CMSSettingsController {
-class BlockHolderMain extends LeftAndMain {
+class BlockHolderMain extends LeftAndMain implements PermissionProvider {
+	
+	const ADMIN_PERSONALIZATION = 'ADMIN_PERSONALIZATION';
 	
 	static $url_segment = 'personalization';
 	static $url_rule = '/$Action/$ID/$OtherID';
@@ -16,6 +18,10 @@ class BlockHolderMain extends LeftAndMain {
 			'AddBlockForm',
 			'doAddBlock'
 			);
+	
+	function providePermissions() {
+		return array(BlockHolderMain::ADMIN_PERSONALIZATION => "Manage and debug personalized contents.");
+	}
 	
 	public function init(){
 		parent::init();

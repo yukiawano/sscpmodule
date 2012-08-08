@@ -1,18 +1,12 @@
 <?php
-class SSCP_DebugController extends Controller implements PermissionProvider {
-	
-	const SSCP_DEBUG_PERMISSION_KEY = "SSCPDebug"; 
-	
-	function providePermissions() {
-		return array(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY => "Debug Personalized Content");
-	}
+class SSCP_DebugController extends Controller {
 	
 	/**
 	 * Change Location
 	 * @param SS_HTTPRequest $request
 	 */
 	public function changelocation(SS_HTTPRequest $request) {
-		if(Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY)) {
+		if(Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION)) {
 			$lat = $request->getVar('lat');
 			$lon = $request->getVar('lon');
 			
@@ -21,7 +15,7 @@ class SSCP_DebugController extends Controller implements PermissionProvider {
 			
 			$this->response->setStatusCode(200);
 		} else {
-			$this->response->setStatusCode(400);
+			Security::permissionFailure();
 		}
 	}
 	
@@ -29,13 +23,13 @@ class SSCP_DebugController extends Controller implements PermissionProvider {
 	 * Clear location
 	 */
 	public function clearLocation(SS_HTTPRequest $request) {
-		if(Permission::check(SSCP_DebugController::SSCP_DEBUG_PERMISSION_KEY)) {
+		if(Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION)) {
 			$env = CPEnvironment::getCPEnvironment();
 			$env->resetToDefaultLocation();
 		
 			$this->response->setStatusCode(200);
 		} else {
-			$this->response->setStatusCode(400);	
+			Security::permissionFailure();
 		}
 	}
 }
