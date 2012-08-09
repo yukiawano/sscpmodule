@@ -6,9 +6,9 @@ before_script:
   - wget http://www.silverstripe.org/assets/releases/SilverStripe-cms-v3.0.1-rc3.tar.gz
   - tar -xzf SilverStripe-cms-v3.0.1-rc3.tar.gz
   - mv SilverStripe-cms-v3.0.1-rc3 ss3
-  - mv yukiawano/sscpmodule ss3/sscpmodule
+  - mv yukiawano/sscpmodule ss3/sscp
   - mysql -e "create database IF NOT EXISTS ss_module_test;"
-  - mv -f ss3/sscpmodule/tests/travis/_config.php.travis ss3/mysite/_config.php
+  - mv -f ss3/sscp/tests/travis/_config.php.travis ss3/mysite/_config.php
 script:
   - cd ss3/framework
-  - ./sake dev/tests "flush=1"
+  - ./sake dev/tests/module/sscp "flush=1"

@@ -3,17 +3,6 @@
 global $project;
 $project = 'mysite';
 
-global $database;
-$database = array(
-	"type" => 'MySQLDatabase',
-	"server" => 'localhost',
-	"username" => 'root',
-	"password" => '',
-	"database" => 'ss_module_test',
-	"path" => '',
-);
-
-
 global $databaseConfig;
 $databaseConfig = array(
 	"type" => 'MySQLDatabase',
