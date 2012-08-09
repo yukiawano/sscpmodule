@@ -6,7 +6,7 @@ before_script:
   - wget http://www.silverstripe.org/assets/releases/SilverStripe-cms-v3.0.1-rc3.tar.gz
   - tar -xzvf SilverStripe-cms-v3.0.1-rc3.tar.gz
   - mv SilverStripe-cms-v3.0.1-rc3 ss3
-  - mv yukiawano/sscp ss3/sscp
+  - mv yukiawano/sscpmodule ss3/sscpmodule
   - mysql -e "create database IF NOT EXISTS ss_module_test;"
 script:
   - cd ss3/framework
