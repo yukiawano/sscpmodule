@@ -1,4 +1,2 @@
 <?php
 ob_start();
-
-define('SS_ENVIRONMENT_TYPE', 'dev');
