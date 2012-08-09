@@ -13,6 +13,17 @@ $database = array(
 	"path" => '',
 );
 
+
+global $databaseConfig;
+$databaseConfig = array(
+	"type" => 'MySQLDatabase',
+	"server" => 'localhost',
+	"username" => 'root',
+	"password" => '',
+	"database" => 'ss_module_test',
+	"path" => '',
+);
+
 require_once('conf/ConfigureFromEnv.php');
 
 MySQLDatabase::set_connection_charset('utf8');
