@@ -3,9 +3,12 @@ php:
   - 5.4
 before_script:
   - cd ~/builds
-  - wget http://www.silverstripe.org/assets/releases/SilverStripe-cms-v3.0.1-rc3.tar.gz
-  - tar -xzf SilverStripe-cms-v3.0.1-rc3.tar.gz
-  - mv SilverStripe-cms-v3.0.1-rc3 ss3
+  - git clone git@github.com:silverstripe/silverstripe-installer.git ss3
+  - cd ~/builds/ss3
+  - git clone git@github.com:silverstripe/sapphire.git framework
+  - git clone git@github.com:<username>/silverstripe-cms.git cms
+  - git clone git@github.com:<username>/silverstripe-simple.git themes/simple
+  - cd ~/builds
   - mv yukiawano/sscpmodule ss3/sscp
   - mysql -e "create database IF NOT EXISTS ss_module_test;"
   - mv -f ss3/sscp/tests/travis/_config.php.travis ss3/mysite/_config.php
