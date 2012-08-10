@@ -6,8 +6,8 @@ before_script:
   - git clone --quiet git://github.com/silverstripe/silverstripe-installer.git ss3
   - cd ~/builds/ss3
   - git clone --quiet git://github.com/silverstripe/sapphire.git framework
-  - git clone --quiet git://github.com/silverstripe-cms.git cms
-  - git clone --quiet git://github.com/silverstripe-simple.git themes/simple
+  - git clone --quiet git://github.com/silverstripe/silverstripe-cms.git cms
+  - git clone --quiet git://github.com/silverstripe/silverstripe-simple.git themes/simple
   - cd ~/builds
   - mv yukiawano/sscpmodule ss3/sscp
   - mysql -e "create database IF NOT EXISTS ss_module_test;"
