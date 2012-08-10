@@ -3,11 +3,11 @@ php:
   - 5.4
 before_script:
   - cd ~/builds
-  - git clone git@github.com:silverstripe/silverstripe-installer.git ss3
+  - git clone --quiet git://github.com/silverstripe/silverstripe-installer.git ss3
   - cd ~/builds/ss3
-  - git clone git@github.com:silverstripe/sapphire.git framework
-  - git clone git@github.com:<username>/silverstripe-cms.git cms
-  - git clone git@github.com:<username>/silverstripe-simple.git themes/simple
+  - git clone --quiet git://github.com/silverstripe/sapphire.git framework
+  - git clone --quiet git://github.com/silverstripe-cms.git cms
+  - git clone --quiet git://github.com/silverstripe-simple.git themes/simple
   - cd ~/builds
   - mv yukiawano/sscpmodule ss3/sscp
   - mysql -e "create database IF NOT EXISTS ss_module_test;"
