@@ -40,7 +40,7 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
     	
     	// BlockHolder Tab
     	$config = GridFieldConfig_RelationEditor::create();
-    	$gridField = new GridField('BlockHolders', null, BlockHolder::get(), $config);
+    	$gridField = new GridField('BlockHolders', null, BlockHolderBase::get(), $config);
     	$blockHolderTab->push($gridField);
     	
     	// Snippet Tab
