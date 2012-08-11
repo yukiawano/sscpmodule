@@ -20,9 +20,9 @@ These are list of what we will do in near future. These are still a lot of room 
 We are really welcome to your feedback.
 So if you have anything about them, please let us know.
 
-* Developer mode - Provide developer mode for web site developer. In the mode, user can change their location or other settings, and can preview the results in specific environment.
-* Snippet for personalized list of articles
-* Create a personalized demo site with [plunket](https://skitch.com/sigurdmagnusson/8ajep/screen-shot-2012-05-02-at-10.15.07-pm). The demo site is still under construction. However you can check it from  [http://sandbox.yaunix.com/](http://sandbox.yaunix.com/).
+* Make Block Holder extensible. (To create Slideshow Block Holder.)
+* Enable to assign multiple Audience Types to a Block.
+* Move MatchingType option from audiencetype.yml to Block Holder.
 
 ## Open Questions
 
