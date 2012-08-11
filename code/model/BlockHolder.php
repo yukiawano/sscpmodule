@@ -63,4 +63,38 @@ class BlockHolder extends DataObject {
 		}
 		return $relatedAudienceTypes;
 	}
+	
+	/**
+	 * Return content for specified environment
+	 */
+	public function getContent(CPEnvironment $env) {
+		$audienceTypeManager = new AudienceTypeManager();
+		$audienceTypes = $env->getAudienceTypes();
+		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, $this->getRelatedAudienceTypes());
+		
+		// Get blocks of this block holder
+		$blocks = $this->Blocks();
+		foreach($blocks as $block) {
+			if(in_array($block->AudienceType, $currentAudienceTypes)) {
+				return array(
+						'Content' => $block->SnippetBase()->getContent(),
+						'DebugInfo' => array(
+								'AppliedAudienceType' => $block->AudienceType,
+								'ConsideredAudienceTypes' => $this->getRelatedAudienceTypes(),
+								'RenderedSnippetName' => $block->SnippetBase()->Title,
+								'BlockHolderName' => $this->Title)
+				);
+			}
+		}
+		
+		// When there is no block that correspond to current session.
+		return array(	'Content' => ($this->ShowDefaultSnippet ? $this->DefaultSnippet()->getContent() : ''),
+				'DebugInfo' => array(
+						'AppliedAudienceType' => null,
+						'ConsideredAudienceTypes' => $this->getRelatedAudienceTypes(),
+						'RenderedSnippetName' => ($this->ShowDefaultSnippet ? $this->DefaultSnippet()->Title : 'Nothing'),
+						'BlockHolderName' => $this->Title)
+		);
+	}
+	
 }

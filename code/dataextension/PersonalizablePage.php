@@ -56,47 +56,8 @@ class PersonalizablePage extends DataExtension {
 			return "BlockHolder of {$templateKey} is not found.";
 		} else {
 			$showDebugToolbar = Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION);
-			return $this->renderPersonalizedContent($this->getPersonalizedContent($blockHolder), $showDebugToolbar);
+			return $this->renderPersonalizedContent($blockHolder->getContent($env), $showDebugToolbar);
 		}
-	}
-	
-	/**
-	 * Get personalzied content
-	 * 
-	 * @param BlockHolder $blockHolder
-	 * @return String of content
-	 */
-	private function getPersonalizedContent(BlockHolder $blockHolder) {
-		$audienceTypeLoader = new AudienceTypeLoader();
-		$audienceTypeManager = new AudienceTypeManager();
-		
-		$env = CPEnvironment::getCPEnvironment();
-		$audienceTypes = $env->getAudienceTypes();
-		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, $blockHolder->getRelatedAudienceTypes());
-		
-		// Get blocks of this block holder
-		$blocks = $blockHolder->Blocks();
-		foreach($blocks as $block) {
-			if(in_array($block->AudienceType, $currentAudienceTypes)) {
-				return array(
-							'Content' => $block->SnippetBase()->getContent(),
-							'DebugInfo' => array(
-								'AppliedAudienceType' => $block->AudienceType,
-								'ConsideredAudienceTypes' => $blockHolder->getRelatedAudienceTypes(),
-								'RenderedSnippetName' => $block->SnippetBase()->Title,
-								'BlockHolderName' => $blockHolder->Title)
-						);
-			}
-		}
-		
-		// When there is no block that correspond to current session.
-		return array(	'Content' => ($blockHolder->ShowDefaultSnippet ? $blockHolder->DefaultSnippet()->getContent() : ''),
-						'DebugInfo' => array(
-							'AppliedAudienceType' => null,
-							'ConsideredAudienceTypes' => $blockHolder->getRelatedAudienceTypes(),
-							'RenderedSnippetName' => ($blockHolder->ShowDefaultSnippet ? $blockHolder->DefaultSnippet()->Title : 'Nothing'),
-							'BlockHolderName' => $blockHolder->Title)
-		);
 	}
 	
 	/**
