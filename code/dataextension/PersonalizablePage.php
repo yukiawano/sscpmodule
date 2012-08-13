@@ -51,7 +51,7 @@ class PersonalizablePage extends DataExtension {
 		
 		Requirements::javascriptTemplate('sscp/code/condition/javascript/vars.js', array('ipInfoDbAPIKey' => $env->getIpInfoDbAPIKey()));
 		
-		$blockHolder = BlockHolder::get()->filter(array('TemplateKey' => $templateKey))->First();
+		$blockHolder = BlockHolderBase::get()->filter(array('TemplateKey' => $templateKey))->First();
 		if($blockHolder == null) {
 			return "BlockHolder of {$templateKey} is not found.";
 		} else {

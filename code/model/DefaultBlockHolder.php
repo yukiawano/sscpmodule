@@ -40,6 +40,31 @@ class DefaultBlockHolder extends BlockHolderBase {
 		return $fields;
 	}
 	
+	
+	/**
+	 * Return audience types which is related to this BlockHolder.
+	 * 
+	 * @example
+	 * There are AudienceType A, B, C, D, E and
+	 * Block Holder A holds
+	 *   BlockA : AudienceTypeA
+	 *   BlockB : AudienceTypeC
+	 *   BlockC : AudienceTypeE
+	 *
+	 * Then getRelatedAudienceTypes() of BlockHolder A returns
+	 *   AudienceTypeA, AudienceTypeC, AudienceTypeE
+	 */
+	public function getRelatedAudienceTypes() {
+		$blocks = $this->Blocks();
+		$relatedAudienceTypes = array();
+		foreach($blocks as $block) {
+			if(!in_array($block->AudienceType, $relatedAudienceTypes)) {
+				array_push($relatedAudienceTypes, $block->AudienceType);
+			}
+		}
+		return $relatedAudienceTypes;
+	}
+	
 	/**
 	 * Return content for specified environment
 	 */

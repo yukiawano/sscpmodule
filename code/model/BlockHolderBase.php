@@ -40,29 +40,15 @@ class BlockHolderBase extends DataObject {
 	
 	/**
 	 * Return audience types which is related to this BlockHolder.
+	 * Only the returned audience types are considered in matching process.
 	 * 
-	 * TODO Implementation of this method is specific to DefaultBlockHolder.
-	 * We need to move this method to DefaultBlockHolder and write here just an interface of this.
+	 * You should overwrite this method in subclass.
 	 * 
-	 * @example
-	 * There are AudienceType A, B, C, D, E and
-	 * Block Holder A holds
-	 *   BlockA : AudienceTypeA
-	 *   BlockB : AudienceTypeC
-	 *   BlockC : AudienceTypeE
-	 *
-	 * Then getRelatedAudienceTypes() of BlockHolder A returns
-	 *   AudienceTypeA, AudienceTypeC, AudienceTypeE
+	 * @return Array of related audience types
+	 * e.g. array('TypeA', 'TypeB');
 	 */
 	public function getRelatedAudienceTypes() {
-		$blocks = $this->Blocks();
-		$relatedAudienceTypes = array();
-		foreach($blocks as $block) {
-			if(!in_array($block->AudienceType, $relatedAudienceTypes)) {
-				array_push($relatedAudienceTypes, $block->AudienceType);
-			}
-		}
-		return $relatedAudienceTypes;
+		return null;
 	}
 	
 	/**
