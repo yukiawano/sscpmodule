@@ -7,7 +7,7 @@ class SSCP_Block extends DataObject {
 		);
 	
 	static $has_one = array(
-			'BlockHolder' => 'BlockHolder',
+			'BlockHolder' => 'DefaultBlockHolder',
 			'SnippetBase' => 'SnippetBase'
 	);
 	

@@ -1,17 +1,18 @@
-BlockHolder:
+DefaultBlockHolder:
   blockholdera:
     Title: BlockHolderA
     TemplateKey: BlockHolderAKey
+    Description: Test Block Holder
 SSCP_Block:
   blocka:
     Title: BlockA
     AudienceType: TypeA
-    BlockHolder: =>BlockHolder.blockholdera
+    BlockHolder: =>DefaultBlockHolder.blockholdera
   blockb:
     Title: BlockB
     AudienceType: TypeB
-    BlockHolder: =>BlockHolder.blockholdera
+    BlockHolder: =>DefaultBlockHolder.blockholdera
   blockc:
     Title: BlockC
     AudienceType: TypeA
-    BlockHolder: =>BlockHolder.blockholdera
+    BlockHolder: =>DefaultBlockHolder.blockholdera

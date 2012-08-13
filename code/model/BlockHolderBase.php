@@ -18,7 +18,32 @@ class BlockHolderBase extends DataObject {
 	public static $blockholder_name = 'BlockHolderBase';
 	
 	/**
+	 * Return a subclasses of BlockHolderBase as an array
+	 * 
+	 * @return An array that contains className and blockHolderName.
+	 * array(
+	 * 		'ClassName' => 'Block Holder Name',
+	 * 		'DefaultBlockHolder' => 'Block Holder'
+	 * );
+	 */
+	public static function getBlockHolderTypes() {
+		$classes = ClassInfo::subclassesFor('BlockHolderBase');
+		
+		$subClasses = array();
+		foreach($classes as $class) {
+			if($class == 'BlockHolderBase') continue;
+			$subClasses[$class] = $class::$blockholder_name;
+		}
+		
+		return $subClasses;
+	}
+	
+	/**
 	 * Return audience types which is related to this BlockHolder.
+	 * 
+	 * TODO Implementation of this method is specific to DefaultBlockHolder.
+	 * We need to move this method to DefaultBlockHolder and write here just an interface of this.
+	 * 
 	 * @example
 	 * There are AudienceType A, B, C, D, E and
 	 * Block Holder A holds
@@ -29,7 +54,7 @@ class BlockHolderBase extends DataObject {
 	 * Then getRelatedAudienceTypes() of BlockHolder A returns
 	 *   AudienceTypeA, AudienceTypeC, AudienceTypeE
 	 */
-	protected function getRelatedAudienceTypes() {
+	public function getRelatedAudienceTypes() {
 		$blocks = $this->Blocks();
 		$relatedAudienceTypes = array();
 		foreach($blocks as $block) {

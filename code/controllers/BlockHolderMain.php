@@ -13,6 +13,8 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 	static $menu_priority = -1;
 		
 	static $allowed_actions = array(
+			'AddBlockHolderForm',
+			'doAddBlockHolder',
 			'AddSnippetForm',
 			'doAddSnippet',
 			'AddBlockForm',
@@ -39,8 +41,10 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
     					$audienceTypeTab = new Tab('AudienceType')));
     	
     	// BlockHolder Tab
-    	$config = GridFieldConfig_RelationEditor::create();
-    	$gridField = new GridField('BlockHolders', null, BlockHolderBase::get(), $config);
+    	$bConfig = GridFieldConfig_RelationEditor::create();
+    	$bConfig->addComponent(new GridFieldAddNewBlockHolderButton('buttons-before-left'));
+    	$bConfig->removeComponentsByType('GridFieldAddNewButton');
+    	$gridField = new GridField('BlockHolders', null, BlockHolderBase::get(), $bConfig);
     	$blockHolderTab->push($gridField);
     	
     	// Snippet Tab
@@ -82,6 +86,7 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 	}
 	
 	/**
+	 * TODO This method should be moved to snippet base and added tests.
 	 * Return a subclasses of SnippetBase
 	 *
 	 * @return array
@@ -170,6 +175,19 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 		return $this->redirect($link);
 	}
 	
+	public function addBlockHolderForm(SS_HTTPRequest $request) {
+		$obj = $this->customise(array(
+					'EditForm' => $this->getAddBlockHolderForm()
+				));
+		
+		if($request->isAjax()) {
+			// Rendering is handled by template, which will call EditForm() eventually
+			return $obj->renderWith($this->getTemplatesWithSuffix('_Content'));
+		} else {
+			return $obj->renderWith($this->getViewer('show'));
+		}
+	}
+	
 	public function addSnippetForm(SS_HTTPRequest $request) {
 		$obj = $this->customise(array(
 				'EditForm' => $this->getAddSnippetForm()
@@ -181,6 +199,26 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 		} else {
 			return $obj->renderWith($this->getViewer('show'));
 		}
+	}
+	
+	private function getAddBlockHolderForm($id = null, $fields = null) {
+		$fields = new FieldList();
+		$fields->push(new TextField('Title', 'Title'));
+		$fields->push(new TextField('TemplateKey', 'Template Key'));
+		$fields->push(new TextareaField('Description', 'Description'));
+		$fields->push(new ListboxField('BlockHolderType', 'Block Holder Type', BlockHolderBase::getBlockHolderTypes()));
+		
+		$actions = new FieldList(
+				FormAction::create('doAddBlockHolder')
+				->addExtraClass('ss-ui-action-constructive')->setAttribute('data-icon', 'accept')
+				->setTitle('Create Block Holder')
+		);
+		
+		$form = new Form($this, "doAddBlockHolder", $fields, $actions);
+		$form->addExtraClass('add-form cms-add-form cms-edit-form cms-panel-padded center ' . $this->BaseCSSClasses());
+		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+		
+		return $form;
 	}
 	
 	private function getAddSnippetForm($id = null, $fields = null) {
@@ -199,6 +237,35 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 		
 		return $form;
+	}
+	
+	public function doAddBlockHolder(SS_HTTPRequest $request) {
+		$title = $request->postVar('Title');
+		$templateKey = $request->postVar('TemplateKey');
+		$description = $request->postVar('Description');
+		$blockHolderType = $request->postVar('BlockHolderType');
+		
+		// Assert that the specified block holder type exists
+		$blockHolderTypes = BlockHolderBase::getBlockHolderTypes();
+		if(!isset($blockHolderTypes[$blockHolderType])) {
+			$this->response->setStatusCode("400");
+			return;
+		}
+		
+		$blockHolder = new $blockHolderType();
+		$blockHolder->Title = $title;
+		$blockHolder->TemplateKey = $templateKey;
+		$blockHolder->Description = $description;
+		$blockHolder->write();
+		
+		$link = Controller::join_links(
+				$this->stat('url_base', true),
+				'personalization',
+				'/'
+				);
+		
+		$this->response->addHeader('X-Status', 'Created new block holder.');
+		return $this->redirect($link);
 	}
 	
 	public function doAddSnippet(SS_HTTPRequest $request) {
