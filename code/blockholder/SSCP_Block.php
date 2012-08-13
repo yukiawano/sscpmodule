@@ -25,4 +25,7 @@ class SSCP_Block extends DataObject {
 		return $fields;
 	}
 	
+	public function getAudienceTypes() {
+		return array_map('trim', explode(',', $this->AudienceType));
+	}
 }

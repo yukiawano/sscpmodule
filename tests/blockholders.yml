@@ -14,5 +14,5 @@ SSCP_Block:
     BlockHolder: =>DefaultBlockHolder.blockholdera
   blockc:
     Title: BlockC
-    AudienceType: TypeA
+    AudienceType: TypeA, TypeC
     BlockHolder: =>DefaultBlockHolder.blockholdera
