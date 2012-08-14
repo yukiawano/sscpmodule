@@ -123,7 +123,7 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 	public function getAddBlockForm($id = null, $fields = null) {
 		$fields = new FieldList();
 		
-		$blockHolder = BlockHolder::get()->byID($id);
+		$blockHolder = BlockHolderBase::get()->byID($id);
 		
 		// Snippet Bases
 		$snippetBasesArray = array();
