@@ -150,8 +150,7 @@ class CPEnvironment {
 	 */
 	public function getAudienceTypes() {
 		if($this->audienceTypes == null) {
-			$audienceTypeLoader = new AudienceTypeLoader();
-			$this->audienceTypes = $audienceTypeLoader->load();
+			$this->audienceTypes = Config::inst()->get("AudienceTypeDefinition", "AudienceTypes");
 		}
 		return $this->audienceTypes;
 	}

@@ -13,59 +13,50 @@ class AudienceTypeManagerTest extends SapphireTest{
 	
 	function testGetAudienceTypesInclusive(){
 		$audienceTypeManager = new AudienceTypeManager();
-		$audienceTypes = array('InclusiveOR' => array(
+		$audienceTypes = array(
 				'NewComer' => array('NewComer' => 'true'),
 				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
-				));
-		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment(), array('NewComer', 'Kyoto'));
+				);
+		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
+		$result = $audienceTypeManager->getAudienceTypes($env, array('NewComer', 'Kyoto'));
 		$this->assertEquals(array('NewComer', 'Kyoto'), $result);
-	}
-	
-	function testGetAudienceTypesExclusive(){
-		$audienceTypeManager = new AudienceTypeManager();
-		$audienceTypes = array('ExclusiveOR' => array(
-				'NewComer' => array('NewComer' => 'true'),
-				'Kyoto' => array('Location' => 'Kyoto', 'Device' => 'Linux')
-				));
-		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, CPEnvironmentStub::getCPEnvironment(), array('NewComer', 'Kyoto'));
-		$this->assertEquals(array('NewComer'), $result);
 	}
 	
 	function testGetAudienceTypeFiltered() {
 		$audienceTypeManager = new AudienceTypeManager();
-		$audienceTypes = array('ExclusiveOR' => array(
+		$audienceTypes = array(
 				'NewComer' => array('NewComer' => 'true'),
 				'Kyoto' => array('Location' => 'kyoto'),
 				'LinuxUser' => array('Device' => 'linux')
-				));
+				);
 		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
-		$result = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, array('Kyoto', 'LinuxUser'));
-		$this->assertEquals(array('Kyoto'), $result);
+		$expected = array('Kyoto');
+		$result = $audienceTypeManager->getAudienceTypes($env, array('Kyoto'));
+		$this->assertEquals($expected, $result);
 	}
 	
 	function testGetNearestOptionedLocations() {
 		$audienceTypeManager = new AudienceTypeManager();
-		$audienceTypes = array('ExclusiveOR' => array(
+		$audienceTypes = array(
 				'OsakaResidents' => array('Location' => 'nearest((34.693744,135.502151))'),
 				'ShigaResidents' => array('Location' => 'shiga'),
 				'KyotoResidents' => array('Location' => 'nearest((35.011642,135.768031))'),
 				'TokyoResidents' => array('Location' => 'nearest((35.6895,139.691729))'),
-		));
+		);
 		
 		$expected = array(	array('lat' => 34.693744, 'lon' => 135.502151), // Osaka
 							array('lat' => 35.6895, 'lon' => 139.691729) // Tokyo
 						  	);
-		$this->assertEquals($expected, $audienceTypeManager->getNearestOptionedLocations($audienceTypes, array('OsakaResidents', 'TokyoResidents')));
+		$result = $audienceTypeManager->getNearestOptionedLocations($audienceTypes, array('OsakaResidents', 'TokyoResidents'));
+		$this->assertEquals($expected, $result);
 	}
 	
 	function testPrettyPrint(){
-		// TODO Change to use template tracked on https://github.com/yukiawano/sscpmodule/issues/18
-		$audienceTypes = array('InclusiveOR' => array(
+		$audienceTypes = array(
 				'NewComer' => array('NewComer' => 'true'),
 				'ShigaResidents' => array('Location' => 'SHIGA', 'Device' => 'Linux')
-				));
+				);
 		$expected = <<<EOT
-<p>MatchingRule: InclusiveOR</p>
 <ul>
 
 <li>

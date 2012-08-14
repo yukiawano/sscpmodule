@@ -10,11 +10,11 @@ class CPEnvironmentTest extends SapphireTest {
 	}
 	
 	function testGetNearestLocation() {
-		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
+		$env = CPEnvironmentStub::getCPEnvironment(array(
 				'Osaka' => array('Location' => 'nearest((34.693744,135.502151))'),
 				'Tokyo' => array('Location' => 'nearest((35.6895,139.691729))'),
 				'Sapporo' => array('Location' => 'nearest((43.062092,141.354377))')
-				)));
+				));
 		$result = $env->getNearestLocation(array('Sapporo', 'Tokyo')); // Current location is kyoto, thus Tokyo is the nearest location.
 		$expected = "35.6895-139.691729";
 		

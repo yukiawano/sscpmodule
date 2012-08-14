@@ -1,7 +1,6 @@
 # Copy this yaml file to mysite/_config/audiencetype.yml and define your setting of AudienceType
 # This file is a sample of defining audience type and if you don't need this, you can delete this file.
 AudienceTypeDefinition:
-  MatchingRule: InclusiveOR
   AudienceTypes:
     NewComer:
       NewComer: true

@@ -70,7 +70,7 @@ class DefaultBlockHolder extends BlockHolderBase {
 	public function getBlock(CPEnvironment $env) {
 		$audienceTypeManager = new AudienceTypeManager();
 		$audienceTypes = $env->getAudienceTypes();
-		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($audienceTypes, $env, $this->getRelatedAudienceTypes());
+		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($env, $this->getRelatedAudienceTypes());
 		
 		// Get blocks of this block holder
 		$blocks = $this->Blocks();

@@ -1,4 +1,3 @@
-<p>MatchingRule: $MatchingRule</p>
 <ul>
 <% control $AudienceTypes %>
 <li>

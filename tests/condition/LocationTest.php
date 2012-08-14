@@ -8,11 +8,11 @@ class LocationTest extends SapphireTest {
 	}
 	
 	function testMatch() {
-		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
+		$env = CPEnvironmentStub::getCPEnvironment(array(
 				'Osaka' => array('Location' => 'Osaka'),
 				'Tokyo' => array('Location' => 'Tokyo'),
 				'Kyoto' => array('Location' => 'Kyoto')
-				)));
+				));
 		$consideredAudienceTypes = array('Osaka', 'Tokyo', 'Kyoto');
 		$cond = new Location();
 		$this->assertEquals(true, $cond->doesSatisfy($env, 'Kyoto', $consideredAudienceTypes));
@@ -24,8 +24,9 @@ class LocationTest extends SapphireTest {
 		// Kyoto University(35.028388,135.780621) is in 100km from osaka station(34.702781,135.494723).
 		// Tokyo University(35.714957,139.762049) is not in 100km from osaka station.
 		
-		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
-				'Osaka' => array('Location' => 'nearest(osaka)'))));
+		$env = CPEnvironmentStub::getCPEnvironment(array(
+				'Osaka' => array('Location' => 'nearest(osaka)')
+				));
 		$env->setLocation(array('lat' => 34.702781, 'lon' => 135.494723));
 		$consideredAudienceTypes = array('Osaka');
 		
@@ -40,10 +41,10 @@ class LocationTest extends SapphireTest {
 		// Latitude and longitude of Tokyo University
 		// 35.713207,139.762659
 		
-		$env = CPEnvironmentStub::getCPEnvironment(array('ExclusiveOR' => array(
+		$env = CPEnvironmentStub::getCPEnvironment(array(
 				'StudentOfKyotoUniv' => array('Location' => 'nearest((35.028872,135.780673))'),
 				'StudentOfTokyoUniv' => array('Location' => 'nearest((35.713207,139.762659))')
-				)));
+				));
 		$consideredAudienceTypes = array('StudentOfKyotoUniv', 'StudentOfTokyoUniv');
 		$cond = new Location();
 		$this->assertEquals(true, $cond->doesSatisfy($env, 'nearest((35.028872,135.780673))', $consideredAudienceTypes));

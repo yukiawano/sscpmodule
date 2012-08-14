@@ -10,11 +10,11 @@ class DefaultBlockHolderTest extends SapphireTest {
 	}
 	
 	public function testGetContent() {
-		$audienceTypes = array('ExclusiveOR' => array(
+		$audienceTypes = array(
 				'TypeA' => array('Location' => 'Hokkaido'),
 				'TypeB' => array('Location' => 'Akita'),
 				'TypeC' => array('NewComer' => 'true'),
-		));
+		);
 		
 		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
 		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholdera');
@@ -26,11 +26,11 @@ class DefaultBlockHolderTest extends SapphireTest {
 	}
 	
 	public function testGetContentButNoBlock() {
-		$audienceTypes = array('ExclusiveOR' => array(
+		$audienceTypes = array(
 				'TypeA' => array('Location' => 'Hokkaido'),
 				'TypeB' => array('Location' => 'Akita'),
 				'TypeC' => array('Location' => 'Aomori'),
-		));
+		);
 		
 		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
 		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholdera');

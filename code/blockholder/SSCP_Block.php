@@ -11,6 +11,8 @@ class SSCP_Block extends DataObject {
 			'SnippetBase' => 'SnippetBase'
 	);
 	
+	
+	
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		

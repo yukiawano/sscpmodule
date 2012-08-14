@@ -32,6 +32,8 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 	}
 	
 	function getEditForm($id = null, $fields = null) {
+		$env = CPEnvironment::getCPEnvironment();
+		
     	if($fields == null) $fields = new FieldList();
     	
     	$fields = new FieldList(
@@ -57,7 +59,7 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
     	// AudienceType Tab
     	$audienceTypeLoader = new AudienceTypeLoader();
     	$audienceTypeManager = new AudienceTypeManager();
-    	$prettyPrintOfAudienceTypes = $audienceTypeManager->prettyPrint($audienceTypeLoader->load());
+    	$prettyPrintOfAudienceTypes = $audienceTypeManager->prettyPrint($env->getAudienceTypes());
     	$audienceTypeTab->push(new LabelField('AudienceTypesTips', 'When you update audience types with the configuration file, you need to access /dev/build/?flush=all.<br /><br />'));
     	$audienceTypeTab->push(new LabelField('AudienceTypes', $prettyPrintOfAudienceTypes));
     	
@@ -132,7 +134,8 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 		
 		// Audience Types
 		$audienceTypeLoader = new AudienceTypeLoader();
-		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($audienceTypeLoader->load());
+		$env = CPEnvironment::getCPEnvironment();
+		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($env->getAudienceTypes());
 		
 		$fields->push(new LabelField('description', "Create a new block to {$blockHolder->Title}."));
 		$fields->push(new TextField('Title', 'Title'));

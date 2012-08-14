@@ -4,14 +4,14 @@
  * @package sscp
  */
 class AudienceTypeManager extends Object{
-	public function getAudienceTypes($audienceTypes, CPEnvironment $env, $consideredTypes){
-		$matchingRule = key($audienceTypes);
-		$rules = $audienceTypes[$matchingRule];
+	public function getAudienceTypes(CPEnvironment $env, $consideredTypes) {
+		$rules = $env->getAudienceTypes();
 		$results = array();
 		foreach($rules as $audienceTypeName => $conditions){
 			if($consideredTypes != null && !in_array($audienceTypeName, $consideredTypes)) {
 				continue; // When the audience type is not in consideredTypes, then skip.
 			}
+			
 			$match = true;
 			foreach($conditions as $conditionClass => $conditionArgs){
 				$condition = $this->getConditionClass($conditionClass);
@@ -20,12 +20,9 @@ class AudienceTypeManager extends Object{
 					$match = false;
 				}
 			}
-			if($match){
+			
+			if($match) {
 				array_push($results, $audienceTypeName);
-				if($matchingRule == 'ExclusiveOR'){
-					$env->commit();
-					return $results;
-				}
 			}
 		}
 		
@@ -47,10 +44,8 @@ class AudienceTypeManager extends Object{
 			}
 		};
 		
-		$matchingRule = key($audienceTypes);
-		$rules = $audienceTypes[$matchingRule];
 		$results = array();
-		foreach($rules as $audienceTypeName => $conditions) {
+		foreach($audienceTypes as $audienceTypeName => $conditions) {
 			if(in_array($audienceTypeName, $consideredAudienceTypes)) {
 				foreach($conditions as $conditionClass => $conditionArgs) {
 					if(preg_match('/nearest\((.+)\)/', $conditionArgs, $matches)){
@@ -68,10 +63,8 @@ class AudienceTypeManager extends Object{
 	 * @param array $audienceTypes
 	 */
 	public function prettyPrint($audienceTypeArray) {	
-		$matchingRule = key($audienceTypeArray);
-		
 		$audienceTypes = new ArrayList();
-		foreach($audienceTypeArray[$matchingRule] as $audienceTypeName => $conditionsArray) {
+		foreach($audienceTypeArray as $audienceTypeName => $conditionsArray) {
 			$conditions = new ArrayList();
 			foreach($conditionsArray as $condition => $args) {
 				$conditions->push(new ArrayData(array('Name' => $condition, 'Args' => $args)));
@@ -80,8 +73,7 @@ class AudienceTypeManager extends Object{
 														'Conditions' => $conditions)));	
 		}
 		
-		$result = array(	'MatchingRule' => $matchingRule,
-							'AudienceTypes' => $audienceTypes );
+		$result = array('AudienceTypes' => $audienceTypes );
 		$template = new SSViewer('PrettyPrint');
 		return $template->process(new ArrayData($result), array());
 	}
