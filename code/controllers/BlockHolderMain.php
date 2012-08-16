@@ -9,16 +9,15 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 	
 	static $url_segment = 'personalization';
 	static $url_rule = '/$Action/$ID/$OtherID';
+	static $url_priority = 39;
 	static $menu_title = 'Personalization';
 	static $menu_priority = -1;
-		
+	
 	static $allowed_actions = array(
 			'AddBlockHolderForm',
 			'doAddBlockHolder',
 			'AddSnippetForm',
-			'doAddSnippet',
-			'AddBlockForm',
-			'doAddBlock'
+			'doAddSnippet'
 			);
 	
 	function providePermissions() {
@@ -104,78 +103,6 @@ class BlockHolderMain extends LeftAndMain implements PermissionProvider {
 		}
 		
 		return $subClasses;
-	}
-	
-	public function addBlockForm(SS_HTTPRequest $request) {
-		$blockHolderId = $request->getVar('block_holder_id');
-		
-		$obj = $this->customise(array(
-				'EditForm' => $this->getAddBlockForm($blockHolderId)
-		));
-		
-		if($request->isAjax()) {
-			return $obj->renderWith($this->getTemplatesWithSuffix('_Content'));
-		} else {
-			return $obj->renderWith($this->getViewer('show'));
-		}
-	}
-	
-	public function getAddBlockForm($id = null, $fields = null) {
-		$fields = new FieldList();
-		
-		$blockHolder = BlockHolderBase::get()->byID($id);
-		
-		// Snippet Bases
-		$snippetBasesArray = array();
-		$snippetBases = SnippetBase::get();
-		foreach($snippetBases as $snippetBase) {
-			$snippetBasesArray[$snippetBase->ID] = $snippetBase->Title;
-		}
-		
-		// Audience Types
-		$audienceTypeLoader = new AudienceTypeLoader();
-		$env = CPEnvironment::getCPEnvironment();
-		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($env->getAudienceTypes());
-		
-		$fields->push(new LabelField('description', "Create a new block to {$blockHolder->Title}."));
-		$fields->push(new TextField('Title', 'Title'));
-		$fields->push(new DropdownField('SnippetBaseID', 'SnippetBase', $snippetBasesArray));
-		$fields->push(new DropdownField('AudienceType', 'AudienceType', $audienceTypesArray));
-		$fields->push(new HiddenField('BlockHolderID', 'BlockHolderID', $id));
-		
-		$actions = new FieldList(
-				FormAction::create('doAddBlock')
-				->addExtraClass('ss-ui-action-constructive')->setAttribute('data-icon', 'accept')
-				->setTitle('Create Block')
-		);
-		
-		$form = new Form($this, "doAddBlock", $fields, $actions);
-		$form->addExtraClass('add-form cms-add-form cms-edit-form cms-panel-padded center ' . $this->BaseCSSClasses());
-		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-		
-		return $form;
-	}
-	
-	public function doAddBlock(SS_HTTPRequest $request) {
-		$title = $request->postVar('Title');
-		$snippetBaseID = $request->postVar('SnippetBaseID');
-		$audienceType = $request->postVar('AudienceType');
-		$blockHolderID = $request->postVar('BlockHolderID');
-		
-		$sscpBlock = new SSCP_Block();
-		$sscpBlock->Title = $title;
-		$sscpBlock->BlockHolderID = $blockHolderID;
-		$sscpBlock->SnippetBaseID = $snippetBaseID;
-		$sscpBlock->AudienceType = $audienceType;
-		$sscpBlock->write();
-		
-		$link = Controller::join_links(
-				$this->stat('url_base', true),
-				"personalization/EditForm/field/BlockHolders/item/{$blockHolderID}/edit/"
-		);
-		
-		$this->response->addHeader('X-Status', 'Created new block.');
-		return $this->redirect($link);
 	}
 	
 	public function addBlockHolderForm(SS_HTTPRequest $request) {

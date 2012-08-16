@@ -21,7 +21,6 @@ class DefaultBlockHolder extends BlockHolderBase {
 			'DefaultSnippet' => 'SnippetBase'
 	);
 	
-	
 	public static $blockholder_name = 'Block Holder';
 	
 	public function getCMSFields() {

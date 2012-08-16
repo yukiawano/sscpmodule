@@ -11,17 +11,29 @@ class SSCP_Block extends DataObject {
 			'SnippetBase' => 'SnippetBase'
 	);
 	
-	public function getCMSFields() {
-		$fields = parent::getCMSFields();
+	public function getFields($blockHolderId) {
+		$fields = new FieldList();
 		
-		$fields->removeByName('BlockHolderID');
-		$fields->removeByName('AudienceType');
+		$fields->push(new TextField('Title', 'Title'));
+		$fields->push(new TextField('AudienceType', 'AudienceType'));
+		
+		return $fields;
+	}
+	
+	public function getCMSFields() {
+		// $fields = parent::getCMSFields();
+		
+		$fields = parent::getCMSFields();
+		// $fields->removeByName('BlockHolderID');
+		
 		
 		// Audience Types
+		/*
+		$env = CPEnvironment::getCPEnvironment();
 		$audienceTypeLoader = new AudienceTypeLoader();
-		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($audienceTypeLoader->load());
+		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($env->getAudienceTypes());
 		$fields->push(new DropdownField('AudienceType', 'AudienceType', $audienceTypesArray));
-		
+		*/
 		return $fields;
 	}
 	

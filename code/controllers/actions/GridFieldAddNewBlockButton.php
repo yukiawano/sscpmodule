@@ -12,7 +12,7 @@ class GridFieldAddNewBlockButton implements GridField_HTMLProvider {
 	public function getHTMLFragments($gridField) {
 		$newLink = Controller::join_links(
 				$gridField->stat('url_base', true),
-				"admin/personalization/AddBlockForm/?block_holder_id={$this->id}"
+				"admin/personalization/sscpblock/addForm/?block_holder_id={$this->id}"
 		);
 	
 		$data = new ArrayData(array(
