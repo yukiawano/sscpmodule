@@ -12,11 +12,6 @@ class SSCP_BlockController extends LeftAndMain {
 			'doAdd'
 			);
 	
-	public function init() {
-		parent::init();
-		Requirements::css(SSCP_DIR . '/css/SSCP_BlockController.css');
-	}
-	
 	/**
 	 * Return addForm for SSCP_Block
 	 * @param SS_HTTPRequest $request
