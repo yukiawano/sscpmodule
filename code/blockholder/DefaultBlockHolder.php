@@ -95,6 +95,14 @@ class DefaultBlockHolder extends BlockHolderBase {
 	public function getContent(CPEnvironment $env) {
 		$blocks = $this->getBlocks($env);
 		
+		if($this->ShowDefaultSnippet) {
+			array_push($blocks, $this->DefaultSnippet());
+		}
+		
+		if(count($blocks) == 0) {
+			return array('Content' => '', 'DebugInfo' => array('Notice' => 'No block was matched.'));
+		}
+		
 		if($this->SlideshowMode) {
 			// Combine them
 			$blockTitles = array();
@@ -106,7 +114,6 @@ class DefaultBlockHolder extends BlockHolderBase {
 			
 			Requirements::javascript(SSCP_DIR . '/javascript/slides.jquery.js');
 			Requirements::javascript(SSCP_DIR . '/javascript/slideshow.js');
-			
 			
 			$template = new SSViewer('Slideshow');
 			return array(
