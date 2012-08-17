@@ -1,19 +1,11 @@
 <div class="DebugInfo">
-	<p class="Title">$BlockHolderName</p>
+	<p class="Title">$TemplateKey</p>
 	<div class="PropertyBox">
 		<dl>
-			<dt>Audience Type</dt>
-			<dd>$AppliedAudienceType</dd>
-			<dt>Snippet</dt>
-			<dd>$RenderedSnippetName</dd>
-			<dt>Considered Audience Types</dt>
-			<dd>
-				<ul>
-				<% loop $ConsideredAudienceTypes %>
-					<li>$Name</li>
-				<% end_loop %>
-				</ul>
-			</dd>
+			<% control $ValueList %>
+				<dt>$Key</dt>
+				<dd>$Value</dd>
+			<% end_control %>
 		</dl>
 	</div>
 </div>

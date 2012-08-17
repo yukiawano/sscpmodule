@@ -97,20 +97,40 @@ class DefaultBlockHolder extends BlockHolderBase {
 		
 		if($this->SlideshowMode) {
 			// Combine them
+			$blockTitles = array();
 			$blockArray = new ArrayList();
 			foreach($blocks as $block) {
 				$blockArray->push(new ArrayData(array('Body' => $block->getContent())));
+				array_push($blockTitles, $block->Title);
 			}
 			
 			Requirements::javascript(SSCP_DIR . '/javascript/slides.jquery.js');
 			Requirements::javascript(SSCP_DIR . '/javascript/slideshow.js');
 			
+			
 			$template = new SSViewer('Slideshow');
-			return $template->process($this, array('Blocks' => $blockArray));
+			return array(
+						'Content' => $template->process($this, array('Blocks' => $blockArray)),
+						'DebugInfo' => array(
+								'SlideshowMode' => 'true',
+								'RenderedBlocks' => join(', ', $blockTitles)
+								)
+					);
 		} else {
 			$block = $blocks[0];
-			return $block->getContent();
+			return array(
+						'Content' => $block->getContent(),
+						'DebugInfo' => array(
+								'SlideshowMode' => 'false',
+								'RenderedBlock' => $block->Title
+								)
+					);
 		}
+		
+		/* 
+		 * BlockHolderName,
+		 * DebugInfo - Debug info should be key value list.
+		 *  */
 		
 		if(($block = $this->getBlock($env))) {
 			return array(

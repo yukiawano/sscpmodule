@@ -56,7 +56,7 @@ class PersonalizablePage extends DataExtension {
 			return "BlockHolder of {$templateKey} is not found.";
 		} else {
 			$showDebugToolbar = Permission::check(BlockHolderMain::ADMIN_PERSONALIZATION);
-			return $this->renderPersonalizedContent($blockHolder->getContent($env), $showDebugToolbar);
+			return $this->renderPersonalizedContent($blockHolder->getContent($env), $showDebugToolbar, $templateKey);
 		}
 	}
 	
@@ -73,10 +73,9 @@ class PersonalizablePage extends DataExtension {
 	 * 	'DebugInfo' => array( For more details, check phpdoc of renderDebugInfo. )
 	 * )
 	 */
-	private function renderPersonalizedContent($context, $renderDebugInfo) {
-		return $context;
+	private function renderPersonalizedContent($context, $renderDebugInfo, $templateKey) {
 		if($renderDebugInfo) {
-			return $context['Content'] . $this->renderDebugInfo($context['DebugInfo']);
+			return $context['Content'] . $this->renderDebugInfo($context['DebugInfo'], $templateKey);
 		} else {
 			return $context['Content'];
 		}
@@ -95,21 +94,21 @@ class PersonalizablePage extends DataExtension {
 	 * 			'RenderedSnippetName'		=> 'TestSnippet',
 	 * 			'BlockHolderName'			=> 'BannerBlockHolder' );
 	 */
-	private function renderDebugInfo($debugInfo) {
+	private function renderDebugInfo($debugInfo, $templateKey) {
 		Requirements::css('sscp/css/DebugInfo.css');
 		
-		$ssViewer = new SSViewer('DebugInfo');
-		
-		$consideredAudienceTypes = new ArrayList();
-		foreach($debugInfo['ConsideredAudienceTypes'] as $audienceType) {
-			$consideredAudienceTypes->add(new DataObject(array('Name' => $audienceType)));
+		$valueList = new ArrayList();
+		foreach($debugInfo as $key => $value) {
+			$valueList->push(new ArrayData(array(
+						'Key' => $key,
+						'Value' => $value
+					)));	
 		}
 		
+		$ssViewer = new SSViewer('DebugInfo');
 		return $ssViewer->process(new DataObject(array(
-					'AppliedAudienceType' 		=> (null === $debugInfo['AppliedAudienceType'] ? 'No AudienceType has matched.' : $debugInfo['AppliedAudienceType']),
-					'ConsideredAudienceTypes' 	=> $consideredAudienceTypes,
-					'RenderedSnippetName' 		=> $debugInfo['RenderedSnippetName'],
-					'BlockHolderName'			=> $debugInfo['BlockHolderName']
+					'TemplateKey' => $templateKey,
+					'ValueList' => $valueList
 				)));
 	}
 }
