@@ -9,18 +9,43 @@ class DefaultBlockHolderTest extends SapphireTest {
 		$this->assertEquals($expected, $result);
 	}
 	
-	public function testGetContent() {
+	
+	private function getBlockSequenceString($blocks) {
+		$result = count($blocks);
+		foreach($blocks as $block) {
+			$result .= "-{$block->Title}";
+		}
+		return $result;
+	}
+	
+	public function testGetBlocksSingle() {
 		$audienceTypes = array(
 				'TypeA' => array('Location' => 'Hokkaido'),
 				'TypeB' => array('Location' => 'Akita'),
-				'TypeC' => array('NewComer' => 'true'),
+				'TypeC' => array('NewComer' => 'true'), // Only the type C is true
 		);
 		
 		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
 		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholdera');
 		
-		$result = $blockHolder->getBlock($env)->Title;
-		$expected = 'BlockC';
+		$result = $this->getBlockSequenceString($blockHolder->getBlocks($env));
+		$expected = '1-BlockC';
+		
+		$this->assertEquals($expected, $result);
+	}
+	
+	public function testGetBlocksMultiple() {
+		$audienceTypes = array(
+				'TypeA' => array('Location' => 'Hokkaido'),
+				'TypeB' => array('Location' => 'Kyoto'),
+				'TypeC' => array('NewComer' => 'true'), // Only the type C is true
+		);
+		
+		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
+		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholdera');
+		
+		$result = $this->getBlockSequenceString($blockHolder->getBlocks($env));
+		$expected = '2-BlockB-BlockC';
 		
 		$this->assertEquals($expected, $result);
 	}

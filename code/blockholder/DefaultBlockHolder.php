@@ -6,11 +6,13 @@
 class DefaultBlockHolder extends BlockHolderBase {
 	
 	static $db = array(
-			'ShowDefaultSnippet' => 'Boolean'
+			'ShowDefaultSnippet' => 'Boolean',
+			'SlideshowMode' => 'Boolean'
 	);
 	
 	static $defaults = array(
-			'ShowDefaultSnippet' => false
+			'ShowDefaultSnippet' => false,
+			'SlideshowMode' => false
 	);
 	
 	static $has_many = array(
@@ -20,6 +22,10 @@ class DefaultBlockHolder extends BlockHolderBase {
 	static $has_one = array(
 			'DefaultSnippet' => 'SnippetBase'
 	);
+	
+	/*
+	 * If the slideshow mode is true, it will show multiple blocks at a time.
+	 * */
 	
 	public static $blockholder_name = 'Block Holder';
 	
@@ -63,30 +69,49 @@ class DefaultBlockHolder extends BlockHolderBase {
 	}
 	
 	/**
-	 * Get SSCP_Block for the environment.
+	 * Return related SSCP_Blocks for the environment.
 	 * @param CPEnvironment $env
+	 * @return array of Blocks
 	 */
-	public function getBlock(CPEnvironment $env) {
+	public function getBlocks(CPEnvironment $env) {
 		$audienceTypeManager = new AudienceTypeManager();
-		$audienceTypes = $env->getAudienceTypes();
 		$currentAudienceTypes = $audienceTypeManager->getAudienceTypes($env, $this->getRelatedAudienceTypes());
 		
-		// Get blocks of this block holder
+		$relatedBlocks = array();
 		$blocks = $this->Blocks();
 		foreach($blocks as $block) {
-			$intersect = array_intersect($block->getAudienceTypes(),$currentAudienceTypes);
+			$intersect = array_intersect($block->getAudienceTypes(), $currentAudienceTypes);
 			if(count($intersect) != 0) {
-				return $block;
+				array_push($relatedBlocks, $block);
 			}
 		}
 		
-		return null;
+		return $relatedBlocks;
 	}
 	
 	/**
 	 * Return content for specified environment
 	 */
 	public function getContent(CPEnvironment $env) {
+		$blocks = $this->getBlocks($env);
+		
+		if($this->SlideshowMode) {
+			// Combine them
+			$blockArray = new ArrayList();
+			foreach($blocks as $block) {
+				$blockArray->push(new ArrayData(array('Body' => $block->getContent())));
+			}
+			
+			Requirements::javascript(SSCP_DIR . '/javascript/slides.jquery.js');
+			Requirements::javascript(SSCP_DIR . '/javascript/slideshow.js');
+			
+			$template = new SSViewer('Slideshow');
+			return $template->process($this, array('Blocks' => $blockArray));
+		} else {
+			$block = $blocks[0];
+			return $block->getContent();
+		}
+		
 		if(($block = $this->getBlock($env))) {
 			return array(
 					'Content' => $block->SnippetBase()->getContent(),

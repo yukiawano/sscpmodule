@@ -20,6 +20,10 @@ class SSCP_Block extends DataObject {
 		return $fields;
 	}
 	
+	public function getContent() {
+		return $this->SnippetBase()->getContent();
+	}
+	
 	public function getCMSFields() {
 		// $fields = parent::getCMSFields();
 		

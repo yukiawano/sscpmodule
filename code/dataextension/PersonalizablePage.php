@@ -74,6 +74,7 @@ class PersonalizablePage extends DataExtension {
 	 * )
 	 */
 	private function renderPersonalizedContent($context, $renderDebugInfo) {
+		return $context;
 		if($renderDebugInfo) {
 			return $context['Content'] . $this->renderDebugInfo($context['DebugInfo']);
 		} else {
