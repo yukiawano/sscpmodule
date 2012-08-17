@@ -60,8 +60,8 @@ class DefaultBlockHolderTest extends SapphireTest {
 		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
 		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholdera');
 		
-		$result = $blockHolder->getBlock($env);
-		$expected = null;
+		$result = $blockHolder->getBlocks($env);
+		$expected = array();
 		
 		$this->assertEquals($expected, $result);
 	}
