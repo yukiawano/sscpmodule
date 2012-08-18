@@ -9,26 +9,38 @@ Relations between them are as the below image.
 
 ![Object Relations](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/ObjectRelations.png)
 
-## BlockHolder
+## BlockHolder and it's extensibility
 
 BlockHolder is a placeholder for personalization.
-If you want to personalize a part of web site, create a BlockHolder.
 
-Each BlockHolder has a template key.
-You use the template key for showing this from template file.
+You call BlockHolder from the template file by using templateKey.
 
-## Block
+BlockHolder is designed as extensible.
+You can customize BlockHolder by extending BlockHolderBase.
+
+DefaultBlockHolder is a built-in BlockHolder.
+DefaultBlockHolder holds some blocks.
+It shows proper blocks to visitor depending on AudienceType that is defined before.
+
+## DefaultBlockHolder
+
+In this section, we explain about DefaultBlockHolder.
+
+### Block
 
 Block is a pair of AudienceType and Snippet.
-If you want to show a specific content for newcomers to a website, create a Block with AudienceType newcomer.
+If you want to show a snippet for newcomers, create a Block with AudienceType newcomer.
+You can also specify multiple audience types to a block by listing AudienceTypes with comma separated style.
 
-A BlockHolder holds multiple Blocks.
+Here, we explain Block in technically, Blocks table is a join table of BlockHolder and Snippet many-many relationship.
 
-We explain Block in technically, Blocks table is a join table of BlockHolder and Snippet many-many relationship.
-
-## Snippet
+### Snippet
 
 Snippet is a fragment of html, the content that is actually shown for visitors.
+Snippet is also designed as extensible.
+You can create customized snippet by extending SnippetBase.
+
+There are sevral snippet types, HTMLSnippet, Image Snippet.
 
 A Snippet can be set to multiple Blocks.
 In other words, you can reuse a fragment of html by using Snippet.

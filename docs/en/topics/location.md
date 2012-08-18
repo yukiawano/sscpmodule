@@ -15,6 +15,25 @@ In such case we uses IP-Based location service as a fallback,
 In the first time access, we get the location of a visitor, and store it in cookie.
 From the second access, we just read cookie for getting location of the visitor.
 
+## Strategy of getting visitor's location
+
+We uses sevral source for getting visitor's location.
+
+When a visitor comes to a website for the first time, we use the default location as the visitor's location.
+Default location is defined with yaml in configuration.
+This is because getting visitor's location by using HTML5 API or IP-Based location service needs Web API calls, which are time consuming tasks.
+Rendering a page faster is really important especially in commercial website.
+
+When the page is loaded, a javascript code will run.
+The code try to get visitor's location by using HTML5 Geo-location API in background. If it success, it stores the location in cookie.
+On the other hand, when it fails, the code try to get the location by using IP-Based location service.
+
+In short, the strategy of getting visitor's location is the below.
+
+1. Use Default location
+2. Try to get the location by Using HTML5 Geo-location API
+3. When it failed, try to get the location by using IP-Based location service.
+
 ## HTML5 Geo-location APIs
 
 HTML5 Geo-Location APIs return the location as longitude and latitude.
