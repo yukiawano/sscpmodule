@@ -65,6 +65,11 @@ class DefaultBlockHolder extends BlockHolderBase {
 		foreach($blocks as $block) {
 			$relatedAudienceTypes = array_merge($relatedAudienceTypes, $block->getAudienceTypes());
 		}
+		
+		if($key = array_search('All', $relatedAudienceTypes)) {
+			unset($relatedAudienceTypes[$key]);
+		}
+		
 		return array_merge(array_unique($relatedAudienceTypes)); // Use array merge for making the index starting from 0. (array_unique makes index starting from non-zero value)
 	}
 	
@@ -81,7 +86,7 @@ class DefaultBlockHolder extends BlockHolderBase {
 		$blocks = $this->Blocks();
 		foreach($blocks as $block) {
 			$intersect = array_intersect($block->getAudienceTypes(), $currentAudienceTypes);
-			if(count($intersect) != 0) {
+			if(count($intersect) != 0 || in_array('All', $block->getAudienceTypes())) {
 				array_push($relatedBlocks, $block);
 			}
 		}

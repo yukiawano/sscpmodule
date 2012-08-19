@@ -50,6 +50,20 @@ class DefaultBlockHolderTest extends SapphireTest {
 		$this->assertEquals($expected, $result);
 	}
 	
+	public function testGetBlocksWithAllOption() {
+		$audienceTypes = array(
+				'TypeA' => array('Location' => 'Hokkaido'),
+		);
+		
+		$env = CPEnvironmentStub::getCPEnvironment($audienceTypes);
+		$blockHolder = $this->objFromFixture('DefaultBlockHolder', 'blockholderb');
+		
+		$result = $this->getBlockSequenceString($blockHolder->getBlocks($env));
+		$expected = '1-BlockD';
+		
+		$this->assertEquals($expected, $result);
+	}
+	
 	public function testGetContentButNoBlock() {
 		$audienceTypes = array(
 				'TypeA' => array('Location' => 'Hokkaido'),
