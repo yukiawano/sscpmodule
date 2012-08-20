@@ -3,7 +3,8 @@
 		$('#slides').slides({
 			preload: true,
 			effect: 'fade',
-			play: 5000,
+			play: 3000,
+			fadeSpeed: 2000,
 			generatePagination: false,
 			crossfade: true
 		});
