@@ -140,15 +140,20 @@ BlockHolders are the containers of personalized content. They provide the mappin
 
 Go to the *Block Holder* tab and click on the *Add Block Holder*. On the following page set the *Template Key* to ``WelcomeBlock`` and add a title and description to give it some context.
 
-![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/CreateBlockHolder.png)
+![Create Block Holder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/CreateBlockHolder.png)
 
 ### 4. Create a Block
 
-Once we have defined a BlockHolder, we need to add Blocks to it. These Blocks specify the audience type and map to the correct Snippet.
+Once we have defined a BlockHolder, we need to add Blocks to it.
+These Blocks specify the audience types and map to the correct Snippet.
 
-On the current page, where we have just defined the *Template Key*, go the *Blocks* tab and hit *Add Block*. There, add the information as shown in the following screenshot:
+Go to the edit page of BlockHolder which we have created in step 3, and hit *Add Block*.
 
-![Welcome Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlock.png)
+![Edit Block Holder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/EditBlockHolder.png)
+
+There, add the information as shown in the following screenshot:
+
+![Create Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/CreateBlock.png)
 
 ### 5. Define a DefaultSnippet
 
@@ -157,7 +162,7 @@ To accomplish that, we set the ``WelcomeBackSnippet`` as the DefaultSnippet, whi
 
 Go back to the details page of the current BlockHolder, check *Show default snippet* and set the ``WelcomeBackSnippet`` as the *Default Snippet*.
 
-![Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/DefaultSnippet.png)
+![Set Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/SetDefaultSnippet.png)
 
 ### 6. Congratulations
 
