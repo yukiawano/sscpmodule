@@ -140,8 +140,7 @@ BlockHolders are the containers of personalized content. They provide the mappin
 
 Go to the *Block Holder* tab and click on the *Add Block Holder*. On the following page set the *Template Key* to ``WelcomeBlock`` and add a title and description to give it some context.
 
-![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlockHolder.png)
-
+![Welcome BlockHolder](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/CreateBlockHolder.png)
 
 ### 4. Create a Block
 
@@ -151,7 +150,6 @@ On the current page, where we have just defined the *Template Key*, go the *Bloc
 
 ![Welcome Block](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/WelcomeBlock.png)
 
-
 ### 5. Define a DefaultSnippet
 
 Now a new comer gets the ``WelcomeSnippet`` that we have created, but we also want to show the ``WelcomeBackSnippet`` to returning users.
@@ -160,7 +158,6 @@ To accomplish that, we set the ``WelcomeBackSnippet`` as the DefaultSnippet, whi
 Go back to the details page of the current BlockHolder, check *Show default snippet* and set the ``WelcomeBackSnippet`` as the *Default Snippet*.
 
 ![Default Snippet](https://github.com/yukiawano/sscpmodule/raw/master/docs/img/DefaultSnippet.png)
-
 
 ### 6. Congratulations
 
