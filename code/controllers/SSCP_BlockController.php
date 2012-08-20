@@ -44,10 +44,11 @@ class SSCP_BlockController extends LeftAndMain {
 		}
 	
 		// Audience Types
-		$fields->push(new LabelField('description', "Create a new block to {$blockHolder->Title}."));
+		$fields->push(new LabelField('description', "Create a new block to {$blockHolder->Title}.<br /><br />"));
 		$fields->push(new TextField('Title', 'Title'));
 		$fields->push(new DropdownField('SnippetBaseID', 'SnippetBase', $snippetBasesArray));
 		$fields->push(new TextField('AudienceType', 'Audience Type'));
+		$fields->push(new LabelField('AudienceTypeDescription', 'You can assign multiple audience types to a block with comma separated. If you want to show this block to everyone, just type All (Case sensitive).<br /><strong>e.g.</strong><ul><li>AudienceTypeA, AudienceTypeB</li><li>All</li></ul><br />'));
 		$fields->push(new HiddenField('BlockHolderID', 'BlockHolderID', $id));
 		
 		$actions = new FieldList(
@@ -78,15 +79,21 @@ class SSCP_BlockController extends LeftAndMain {
 		$sscpBlock->BlockHolderID = $blockHolderID;
 		$sscpBlock->SnippetBaseID = $snippetBaseID;
 		$sscpBlock->AudienceType = $audienceType;
-		$sscpBlock->write();
+		$validateResult = $sscpBlock->validate();
 		
-		$link = Controller::join_links(
-				$this->stat('url_base', true),
-				"personalization/EditForm/field/BlockHolders/item/{$blockHolderID}/edit/"
-		);
-		
-		$this->response->addHeader('X-Status', 'Created new block.');
-		return $this->redirect($link);
+		if($validateResult->valid()){
+			$sscpBlock->write();
+			
+			$link = Controller::join_links(
+					$this->stat('url_base', true),
+					"personalization/EditForm/field/BlockHolders/item/{$blockHolderID}/edit/"
+					);
+			
+			$this->response->addHeader('X-Status', 'Created new block.');
+			return $this->redirect($link);
+		} else {
+			$this->response->addHeader('X-Status', 'Error: ' . $validateResult->message());
+		}
 	}
 	
 }

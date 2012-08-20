@@ -28,7 +28,7 @@ class SSCP_Block extends DataObject {
 		// $fields = parent::getCMSFields();
 		
 		$fields = parent::getCMSFields();
-		// $fields->removeByName('BlockHolderID');
+		$fields->removeByName('AudienceType');
 		
 		
 		// Audience Types
@@ -40,6 +40,23 @@ class SSCP_Block extends DataObject {
 		*/
 		return $fields;
 	}
+	
+	public function validate() {
+		$result = parent::validate();
+		
+		$env = CPEnvironment::getCPEnvironment();
+		$audienceTypeLoader = new AudienceTypeLoader();
+		$audienceTypesArray = $audienceTypeLoader->getAudienceTypes($env->getAudienceTypes());
+		
+		foreach($this->getAudienceTypes() as $audienceType) {
+			if(!in_array($audienceType, $audienceTypesArray)) {
+				$result->error("Invalid Audience Type - {$audienceType}");
+			}
+		}
+		
+		return $result;
+	}
+	
 	
 	public function getAudienceTypes() {
 		return array_map('trim', explode(',', $this->AudienceType));
